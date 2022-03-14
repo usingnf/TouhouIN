@@ -43,6 +43,7 @@ public:
 	void render(HDC& hDC);
 
 	void create(CD2DImage* tex, Vec2 lt, Vec2 slice, Vec2 step, float duration, UINT frmCount);
+	void setReverse(bool reverse);
 	//void create(CTexture* tex, Vec2 leftTop, Vec2 slice, Vec2 step, float duration, UINT frameCount);
 };
 

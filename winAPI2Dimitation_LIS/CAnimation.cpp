@@ -46,7 +46,6 @@ void CAnimation::update()
 
 	if (accTime > vecFrame[curFrame].duration)
 	{
-		//accTime = 0;
 		accTime -= vecFrame[curFrame].duration;
 		curFrame++;
 		if (curFrame >= vecFrame.size())
@@ -100,38 +99,6 @@ void CAnimation::render(HDC& hDC)
 			frm.leftTop.y + frm.slice.y
 		);
 	}
-
-	/*
-	BLENDFUNCTION bf = {};
-	bf.BlendOp = AC_SRC_OVER;
-	bf.BlendFlags = 0;
-	bf.AlphaFormat = 0;
-	bf.SourceConstantAlpha = 255;
-
-	AlphaBlend(hDC, 0, 0,
-		(int)texture->getBitmapWidth(),
-		(int)texture->getBitmapHeight(),
-		texture->getDC(),
-		0, 0,
-		(int)texture->getBitmapWidth(),
-		(int)texture->getBitmapHeight(),
-		bf);
-	
-	*/
-	/*
-	TransparentBlt(hDC,
-		(int)pos.x - frm.slice.x / 2, 
-		(int)pos.y - frm.slice.y / 2, 
-		(int)frm.slice.x,
-		(int)frm.slice.y, 
-		texture->getDC(), 
-		frm.leftTop.x,
-		frm.leftTop.y, 
-		frm.slice.x,
-		frm.slice.y, 
-		RGB(255,0,255));
-		*/
-		
 }
 
 void CAnimation::create(CD2DImage* img, Vec2 lt, Vec2 slice, Vec2 step, float duration,	UINT frmCount)
@@ -148,22 +115,11 @@ void CAnimation::create(CD2DImage* img, Vec2 lt, Vec2 slice, Vec2 step, float du
 		vecFrame.push_back(frm);
 	}
 }
-/*
-void CAnimation::create(CTexture* tex, Vec2 leftTop, Vec2 slice, Vec2 step, float duration, UINT frameCount)
+void CAnimation::setReverse(bool reverse)
 {
-	this->texture = tex;
-	tAniFrame frm = {};
-	for (UINT i = 0; i < frameCount; i++)
-	{
-		frm.duration = duration;
-		frm.slice = slice;
-		frm.leftTop = leftTop + step * i;
-		frm.fptOffset = Vec2(0, 0);
-
-		vecFrame.push_back(frm);
-	}
+	this->reverse = reverse;
 }
-*/
+
 void CAnimation::SetFrame(int frmIndex)
 {
 	curFrame = frmIndex;

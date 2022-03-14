@@ -74,8 +74,9 @@ void CRenderManager::RenderRevFrame(CD2DImage* img, float dstX, float dstY, floa
 	D2D1_RECT_F imgRect = { dstX, dstY, dstW, dstH };
 	D2D1_RECT_F srcRect = { srcX, srcY, srcW, srcH };
 
-	CRenderManager::getInstance()->GetRenderTarget()->SetTransform(D2D1::Matrix3x2F::Scale(-1.f, 1.f,
-		D2D1_POINT_2F{ dstX + dstW / 2.f, dstY + dstH / 2.f }));
+	//CRenderManager::getInstance()->GetRenderTarget()->SetTransform(D2D1::Matrix3x2F::Rotation();
+	CRenderManager::getInstance()->GetRenderTarget()->SetTransform(D2D1::Matrix3x2F::Scale(-1.0f, 1.0f,
+		D2D1_POINT_2F{ (dstX + dstW) / 2.f, (dstY + dstH) / 2.f }));
 
 	if (nullptr != img)
 	{
@@ -83,7 +84,7 @@ void CRenderManager::RenderRevFrame(CD2DImage* img, float dstX, float dstY, floa
 	}
 
 	CRenderManager::getInstance()->GetRenderTarget()->SetTransform(D2D1::Matrix3x2F::Scale(1.f, 1.f,
-		D2D1_POINT_2F{ dstX + dstW / 2.f, dstY + dstH / 2.f }));
+		D2D1_POINT_2F{ (dstX + dstW) / 2.f, (dstY + dstH) / 2.f }));
 }
 
 void CRenderManager::RenderText(wstring str, float dstX, float dstY, float dstW, float dstH, float fontSize, COLORREF color)
