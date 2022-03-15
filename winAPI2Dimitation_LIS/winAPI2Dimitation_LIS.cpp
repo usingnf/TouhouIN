@@ -17,10 +17,7 @@ HWND hWnd;
 WCHAR szTitle[MAX_LOADSTRING];                  // 제목 표시줄 텍스트입니다.
 WCHAR szWindowClass[MAX_LOADSTRING];            // 기본 창 클래스 이름입니다.
 PAINTSTRUCT ps;
-POINT mousePos;
-POINT startPos = { 0,0 };
-POINT endPos = { 0,0 };
-bool isMouseButtonDown = false;
+
 
 // 이 코드 모듈에 포함된 함수의 선언을 전달합니다:
 ATOM                MyRegisterClass(HINSTANCE hInstance);
@@ -123,7 +120,7 @@ ATOM MyRegisterClass(HINSTANCE hInstance)
     wcex.hCursor        = LoadCursor(nullptr, IDC_ARROW);
     wcex.hbrBackground  = (HBRUSH)(COLOR_WINDOW+1);
     //창 메뉴줄 설정
-    wcex.lpszMenuName   = MAKEINTRESOURCEW(IDC_WINAPI2DIMITATIONLIS);
+    wcex.lpszMenuName = NULL;//MAKEINTRESOURCEW(IDC_WINAPI2DIMITATIONLIS);
     wcex.lpszClassName  = szWindowClass;
     //창의 작은 아이콘
     wcex.hIconSm        = LoadIcon(wcex.hInstance, MAKEINTRESOURCE(IDI_SMALL));

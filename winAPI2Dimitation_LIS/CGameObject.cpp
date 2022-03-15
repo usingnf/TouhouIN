@@ -20,6 +20,9 @@ CGameObject::CGameObject()
 	speed = 100;
 	hp = 100;
 	isDelete = false;
+	isRender = true;
+
+	color = COLORREF(RGB(255, 255, 255));
 }
 
 CGameObject::CGameObject(const CGameObject& other)
@@ -80,7 +83,7 @@ void CGameObject::render(HDC& hDC)
 {
 	Vec2 camPos = CCameraManager::getInstance()->getRenderPos(pos);
 
-	Rectangle(hDC, 
+	Rectangle(hDC,
 		camPos.x - (scale.x / 2),
 		camPos.y - (scale.y / 2),
 		camPos.x + (scale.x / 2),
@@ -178,6 +181,26 @@ void CGameObject::createAnimator()
 {
 	animator = new CAnimator();
 	animator->owner = this;
+}
+
+void CGameObject::setColor(COLORREF color)
+{
+	this->color = color;
+}
+
+void CGameObject::setImage(const wstring& name)
+{
+	image = CResourceManager::getInstance()->loadD2DImage(name, L"\\texture\\" + name);
+}
+
+bool CGameObject::getIsRender()
+{
+	return isRender;
+}
+
+void CGameObject::setIsRender(bool render)
+{
+	this->isRender = render;
 }
 
 

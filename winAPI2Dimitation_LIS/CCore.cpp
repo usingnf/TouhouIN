@@ -1,6 +1,9 @@
 #pragma once
 #include "pch.h"
 
+//전역변수
+int g_level = 0;
+
 CCore::CCore()
 {
 	m_hDC = 0;
@@ -38,34 +41,14 @@ void CCore::render()
 {
 	//배경
 	CRenderManager::getInstance()->GetRenderTarget()->BeginDraw();
-
 	CRenderManager::getInstance()->RenderFillRectangle(-1, -1, WS_WIDTH + 1, WS_HEIGHT + 1, RGB(255, 255, 255));
-
 	CSceneManager::getInstance()->render(m_hDC);
-
-	//배경
-	//Rectangle(m_MemTexture->getDC(), -1, -1, WS_WIDTH + 1, WS_HEIGHT + 1);
-	//Rectangle(m_hMemDC, -1, -1, WS_WIDTH + 1, WS_HEIGHT + 1);
-	
-	//scene의 오브젝트 출력
-	//CSceneManager::getInstance()->render(m_hMemDC);
-	//CSceneManager::getInstance()->render(m_MemTexture->getDC());
-	//CCameraManager::getInstance()->render(m_MemTexture->getDC());
-
+		
 	//frame 출력
-	//WCHAR strFPS[7];
-	//swprintf_s(strFPS, L"%d", CTimeManager::getInstance()->getFPS());
-	//CRenderManager::getInstance()->RenderText(strFPS, WS_WIDTH - 50, 10, WS_HEIGHT, 50, 12, RGB(0, 0, 0));
-	//TextOutW(m_MemTexture->getDC(), WS_WIDTH - 100, 10, strFPS, 6);
-
-	WCHAR strFPS[6];
-	swprintf_s(strFPS, L"%5d", CTimeManager::getInstance()->getFPS());
-	CRenderManager::getInstance()->RenderText(strFPS, WS_WIDTH - 50, 10, WS_HEIGHT, 50, 12, RGB(0, 0, 0));
-
+	WCHAR strFPS[10];
+	swprintf_s(strFPS, L"FPS:%4d", CTimeManager::getInstance()->getFPS());
+	CRenderManager::getInstance()->RenderText(strFPS, WS_WIDTH - 150, WS_HEIGHT - 30, 200, 10, 30, RGB(255, 255, 255));
 	CRenderManager::getInstance()->GetRenderTarget()->EndDraw();
-
-	//MemDC로 그린 BMP를 복사하여 윈도우 창으로 옮기기
-	//BitBlt(m_hDC, 0, 0, WS_WIDTH, WS_HEIGHT, m_MemTexture->getDC(), 0, 0, SRCCOPY);
 }
 
 void CCore::init()
@@ -77,10 +60,11 @@ void CCore::init()
 	//CResourceManager::getInstance()->init();
 	CTimeManager::getInstance()->init();
 	CKeyManager::getInstance()->init();
+	CRenderManager::getInstance()->init();
 	CSceneManager::getInstance()->init();
 	CCameraManager::getInstance()->init();
 	CCollisionManager::getInstance()->init();
-	CRenderManager::getInstance()->init();
+	
 	
 	srand(time(0));
 

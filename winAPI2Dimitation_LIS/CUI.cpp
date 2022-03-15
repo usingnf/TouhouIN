@@ -8,6 +8,9 @@ CUI::CUI()
 	bCameraAffected = false;
 	bMouseOn = false;
 	bLbtnDown = false;
+
+	startImagePos = Vec2(0, 0);
+	endImagePos = Vec2(0, 0);
 }
 
 
@@ -77,8 +80,20 @@ void CUI::render(HDC& hDC)
 		p = CCameraManager::getInstance()->getRenderPos(p);
 	}
 
-	
+	if (image != nullptr)
+	{
+		CRenderManager::getInstance()->RenderFrame(
+			image,
+			p.x, p.y,
+			p.x + s.x, p.y + s.y,
+			startImagePos.x, startImagePos.y,
+			endImagePos.x, endImagePos.y
+		);
+	}
 
+	
+	
+	/*
 	if (texture == nullptr)
 	{
 		if (bLbtnDown == true)
@@ -104,7 +119,7 @@ void CUI::render(HDC& hDC)
 			0, 0, width, height,
 			RGB(255, 0, 255));
 	}
-	
+	*/
 
 	render_child(hDC);
 }
@@ -196,6 +211,30 @@ void CUI::AddChild(CUI* ui)
 	vecChild.push_back(ui);
 	ui->parent = this;
 	ui->bCameraAffected = this->bCameraAffected;
+}
+
+void CUI::setImage(const wstring& name)
+{
+	image = CResourceManager::getInstance()->loadD2DImage(name, L"\\texture\\" + name);
+	if (image != nullptr)
+	{
+		endImagePos.x = image->getWidth();
+		endImagePos.y = image->getHeight();
+	}
+}
+
+void CUI::setImagePos(Vec2 start, Vec2 end)
+{
+	startImagePos = start;
+	endImagePos = end;
+	if (end.x == 0)
+	{
+		endImagePos.x = image->getWidth();
+	}
+	if (end.y == 0)
+	{
+		endImagePos.y = image->getHeight();
+	}
 }
 
 void CUI::mouseOnCheck()

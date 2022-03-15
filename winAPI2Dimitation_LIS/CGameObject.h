@@ -18,6 +18,7 @@ protected:
 	Vec2 velocity;
 	double gravity;
 	double drag;
+	COLORREF color;
 
 	CTexture* texture;
 	CD2DImage* image;
@@ -29,8 +30,8 @@ protected:
 	bool isDelete;
 	double timer = 0;
 
+	bool isRender;
 	void setIsDelete(bool dead);
-
 public:
 	CGameObject();
 	CGameObject(const CGameObject& other);
@@ -71,5 +72,11 @@ public:
 
 	CAnimator* getAnimator();
 	void createAnimator();
+
+	void setColor(COLORREF color);
+	virtual void setImage(const wstring& name);
+
+	bool getIsRender();
+	void setIsRender(bool render);
 };
 

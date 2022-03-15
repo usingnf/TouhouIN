@@ -59,10 +59,14 @@ enum class Key_State
 };
 
 #define WS_MYSTYLE WS_CAPTION | WS_SYSMENU | WS_MINIMIZEBOX
-#define WS_WIDTH 1280
-#define WS_HEIGHT 720
+#define WS_WIDTH 642
+#define WS_HEIGHT 482
 #define WS_STARTX 100
 #define WS_STARTY 100
+#define STAGE_WIDTH (400)
+#define STAGE_HEIGHT (WS_HEIGHT - 20)
+
+extern int g_level;
 
 #include "Vec2.h"
 #include "logger.h"

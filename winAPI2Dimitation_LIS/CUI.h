@@ -7,6 +7,8 @@ private:
 	CUI* parent;
 
 	Vec2 finalPos;
+	Vec2 startImagePos;
+	Vec2 endImagePos;
 
 	bool bCameraAffected = false;
 	bool bMouseOn = false;
@@ -41,6 +43,8 @@ public:
 	const vector<CUI*>& getChild();
 
 	void AddChild(CUI* ui);
+	virtual void setImage(const wstring& name);
+	void setImagePos(Vec2 start, Vec2 end);
 
 private:
 	void mouseOnCheck();

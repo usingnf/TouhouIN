@@ -17,6 +17,8 @@ CPanelUI::~CPanelUI()
 
 void CPanelUI::mouseOn()
 {
+
+	/*
 	if (isLbtnDown() == true)
 	{
 		Vec2 mousePos = GETMOUSEPOS();
@@ -26,6 +28,7 @@ void CPanelUI::mouseOn()
 		setPos(curPos);
 		dragStart = GETMOUSEPOS();
 	}
+	*/
 }
 
 void CPanelUI::mouseLbtnDown()
