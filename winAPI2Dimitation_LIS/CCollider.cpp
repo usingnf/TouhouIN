@@ -39,18 +39,10 @@ void CCollider::finalupdate()
 {
 	Vec2 objPos = owner->getPos();
 	colliderPos = objPos + offSet;
-	//colliderPos = objPos;
-	//충돌계산?
 }
 
 void CCollider::render(HDC& hDC)
 {
-	/*HPEN hGreenPen = CCore::getInstance()->getPen(Group_Pen::Green);
-	HBRUSH hHollowBrush = CCore::getInstance()->getBrush(Group_Brush::Hollow);
-
-	HPEN hOldPen = (HPEN)SelectObject(hDC, hGreenPen);
-	HBRUSH hOldBrush = (HBRUSH)SelectObject(hDC, hHollowBrush);*/
-
 	Group_Pen pType;
 	COLORREF color = RGB(0, 0, 0);
 	if (collCount)
@@ -70,19 +62,10 @@ void CCollider::render(HDC& hDC)
 
 	Vec2 camPos = CCameraManager::getInstance()->getRenderPos(colliderPos);
 
-	CRenderManager::getInstance()->RenderFillRectangle(
+	CRenderManager::getInstance()->RenderRectangle(
 		camPos.x - (colliderScale.x / 2), camPos.y - (colliderScale.y / 2),
 		camPos.x + (colliderScale.x / 2), camPos.y + (colliderScale.y / 2), color);
 
-	/*Rectangle(hDC,
-		camPos.x - (colliderScale.x / 2),
-		camPos.y - (colliderScale.y / 2),
-		camPos.x + (colliderScale.x / 2),
-		camPos.y + (colliderScale.y / 2));
-		*/
-
-	/*SelectObject(hDC, hOldPen);
-	SelectObject(hDC, hHollowBrush);*/
 }
 
 Vec2 CCollider::getOffSet()

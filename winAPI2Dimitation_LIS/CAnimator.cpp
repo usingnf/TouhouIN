@@ -27,6 +27,7 @@ void CAnimator::update()
 
 void CAnimator::render(HDC hDC)
 {
+	curAnimation->angle = owner->getAngle();
 	if (curAnimation != nullptr)
 		curAnimation->render(hDC);
 }

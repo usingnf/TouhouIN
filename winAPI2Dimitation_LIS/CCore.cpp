@@ -3,6 +3,14 @@
 
 //전역변수
 int g_level = 0;
+int g_score = 0;
+int g_highScore = 0;
+int g_life = 0;
+int g_spell = 0;
+int g_power = 0;
+int g_graze = 0;
+int g_point = 0;
+int g_time = 0;
 
 CCore::CCore()
 {

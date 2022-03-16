@@ -20,11 +20,12 @@ enum class Group_GameObj
 	Default,
 	Background,
 	Tile,
-	Monster,
+	Enemy,
 	Item,
+	Body,
 	Player,
 	Missile,
-	Wall,
+	EnemyMissile,
 	UI,
 
 	Size,
@@ -67,6 +68,14 @@ enum class Key_State
 #define STAGE_HEIGHT (WS_HEIGHT - 20)
 
 extern int g_level;
+extern int g_score;
+extern int g_highScore = 0;
+extern int g_life = 0;
+extern int g_spell = 0;
+extern int g_power = 0;
+extern int g_graze = 0;
+extern int g_point = 0;
+extern int g_time = 0;
 
 #include "Vec2.h"
 #include "logger.h"

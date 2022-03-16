@@ -13,7 +13,7 @@ CPathManager::CPathManager()
 			break;
 		}
 	}
-	wcscat_s(szContentPath, MAXSIZE_PATH, L"\\Output\\release");
+	wcscat_s(szContentPath, MAXSIZE_PATH, L"\\release");
 }
 
 CPathManager::~CPathManager()
@@ -33,5 +33,5 @@ const WCHAR* CPathManager::getContentPath()
 
 const WCHAR* CPathManager::getContentRelativePath()
 {
-	return L"..\\Output\\Release\\content";
+	return L"..\\Release\\content";
 }

@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "CCollider.h"
+#include "CMissile.h"
 
 CGameObject::CGameObject()
 {
@@ -145,6 +146,11 @@ double CGameObject::getAngle()
 	return this->angle;
 }
 
+void CGameObject::setSpeed(double speed)
+{
+	this->speed = speed;
+}
+
 bool CGameObject::getIsDelete()
 {
 	return isDelete;
@@ -179,7 +185,8 @@ CAnimator* CGameObject::getAnimator()
 
 void CGameObject::createAnimator()
 {
-	animator = new CAnimator();
+	if(animator == nullptr)
+		animator = new CAnimator();
 	animator->owner = this;
 }
 
@@ -191,6 +198,15 @@ void CGameObject::setColor(COLORREF color)
 void CGameObject::setImage(const wstring& name)
 {
 	image = CResourceManager::getInstance()->loadD2DImage(name, L"\\texture\\" + name);
+}
+
+void CGameObject::setImage(const wstring& name, Vec2 leftTop, Vec2 imageSize)
+{
+	image = CResourceManager::getInstance()->loadD2DImage(name, L"\\texture\\" + name);
+	
+	createAnimator();
+	getAnimator()->createAnimation(L"stay", image, leftTop, imageSize, imageSize, 1, 1);
+	getAnimator()->play(L"stay");
 }
 
 bool CGameObject::getIsRender()
@@ -214,3 +230,15 @@ void CGameObject::setAngle(Vec2 vec)
 	this->angle = Vec2::getAngle(vec);
 }
 
+void CGameObject::createMissile(const wstring& image, Vec2 leftTop, Vec2 imageSize, Vec2 pos, Vec2 size, Vec2 colSize, double speed, double angle, double damage)
+{
+	CMissile* missile = new CMissile();
+	missile->setPos(pos);
+	missile->setScale(size);
+	missile->getCollider()->setColliderScale(colSize);
+	missile->setSpeed(speed);
+	missile->setAngle(angle);
+	missile->setDamage(damage);
+	missile->setImage(image, leftTop, imageSize);
+	CREATEOBJECT(missile, Group_GameObj::Missile);
+}

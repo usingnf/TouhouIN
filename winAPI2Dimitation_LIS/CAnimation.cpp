@@ -13,6 +13,7 @@ CAnimation::CAnimation()
 	accTime = 0;
 	isLoop = true;
 	reverse = false;
+	angle = 0;
 }
 
 CAnimation::~CAnimation()
@@ -82,7 +83,8 @@ void CAnimation::render(HDC& hDC)
 			frm.leftTop.x,
 			frm.leftTop.y,
 			frm.leftTop.x + frm.slice.x,
-			frm.leftTop.y + frm.slice.y
+			frm.leftTop.y + frm.slice.y,
+			pos, angle
 		);
 	}
 	else
@@ -96,7 +98,8 @@ void CAnimation::render(HDC& hDC)
 			frm.leftTop.x,
 			frm.leftTop.y,
 			frm.leftTop.x + frm.slice.x,
-			frm.leftTop.y + frm.slice.y
+			frm.leftTop.y + frm.slice.y,
+			pos, angle
 		);
 	}
 }

@@ -237,6 +237,11 @@ void CUI::setImagePos(Vec2 start, Vec2 end)
 	}
 }
 
+void CUI::setUpdateCallBack(BTN_FUNC1 pFunc1)
+{
+	m_pFunc1 = pFunc1;
+}
+
 void CUI::mouseOnCheck()
 {
 	//카메라 이동시 위치가 제대로 잡히지 않음.

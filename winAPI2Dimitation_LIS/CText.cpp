@@ -21,7 +21,8 @@ CText::~CText()
 
 void CText::update()
 {
-	
+	if (m_pFunc1 != nullptr)
+		m_pFunc1((DWORD_PTR)this);
 }
 
 void CText::render(HDC& hDC)

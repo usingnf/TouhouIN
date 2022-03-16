@@ -25,6 +25,7 @@ private:
 	int curFrame;
 	double accTime;
 	bool isLoop;
+	float angle;
 	bool reverse;
 public:
 	CAnimation();

@@ -97,7 +97,7 @@
     <Filter Include="4. Object\UI">
       <UniqueIdentifier>{f253390a-2688-4c10-b106-846bab0029b7}</UniqueIdentifier>
     </Filter>
-    <Filter Include="1. Engine\CRenderManager">
+    <Filter Include="1. Engine\RenderManager">
       <UniqueIdentifier>{18d19c98-d875-4f05-b920-1e73409230f6}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -153,7 +153,7 @@
     <ClInclude Include="CScene_Stage01.h">
       <Filter>2. Scene</Filter>
     </ClInclude>
-    <ClInclude Include="CMonster.h">
+    <ClInclude Include="CEnemy.h">
       <Filter>4. Object</Filter>
     </ClInclude>
     <ClInclude Include="CMissile.h">
@@ -223,10 +223,16 @@
       <Filter>1. Engine\ResourceManager\Soundcpp</Filter>
     </ClInclude>
     <ClInclude Include="CRenderManager.h">
-      <Filter>1. Engine\CRenderManager</Filter>
+      <Filter>1. Engine\RenderManager</Filter>
     </ClInclude>
     <ClInclude Include="CD2DImage.h">
-      <Filter>1. Engine\CRenderManager</Filter>
+      <Filter>1. Engine\RenderManager</Filter>
+    </ClInclude>
+    <ClInclude Include="CBody.h">
+      <Filter>4. Object</Filter>
+    </ClInclude>
+    <ClInclude Include="CPlayer.h">
+      <Filter>4. Object</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -269,7 +275,7 @@
     <ClCompile Include="CScene_Stage01.cpp">
       <Filter>2. Scene</Filter>
     </ClCompile>
-    <ClCompile Include="CMonster.cpp">
+    <ClCompile Include="CEnemy.cpp">
       <Filter>4. Object</Filter>
     </ClCompile>
     <ClCompile Include="CMissile.cpp">
@@ -336,10 +342,16 @@
       <Filter>1. Engine\ResourceManager\Soundcpp</Filter>
     </ClCompile>
     <ClCompile Include="CRenderManager.cpp">
-      <Filter>1. Engine\CRenderManager</Filter>
+      <Filter>1. Engine\RenderManager</Filter>
     </ClCompile>
     <ClCompile Include="CD2DImage.cpp">
-      <Filter>1. Engine\CRenderManager</Filter>
+      <Filter>1. Engine\RenderManager</Filter>
+    </ClCompile>
+    <ClCompile Include="CPlayer.cpp">
+      <Filter>4. Object</Filter>
+    </ClCompile>
+    <ClCompile Include="CBody.cpp">
+      <Filter>4. Object</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

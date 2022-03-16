@@ -59,12 +59,16 @@ public:
 	virtual void setAngle(Vec2 vec);
 	virtual double getAngle();
 
+	void setSpeed(double speed);
+
 	bool getIsDelete();
 
 	void createCollider();
 	CCollider* getCollider();
 
 	void addForce(Vec2 vec);
+
+	void createMissile(const wstring& image, Vec2 leftTop, Vec2 imageSize, Vec2 pos, Vec2 size, Vec2 colSize, double speed, double angle, double damage);
 
 	virtual void onCollisionEnter(CCollider* other) {};
 	virtual void onCollisionStay(CCollider* other) {};
@@ -74,7 +78,8 @@ public:
 	void createAnimator();
 
 	void setColor(COLORREF color);
-	virtual void setImage(const wstring& name);
+	void setImage(const wstring& name);
+	void setImage(const wstring& name, Vec2 leftTop, Vec2 imageSize);
 
 	bool getIsRender();
 	void setIsRender(bool render);

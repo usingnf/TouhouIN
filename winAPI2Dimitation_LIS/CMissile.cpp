@@ -4,8 +4,9 @@
 
 CMissile::CMissile()
 {
-	speed = mSpeed;
-	scale = mScale;
+	speed = 100;
+	scale = Vec2(50,50);
+	damage = 0;
 	name = L"Missile";
 
 	createCollider();
@@ -24,29 +25,38 @@ CMissile::~CMissile()
 
 void CMissile::update()
 {
-	if (pos.x < 0 || pos.x > WS_WIDTH || pos.y < 0 || pos.y > WS_HEIGHT)
+	if (pos.x < 0 || pos.x > STAGE_WIDTH+21 || pos.y < 0 || pos.y > WS_HEIGHT)
 	{
 		DELETEOBJECT(this);
 		return;
 		//object 파괴 작업 필요.
 	}
-	pos.x += speed * DT() * cos(angle * RADIAN);
-	pos.y += speed * DT() * -sin(angle * RADIAN);
+	pos.x += speed * DT() * cos((angle-90) * RADIAN);
+	pos.y += speed * DT() * sin((angle-90) * RADIAN);
 }
 
 void CMissile::render(HDC& hDC)
 {
-	Ellipse(hDC,
-		pos.x - (scale.x / 2),
-		pos.y - (scale.y / 2),
-		pos.x + (scale.x / 2),
-		pos.y + (scale.y / 2));
+	
 
 	component_render(hDC);
 }
 
+void CMissile::setDamage(double damage)
+{
+	this->damage = damage;
+}
+
 void CMissile::onCollisionEnter(CCollider* other)
 {	
-	//Logger::debug(other->getOwner()->getName().c_str());
-	DELETEOBJECT(this);
+	if (hp > 0)
+	{
+		g_score += 10;
+		other->getOwner()->setHp(other->getOwner()->getHp() - damage);
+		if (other->getOwner()->getHp() <= 0)
+		{
+			DELETEOBJECT(other->getOwner());
+		}
+		DELETEOBJECT(this);
+	}
 }

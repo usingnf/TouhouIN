@@ -8,7 +8,7 @@ CRemilia::CRemilia()
 	name = L"Remilia";
 
 	createCollider();
-	getCollider()->setColliderScale(Vec2(50, 50));
+	getCollider()->setColliderScale(Vec2(30, 30));
 
 	
 	image = CResourceManager::getInstance()->loadD2DImage(L"Remilia", L"\\texture\\Remilia.png");
