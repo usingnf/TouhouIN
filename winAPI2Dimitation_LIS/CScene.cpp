@@ -16,7 +16,10 @@ CScene::~CScene()
 		for (int j = 0; j < m_arrObj[i].size(); j++)
 		{
 			if (m_arrObj[i][j] != nullptr)
+			{
 				delete m_arrObj[i][j];
+				m_arrObj[i][j] = nullptr;
+			}
 		}
 	}
 }
@@ -51,6 +54,7 @@ void CScene::deleteGroup(Group_GameObj group)
 	for (int i = 0; i < m_arrObj[(UINT)group].size(); i++)
 	{
 		delete m_arrObj[(UINT)group][i];
+		m_arrObj[(UINT)group][i] = nullptr;
 	}
 	m_arrObj[(UINT)group].clear();
 }
@@ -226,6 +230,7 @@ void CScene::clearObject()
 		while (!m_arrObj[i].empty())
 		{
 			delete m_arrObj[i][m_arrObj[i].size() - 1];
+			m_arrObj[i][m_arrObj[i].size() - 1] = nullptr;
 			m_arrObj[i].pop_back();
 		}
 		

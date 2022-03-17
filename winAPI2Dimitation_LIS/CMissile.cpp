@@ -25,14 +25,22 @@ CMissile::~CMissile()
 
 void CMissile::update()
 {
-	if (pos.x < 0 || pos.x > STAGE_WIDTH+21 || pos.y < 0 || pos.y > WS_HEIGHT)
+	if (m_pFunc1 != nullptr)
 	{
-		DELETEOBJECT(this);
-		return;
-		//object 파괴 작업 필요.
+		m_pFunc1((DWORD_PTR)this);
 	}
-	pos.x += speed * DT() * cos((angle-90) * RADIAN);
-	pos.y += speed * DT() * sin((angle-90) * RADIAN);
+	else
+	{
+		if (pos.x < 0 || pos.x > STAGE_WIDTH + 21 || pos.y < 0 || pos.y > WS_HEIGHT)
+		{
+			DELETEOBJECT(this);
+			return;
+			//object 파괴 작업 필요.
+		}
+		pos.x += speed * DT() * cos((angle - 90) * RADIAN);
+		pos.y += speed * DT() * sin((angle - 90) * RADIAN);
+	}
+	
 }
 
 void CMissile::render(HDC& hDC)
@@ -49,13 +57,13 @@ void CMissile::setDamage(double damage)
 
 void CMissile::onCollisionEnter(CCollider* other)
 {	
-	if (hp > 0)
+	if (other->getOwner()->getHp() > 0)
 	{
 		g_score += 10;
 		other->getOwner()->setHp(other->getOwner()->getHp() - damage);
 		if (other->getOwner()->getHp() <= 0)
 		{
-			DELETEOBJECT(other->getOwner());
+			other->getOwner()->die();
 		}
 		DELETEOBJECT(this);
 	}

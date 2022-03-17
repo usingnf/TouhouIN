@@ -160,6 +160,7 @@
     <ClInclude Include="CCore.h" />
     <ClInclude Include="CD2DImage.h" />
     <ClInclude Include="CEventManager.h" />
+    <ClInclude Include="CItem.h" />
     <ClInclude Include="CKeyManager.h" />
     <ClInclude Include="CGameObject.h" />
     <ClInclude Include="CMissile.h" />
@@ -174,6 +175,7 @@
     <ClInclude Include="CResourceManager.h" />
     <ClInclude Include="CScene.h" />
     <ClInclude Include="CSceneManager.h" />
+    <ClInclude Include="CScene_Result.h" />
     <ClInclude Include="CScene_Stage01.h" />
     <ClInclude Include="CScene_Start.h" />
     <ClInclude Include="CScene_Tile.h" />
@@ -206,6 +208,7 @@
     <ClCompile Include="CCore.cpp" />
     <ClCompile Include="CD2DImage.cpp" />
     <ClCompile Include="CEventManager.cpp" />
+    <ClCompile Include="CItem.cpp" />
     <ClCompile Include="CKeyManager.cpp" />
     <ClCompile Include="CGameObject.cpp" />
     <ClCompile Include="CMissile.cpp" />
@@ -220,6 +223,7 @@
     <ClCompile Include="CResourceManager.cpp" />
     <ClCompile Include="CScene.cpp" />
     <ClCompile Include="CSceneManager.cpp" />
+    <ClCompile Include="CScene_Result.cpp" />
     <ClCompile Include="CScene_Stage01.cpp" />
     <ClCompile Include="CScene_Start.cpp" />
     <ClCompile Include="CScene_Tile.cpp" />

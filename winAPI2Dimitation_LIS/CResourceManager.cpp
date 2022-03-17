@@ -14,6 +14,7 @@ CResourceManager::~CResourceManager()
 		if (nullptr != iter->second)
 		{
 			delete iter->second;
+			iter->second = nullptr;
 		}
 	}
 	textureData.clear();
@@ -23,6 +24,7 @@ CResourceManager::~CResourceManager()
 		if (nullptr != iter->second)
 		{
 			delete iter->second;
+			iter->second = nullptr;
 		}
 	}
 	soundData.clear();

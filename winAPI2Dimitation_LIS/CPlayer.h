@@ -7,9 +7,11 @@ private:
 public:
 	CPlayer();
 	virtual CPlayer* clone();
-	~CPlayer();
+	virtual ~CPlayer();
 
 	virtual void update();
 	virtual void render(HDC& hDC);
+
+	virtual void die();
 };
 

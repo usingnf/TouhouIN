@@ -14,8 +14,10 @@ CAnimator::~CAnimator()
 		if (nullptr != iter->second)
 		{
 			delete iter->second;
+			iter->second = nullptr;
 		}
 	}
+	curAnimation = nullptr;
 	m_mapAni.clear();
 }
 
@@ -27,7 +29,6 @@ void CAnimator::update()
 
 void CAnimator::render(HDC hDC)
 {
-	curAnimation->angle = owner->getAngle();
 	if (curAnimation != nullptr)
 		curAnimation->render(hDC);
 }

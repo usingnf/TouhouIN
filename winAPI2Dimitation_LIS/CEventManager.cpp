@@ -17,8 +17,12 @@ void CEventManager::update()
 {
 	for (int i = 0; i < m_vecDelete.size(); i++)
 	{
-		if(nullptr != m_vecDelete[i])
+		if (nullptr != m_vecDelete[i])
+		{
 			delete m_vecDelete[i];
+			m_vecDelete[i] = nullptr;
+		}
+			
 	}
 	m_vecDelete.clear();
 
@@ -45,6 +49,10 @@ void CEventManager::execute(const tEvent& _event)
 	case Type_Event::Delete_Object:
 	{
 		CGameObject* obj = (CGameObject*)_event.lParam;
+		if (obj->getIsDelete() == true)
+		{
+			return;
+		}
 		obj->setIsDelete(true);
 		m_vecDelete.push_back(obj);
 		break;

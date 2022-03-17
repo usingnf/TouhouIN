@@ -28,11 +28,6 @@ void CScene_Stage01::update()
 		}
 	}
 
-	if (body != nullptr && player != nullptr)
-	{
-		this->body->setPos(this->player->getPos());
-	}
-
 	if (KEY('R') == (UINT)Key_State::Tap)
 	{
 		CHANGESCENE(Group_Scene::Start);
@@ -61,6 +56,19 @@ void CScene_Stage01::render(HDC& hDC)
 	}
 }
 
+void updateHighScore(DWORD_PTR self)
+{
+	if (g_highScore <= g_score)
+	{
+		string str = std::to_string(g_highScore);
+		wstring w;
+		w.assign(str.begin(), str.end());
+		((CText*)self)->setText(w.c_str());
+		g_highScore = g_score;
+	}
+	
+}
+
 void updateScore(DWORD_PTR self)
 {
 	string str = std::to_string(g_score);
@@ -69,29 +77,117 @@ void updateScore(DWORD_PTR self)
 	((CText*)self)->setText(w.c_str());
 }
 
+void updateLife(DWORD_PTR self)
+{
+	int a = 0;
+	if (((CText*)self)->getChild().size() < g_life)
+	{
+		CUI* life = new CUI();
+		life->setPos(Vec2(((CText*)self)->getChild().size() * 30 + 50, 5));
+		life->setScale(Vec2(30, 30));
+		life->setImage(L"text2.png");
+		life->setImagePos(Vec2(362, 89), Vec2(376, 103));
+
+		((CText*)self)->AddChild(life);
+	}
+}
+
+void updateSpell(DWORD_PTR self)
+{
+	int a = 0;
+	if (((CText*)self)->getChild().size() < g_spell)
+	{
+		CUI* spell = new CUI();
+		spell->setPos(Vec2(((CText*)self)->getChild().size() * 30 + 50, 5));
+		spell->setScale(Vec2(30, 30));
+		spell->setImage(L"text2.png");
+		spell->setImagePos(Vec2(378, 89), Vec2(392, 103));
+		((CText*)self)->AddChild(spell);
+	}
+}
+
+void updatePower(DWORD_PTR self)
+{
+	string str = std::to_string(g_power);
+	wstring w;
+	w.assign(str.begin(), str.end());
+	((CText*)self)->setText(w.c_str());
+}
+
+void updateGraze(DWORD_PTR self)
+{
+	string str = std::to_string(g_graze);
+	wstring w;
+	w.assign(str.begin(), str.end());
+	((CText*)self)->setText(w.c_str());
+}
+
+void updatePoint(DWORD_PTR self)
+{
+	string str = std::to_string(g_point) + "/100";
+	wstring w;
+	w.assign(str.begin(), str.end());
+	((CText*)self)->setText(w.c_str());
+}
+
+void updateTime(DWORD_PTR self)
+{
+	string str = std::to_string(g_time) + "/2500";
+	wstring w;
+	w.assign(str.begin(), str.end());
+	((CText*)self)->setText(w.c_str());
+}
+
+void enemyAi01(DWORD_PTR self)
+{
+	((CGameObject*)self)->setTimer(((CGameObject*)self)->getTimer() + DT());
+	if (((CGameObject*)self)->getTimer() >= 3)
+	{
+		((CGameObject*)self)->setTimer(0);
+		//action
+		CSoundManager::getInstance()->addSound(L"se_tan00.wav", L"se_tan00.wav", false, false);
+		CSoundManager::getInstance()->play(L"se_tan00.wav", 0.5f);
+		((CGameObject*)self)->createMissile(L"Missile.png", Vec2(108, 118), 
+			Vec2(28, 28), ((CGameObject*)self)->getPos(), 
+			Vec2(30, 30), Vec2(30, 30), 200, 170+rand()%20, 1, Group_GameObj::EnemyMissile);
+	}
+}
+
 void CScene_Stage01::Enter()
 {
 	level = g_level;
+	g_highScore = 100;
 	g_score = 0;
+	g_life = 2;
+	g_spell = 2;
+	g_power = 0;
+	g_graze = 0;
+	g_point = 0;
+	g_time = 0;
 
-	CSoundManager::getInstance()->addSound(L"stage1-1bgm", L"stage1-1bgm.wav", true, true);
-	CSoundManager::getInstance()->play(L"stage1-1bgm");
+	CSoundManager::getInstance()->addSound(L"stage1-1bgm.wav", L"stage1-1bgm.wav", true, true);
+	CSoundManager::getInstance()->play(L"stage1-1bgm.wav");
 
 	CCameraManager::getInstance()->setLookAt(Vec2(WS_WIDTH / 2, WS_HEIGHT / 2));
 
-	player = new CPlayer();
-	player->setPos(Vec2(200, WS_HEIGHT - 50));
-	AddObject(player, Group_GameObj::Player);
+	g_player = new CPlayer();
+	g_player->setPos(Vec2(200, WS_HEIGHT - 50));
+	g_player->setScale(Vec2(64, 64));
+	g_player->setHp(1);
+	AddObject(g_player, Group_GameObj::Player);
+
 	body = new CBody();
 	body->setPos(Vec2(200, WS_HEIGHT - 50));
+	body->setScale(Vec2(32, 48));
 	AddObject(body, Group_GameObj::Body);
 
 	CEnemy* enemy = new CEnemy();
 	enemy->setPos(Vec2(200, 200));
 	enemy->setDestPos(Vec2(200, 200));
 	enemy->setMaxSpeed(300);
-	enemy->setHp(2);
-	enemy->setScale(Vec2(WS_WIDTH, WS_HEIGHT));
+	enemy->setHp(10);
+	enemy->setScale(Vec2(32, 32));
+	enemy->setUpdateCallBack(enemyAi01);
 	AddObject(enemy, Group_GameObj::Enemy);
 
 	CPanelUI* UIBackground = new CPanelUI();
@@ -108,6 +204,20 @@ void CScene_Stage01::Enter()
 	stageBackground->setImagePos(Vec2(18, 38), Vec2(274, 294));
 	UIBackground->AddChild(stageBackground);
 
+	CUI* gname = new CPanelUI();
+	gname->setPos(Vec2(500, 280));
+	gname->setScale(Vec2(60, 150));
+	gname->setImage(L"text2.png");
+	gname->setImagePos(Vec2(420, 22), Vec2(540, 260));
+	UIBackground->AddChild(gname);
+
+	CPanelUI* nameBackground = new CPanelUI();
+	nameBackground->setPos(Vec2(20, 10));
+	nameBackground->setScale(Vec2(STAGE_WIDTH, STAGE_HEIGHT));
+	nameBackground->setImage(L"stagebackground.png");
+	nameBackground->setImagePos(Vec2(18, 38), Vec2(274, 294));
+	UIBackground->AddChild(nameBackground);
+
 	CUI* highScoreImage = new CUI();
 	highScoreImage->setPos(Vec2(STAGE_WIDTH + 40, 20));
 	highScoreImage->setScale(Vec2(40, 40));
@@ -118,9 +228,12 @@ void CScene_Stage01::Enter()
 	CText* highScoreText = new CText();
 	highScoreText->setPos(Vec2(STAGE_WIDTH + 100, 25));
 	highScoreText->setScale(Vec2(200, 30));
-	highScoreText->setText(L"0");
+	string str = std::to_string(g_highScore);
+	wstring w;
+	w.assign(str.begin(), str.end());
+	highScoreText->setText(w.c_str());
 	highScoreText->setSize(30);
-	highScoreText->setUpdateCallBack(updateScore);
+	highScoreText->setUpdateCallBack(updateHighScore);
 	highScoreText->setColor(RGB(255, 255, 255));
 	UIBackground->AddChild(highScoreText);
 
@@ -145,32 +258,16 @@ void CScene_Stage01::Enter()
 	lifeImage->setScale(Vec2(40, 40));
 	lifeImage->setImage(L"text2.png");
 	lifeImage->setImagePos(Vec2(300, 120), Vec2(348, 136));
+	lifeImage->setUpdateCallBack(updateLife);
 	UIBackground->AddChild(lifeImage);
-
-	CText* lifeText = new CText();
-	lifeText->setPos(Vec2(STAGE_WIDTH + 100, 85));
-	lifeText->setScale(Vec2(200, 30));
-	lifeText->setText(L"0");
-	lifeText->setSize(30);
-	lifeText->setUpdateCallBack(updateScore);
-	lifeText->setColor(RGB(255, 255, 255));
-	UIBackground->AddChild(lifeText);
 
 	CUI* spellImage = new CUI();
 	spellImage->setPos(Vec2(STAGE_WIDTH + 40, 110));
 	spellImage->setScale(Vec2(40, 40));
 	spellImage->setImage(L"text2.png");
 	spellImage->setImagePos(Vec2(300, 136), Vec2(348, 152));
+	spellImage->setUpdateCallBack(updateSpell);
 	UIBackground->AddChild(spellImage);
-
-	CText* spellText = new CText();
-	spellText->setPos(Vec2(STAGE_WIDTH + 100, 115));
-	spellText->setScale(Vec2(200, 30));
-	spellText->setText(L"0");
-	spellText->setSize(30);
-	spellText->setUpdateCallBack(updateScore);
-	spellText->setColor(RGB(255, 255, 255));
-	UIBackground->AddChild(spellText);
 
 	CUI* powerImage = new CUI();
 	powerImage->setPos(Vec2(STAGE_WIDTH + 40, 140));
@@ -184,7 +281,7 @@ void CScene_Stage01::Enter()
 	powerText->setScale(Vec2(200, 30));
 	powerText->setText(L"0");
 	powerText->setSize(30);
-	powerText->setUpdateCallBack(updateScore);
+	powerText->setUpdateCallBack(updatePower);
 	powerText->setColor(RGB(255, 255, 255));
 	UIBackground->AddChild(powerText);
 
@@ -200,7 +297,7 @@ void CScene_Stage01::Enter()
 	grazeText->setScale(Vec2(200, 30));
 	grazeText->setText(L"0");
 	grazeText->setSize(30);
-	grazeText->setUpdateCallBack(updateScore);
+	grazeText->setUpdateCallBack(updateGraze);
 	grazeText->setColor(RGB(255, 255, 255));
 	UIBackground->AddChild(grazeText);
 
@@ -216,7 +313,7 @@ void CScene_Stage01::Enter()
 	pointText->setScale(Vec2(200, 30));
 	pointText->setText(L"0");
 	pointText->setSize(30);
-	pointText->setUpdateCallBack(updateScore);
+	pointText->setUpdateCallBack(updatePoint);
 	pointText->setColor(RGB(255, 255, 255));
 	UIBackground->AddChild(pointText);
 
@@ -232,15 +329,23 @@ void CScene_Stage01::Enter()
 	timeText->setScale(Vec2(200, 30));
 	timeText->setText(L"0");
 	timeText->setSize(30);
-	timeText->setUpdateCallBack(updateScore);
+	timeText->setUpdateCallBack(updateTime);
 	timeText->setColor(RGB(255, 255, 255));
 	UIBackground->AddChild(timeText);
+
+	
+	CUI* levelImage = new CUI();
+	levelImage->setPos(Vec2(STAGE_WIDTH + 150, 260));
+	levelImage->setScale(Vec2(80, 50));
+	levelImage->setImage(L"text1.png");
+	levelImage->setImagePos(Vec2(130 * ((g_level % 2) + 1) - 130, 194 + (48*(g_level/2))), Vec2(130*((g_level % 2) + 1), 194 + (48 * (g_level / 2 + 1))));
+	UIBackground->AddChild(levelImage);
 	
 }
 
 void CScene_Stage01::Exit()
 {
-	CSoundManager::getInstance()->stop(L"stage1-1bgm");
+	CSoundManager::getInstance()->stop(L"stage1-1bgm.wav");
 	this->clearObject();
 }
 

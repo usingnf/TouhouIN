@@ -53,12 +53,12 @@ void CSoundManager::addSound(const wstring& name, const wstring& path, bool isBG
 	}
 }
 
-void CSoundManager::play(const wstring& name)
+void CSoundManager::play(const wstring& name, float volume)
 {
 	map<wstring, CSound*>::iterator iter = mapSound.find(name);
 	if (iter == mapSound.end())
 		return;
-	iter->second->play();
+	iter->second->play(volume);
 }
 
 void CSoundManager::stop(const wstring& name)

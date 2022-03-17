@@ -1,6 +1,6 @@
 #pragma once
 
-typedef void(*BTN_FUNC1)(DWORD_PTR);
+
 
 class CUI : public CGameObject
 {
@@ -16,8 +16,7 @@ private:
 	bool bCameraAffected = false;
 	bool bMouseOn = false;
 	bool bLbtnDown = false;
-protected:
-	BTN_FUNC1 m_pFunc1 = nullptr;
+
 
 public:
 	CUI();
@@ -51,9 +50,6 @@ public:
 	void AddChild(CUI* ui);
 	virtual void setImage(const wstring& name);
 	void setImagePos(Vec2 start, Vec2 end);
-
-	virtual void setUpdateCallBack(BTN_FUNC1 pFunc1);
-	
 
 private:
 	void mouseOnCheck();

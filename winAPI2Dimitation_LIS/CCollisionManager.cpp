@@ -47,7 +47,6 @@ void CCollisionManager::collisionGroupUpdate(Group_GameObj left, Group_GameObj r
 				// 계속 충돌 하는중
 				if (iter->second)
 				{
-					
 					if (vecLeft[i]->getIsDelete() || vecRight[j]->getIsDelete())
 					{
 						vecLeft[i]->getCollider()->onCollisionExit(vecRight[j]->getCollider());
@@ -84,8 +83,8 @@ void CCollisionManager::collisionGroupUpdate(Group_GameObj left, Group_GameObj r
 				// 충돌 끝
 				if (iter->second)
 				{
-					vecRight[j]->getCollider()->onCollisionExit(vecLeft[i]->getCollider());
 					vecLeft[i]->getCollider()->onCollisionExit(vecRight[j]->getCollider());
+					vecRight[j]->getCollider()->onCollisionExit(vecLeft[i]->getCollider());
 					iter->second = false;
 					
 				}
@@ -102,15 +101,6 @@ void CCollisionManager::collisionGroupUpdate(Group_GameObj left, Group_GameObj r
 
 bool CCollisionManager::isCollision(CCollider* left, CCollider* right)
 {
-	/*if (left->getOwner()->getIsDelete() == true)
-	{
-		return false;
-	}
-	if (right->getOwner()->getIsDelete() == true)
-	{
-		return false;
-	}*/
-
 	Vec2 leftPos = left->getColliderPos();
 	Vec2 leftScale = left->getColliderScale();
 

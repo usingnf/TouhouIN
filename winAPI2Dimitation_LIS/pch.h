@@ -20,6 +20,7 @@ enum class Group_GameObj
 	Default,
 	Background,
 	Tile,
+	Effect,
 	Enemy,
 	Item,
 	Body,
@@ -38,6 +39,7 @@ enum class Group_Scene
 	Start,
 	Stage_01,
 	Stage_02,
+	Result,
 	End,
 	Size,
 };
@@ -69,13 +71,20 @@ enum class Key_State
 
 extern int g_level;
 extern int g_score;
-extern int g_highScore = 0;
-extern int g_life = 0;
-extern int g_spell = 0;
-extern int g_power = 0;
-extern int g_graze = 0;
-extern int g_point = 0;
-extern int g_time = 0;
+extern int g_highScore;
+extern int g_life;
+extern int g_spell;
+extern int g_power;
+extern int g_graze;
+extern int g_point;
+extern int g_time;
+extern double g_progress;
+extern int g_continue;
+extern int g_miss;
+extern int g_bombUse;
+extern int g_spellBonus;
+extern double g_omission;
+
 
 #include "Vec2.h"
 #include "logger.h"
@@ -96,6 +105,8 @@ extern int g_time = 0;
 #include "CCameraManager.h"
 #include "CUIManager.h"
 
+class CPlayer;
+extern CPlayer* g_player;
 
 
 #define DT() CTimeManager::getInstance()->getDeltaTime()

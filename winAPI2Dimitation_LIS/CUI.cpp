@@ -45,13 +45,19 @@ CUI::~CUI()
 {
 	for (UINT i = 0; i < vecChild.size(); i++)
 	{
-		if(vecChild[i] != nullptr)
+		if (vecChild[i] != nullptr)
+		{
 			delete vecChild[i];
+			vecChild[i] = nullptr;
+		}
+			
 	}
 }
 
 void CUI::update()
 {
+	if (m_pFunc1 != nullptr)
+		m_pFunc1((DWORD_PTR)this);
 	update_child();
 }
 
@@ -235,11 +241,6 @@ void CUI::setImagePos(Vec2 start, Vec2 end)
 	{
 		endImagePos.y = image->getHeight();
 	}
-}
-
-void CUI::setUpdateCallBack(BTN_FUNC1 pFunc1)
-{
-	m_pFunc1 = pFunc1;
 }
 
 void CUI::mouseOnCheck()

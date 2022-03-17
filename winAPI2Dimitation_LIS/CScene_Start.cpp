@@ -77,6 +77,10 @@ void CScene_Start::update()
 	{
 		CHANGESCENE(Group_Scene::Stage_Tile);
 	}
+	if (KEY('Y') == (UINT)Key_State::Tap)
+	{
+		CHANGESCENE(Group_Scene::Result);
+	}
 
 
 	if (KEY(VK_DOWN) == (UINT)Key_State::Tap)
@@ -130,8 +134,8 @@ void CScene_Start::update()
 
 	if (KEY('Z') == (UINT)Key_State::Tap)
 	{
-		CSoundManager::getInstance()->addSound(L"se_ok00", L"se_ok00.wav", false, false);
-		CSoundManager::getInstance()->play(L"se_ok00");
+		CSoundManager::getInstance()->addSound(L"se_ok00.wav", L"se_ok00.wav", false, false);
+		CSoundManager::getInstance()->play(L"se_ok00.wav");
 		if (title->getIsRender() == true)
 		{
 			if (menuIndex == 0)
@@ -159,8 +163,8 @@ void CScene_Start::update()
 
 	if (KEY('X') == (UINT)Key_State::Tap)
 	{
-		CSoundManager::getInstance()->addSound(L"se_cancel00", L"se_cancel00.wav", false, false);
-		CSoundManager::getInstance()->play(L"se_cancel00");
+		CSoundManager::getInstance()->addSound(L"se_cancel00.wav", L"se_cancel00.wav", false, false);
+		CSoundManager::getInstance()->play(L"se_cancel00.wav");
 		if (title->getIsRender() == true)
 		{
 			
@@ -202,8 +206,8 @@ void CScene_Start::Enter()
 	menuIndex = 0;
 	vecMenu.clear();
 
-	CSoundManager::getInstance()->addSound(L"titlebgm", L"titlebgm.wav", true, true);
-	CSoundManager::getInstance()->play(L"titlebgm");
+	CSoundManager::getInstance()->addSound(L"titlebgm.wav", L"titlebgm.wav", true, true);
+	CSoundManager::getInstance()->play(L"titlebgm.wav");
 
 	title = new CPanelUI();
 	title->setPos(Vec2(0, 0));
@@ -358,6 +362,6 @@ void CScene_Start::Enter()
 
 void CScene_Start::Exit()
 {
-	CSoundManager::getInstance()->stop(L"titlebgm");
+	CSoundManager::getInstance()->stop(L"titlebgm.wav");
 	this->clearObject();
 }

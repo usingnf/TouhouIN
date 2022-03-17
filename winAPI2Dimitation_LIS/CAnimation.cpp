@@ -13,7 +13,6 @@ CAnimation::CAnimation()
 	accTime = 0;
 	isLoop = true;
 	reverse = false;
-	angle = 0;
 }
 
 CAnimation::~CAnimation()
@@ -72,14 +71,22 @@ void CAnimation::render(HDC& hDC)
 	Vec2 pos = obj->getPos() + frm.fptOffset;
 	pos = CCameraManager::getInstance()->getRenderPos(pos);
 
+	Vec2 scale = obj->getScale();
+
+	double angle = obj->getAngle();
+	if (obj->getFixed() == true)
+	{
+		angle = 0;
+	}
+
 	if (reverse)
 	{
 		CRenderManager::getInstance()->RenderRevFrame(
 			image,
-			pos.x - frm.slice.x / 2.f,
-			pos.y - frm.slice.y / 2.f,
-			pos.x + frm.slice.x / 2.f,
-			pos.y + frm.slice.y / 2.f,
+			pos.x - (scale.x / 2.f),
+			pos.y - (scale.y / 2.f),
+			pos.x + (scale.x / 2.f),
+			pos.y + (scale.y / 2.f),
 			frm.leftTop.x,
 			frm.leftTop.y,
 			frm.leftTop.x + frm.slice.x,
@@ -91,10 +98,10 @@ void CAnimation::render(HDC& hDC)
 	{
 		CRenderManager::getInstance()->RenderFrame(
 			image,
-			pos.x - frm.slice.x / 2.f,
-			pos.y - frm.slice.y / 2.f,
-			pos.x + frm.slice.x / 2.f,
-			pos.y + frm.slice.y / 2.f,
+			pos.x - (scale.x / 2.f),
+			pos.y - (scale.y / 2.f),
+			pos.x + (scale.x / 2.f),
+			pos.y + (scale.y / 2.f),
 			frm.leftTop.x,
 			frm.leftTop.y,
 			frm.leftTop.x + frm.slice.x,

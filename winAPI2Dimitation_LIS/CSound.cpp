@@ -14,13 +14,13 @@ CSound::~CSound()
 	if (nullptr != m_sound)
 	{
 		m_sound->release();
-		//delete m_sound;
 	}
 }
 
-void CSound::play()
+void CSound::play(float volume)
 {
 	FMOD_RESULT result;
+	m_channel->setVolume(volume);
 	result = CSoundManager::getInstance()->getSystem()->playSound(m_sound, nullptr, false, &m_channel);
 	assert(!result);
 }

@@ -7,11 +7,13 @@ CGameObject::CGameObject()
 	parent = nullptr;
 	name = L"Noname";
 	pos = Vec2(0,0);
+	destPos = Vec2(0, 0);
 	angle = 0;
 	scale = Vec2(0,0);
 	velocity = Vec2(0, 0);
 	gravity = 0;
 	drag = 0;
+	isFixed = false;
 
 	texture = nullptr;
 	image = nullptr;
@@ -47,10 +49,12 @@ CGameObject::CGameObject(const CGameObject& other)
 		collider = new CCollider(*other.collider);
 		collider->owner = this;
 	}
-	if (nullptr != other.collider)
+	if (nullptr != other.animator)
 	{
 		animator = new CAnimator(*other.animator);
 		animator->owner = this;
+		animator->m_mapAni = other.animator->m_mapAni;
+		animator->curAnimation = other.animator->curAnimation;
 	}
 
 	speed = other.speed;
@@ -62,9 +66,17 @@ CGameObject::CGameObject(const CGameObject& other)
 CGameObject::~CGameObject()
 {
 	if (nullptr != collider)
+	{
 		delete collider;
+		collider = nullptr;
+	}
+		
 	if (nullptr != animator)
+	{
 		delete animator;
+		animator = nullptr;
+	}
+		
 }
 
 void CGameObject::update()
@@ -126,6 +138,16 @@ Vec2 CGameObject::getPos()
 	return pos;
 }
 
+void CGameObject::setDestPos(Vec2 vec)
+{
+	this->destPos = vec;
+}
+
+Vec2 CGameObject::getDestPos()
+{
+	return destPos;
+}
+
 Vec2 CGameObject::getScale()
 {
 	return scale;
@@ -146,9 +168,29 @@ double CGameObject::getAngle()
 	return this->angle;
 }
 
+bool CGameObject::getFixed()
+{
+	return isFixed;
+}
+
 void CGameObject::setSpeed(double speed)
 {
 	this->speed = speed;
+}
+
+void CGameObject::die()
+{
+	DeleteObject(this);
+}
+
+void CGameObject::setTimer(double time)
+{
+	this->timer = time;
+}
+
+double CGameObject::getTimer()
+{
+	return this->timer;
 }
 
 bool CGameObject::getIsDelete()
@@ -219,6 +261,11 @@ void CGameObject::setIsRender(bool render)
 	this->isRender = render;
 }
 
+void CGameObject::setUpdateCallBack(BTN_FUNC1 pFunc1)
+{
+	this->m_pFunc1 = pFunc1;
+}
+
 
 void CGameObject::setAngle(double ang)
 {
@@ -230,7 +277,7 @@ void CGameObject::setAngle(Vec2 vec)
 	this->angle = Vec2::getAngle(vec);
 }
 
-void CGameObject::createMissile(const wstring& image, Vec2 leftTop, Vec2 imageSize, Vec2 pos, Vec2 size, Vec2 colSize, double speed, double angle, double damage)
+void CGameObject::createMissile(const wstring& image, Vec2 leftTop, Vec2 imageSize, Vec2 pos, Vec2 size, Vec2 colSize, double speed, double angle, double damage, Group_GameObj type)
 {
 	CMissile* missile = new CMissile();
 	missile->setPos(pos);
@@ -240,5 +287,5 @@ void CGameObject::createMissile(const wstring& image, Vec2 leftTop, Vec2 imageSi
 	missile->setAngle(angle);
 	missile->setDamage(damage);
 	missile->setImage(image, leftTop, imageSize);
-	CREATEOBJECT(missile, Group_GameObj::Missile);
+	CREATEOBJECT(missile, type);
 }

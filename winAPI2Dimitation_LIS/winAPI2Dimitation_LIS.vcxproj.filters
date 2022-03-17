@@ -34,9 +34,6 @@
     <Filter Include="2. Scene">
       <UniqueIdentifier>{0b55e2ee-4793-4cb5-90da-a0d2df2a4ca9}</UniqueIdentifier>
     </Filter>
-    <Filter Include="3. Camera">
-      <UniqueIdentifier>{6c711ecb-a44f-464f-803b-151ab39c4cfc}</UniqueIdentifier>
-    </Filter>
     <Filter Include="10. Util">
       <UniqueIdentifier>{2308ff56-ce55-4cfd-ac4a-7fe6e6e3c2e0}</UniqueIdentifier>
     </Filter>
@@ -100,6 +97,15 @@
     <Filter Include="1. Engine\RenderManager">
       <UniqueIdentifier>{18d19c98-d875-4f05-b920-1e73409230f6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="4. Object\Player">
+      <UniqueIdentifier>{7645ba1e-a9ca-4f29-9064-364e0b69edb1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="4. Object\Enemy">
+      <UniqueIdentifier>{c55aff3f-e67a-4444-9517-a1154000a269}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="4. Object\Item">
+      <UniqueIdentifier>{11f77f93-ef94-4f57-9152-242cd572a503}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -153,12 +159,6 @@
     <ClInclude Include="CScene_Stage01.h">
       <Filter>2. Scene</Filter>
     </ClInclude>
-    <ClInclude Include="CEnemy.h">
-      <Filter>4. Object</Filter>
-    </ClInclude>
-    <ClInclude Include="CMissile.h">
-      <Filter>4. Object</Filter>
-    </ClInclude>
     <ClInclude Include="CMissile2.h">
       <Filter>4. Object</Filter>
     </ClInclude>
@@ -188,9 +188,6 @@
     </ClInclude>
     <ClInclude Include="CAnimation.h">
       <Filter>5. Component\2. Animator</Filter>
-    </ClInclude>
-    <ClInclude Include="CRemilia.h">
-      <Filter>4. Object</Filter>
     </ClInclude>
     <ClInclude Include="CCameraManager.h">
       <Filter>1. Engine\CameraManager</Filter>
@@ -229,10 +226,25 @@
       <Filter>1. Engine\RenderManager</Filter>
     </ClInclude>
     <ClInclude Include="CBody.h">
-      <Filter>4. Object</Filter>
+      <Filter>4. Object\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="CRemilia.h">
+      <Filter>4. Object\Player</Filter>
     </ClInclude>
     <ClInclude Include="CPlayer.h">
-      <Filter>4. Object</Filter>
+      <Filter>4. Object\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="CEnemy.h">
+      <Filter>4. Object\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="CMissile.h">
+      <Filter>4. Object\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="CItem.h">
+      <Filter>4. Object\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="CScene_Result.h">
+      <Filter>2. Scene</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -275,12 +287,6 @@
     <ClCompile Include="CScene_Stage01.cpp">
       <Filter>2. Scene</Filter>
     </ClCompile>
-    <ClCompile Include="CEnemy.cpp">
-      <Filter>4. Object</Filter>
-    </ClCompile>
-    <ClCompile Include="CMissile.cpp">
-      <Filter>4. Object</Filter>
-    </ClCompile>
     <ClCompile Include="CMissile2.cpp">
       <Filter>4. Object</Filter>
     </ClCompile>
@@ -307,9 +313,6 @@
     </ClCompile>
     <ClCompile Include="CAnimation.cpp">
       <Filter>5. Component\2. Animator</Filter>
-    </ClCompile>
-    <ClCompile Include="CRemilia.cpp">
-      <Filter>4. Object</Filter>
     </ClCompile>
     <ClCompile Include="CCameraManager.cpp">
       <Filter>1. Engine\CameraManager</Filter>
@@ -347,11 +350,26 @@
     <ClCompile Include="CD2DImage.cpp">
       <Filter>1. Engine\RenderManager</Filter>
     </ClCompile>
-    <ClCompile Include="CPlayer.cpp">
-      <Filter>4. Object</Filter>
-    </ClCompile>
     <ClCompile Include="CBody.cpp">
-      <Filter>4. Object</Filter>
+      <Filter>4. Object\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="CRemilia.cpp">
+      <Filter>4. Object\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="CPlayer.cpp">
+      <Filter>4. Object\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="CEnemy.cpp">
+      <Filter>4. Object\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="CMissile.cpp">
+      <Filter>4. Object\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="CItem.cpp">
+      <Filter>4. Object\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="CScene_Result.cpp">
+      <Filter>2. Scene</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

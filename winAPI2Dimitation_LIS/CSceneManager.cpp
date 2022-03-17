@@ -2,6 +2,7 @@
 #include "CScene_Start.h"
 #include "CScene_Stage01.h"
 #include "CScene_Tile.h"
+#include "CScene_Result.h"
 
 CSceneManager::CSceneManager()
 {
@@ -16,8 +17,11 @@ CSceneManager::~CSceneManager()
 {
 	for (int i = 0; i < (UINT)Group_Scene::Size; i++)
 	{
-		if(arrScene[i] != nullptr)
+		if (arrScene[i] != nullptr)
+		{
 			delete arrScene[i];
+			arrScene[i] = nullptr;
+		}	
 	}
 }
 
@@ -31,6 +35,9 @@ void CSceneManager::init()
 
 	arrScene[(UINT)Group_Scene::Stage_01] = new CScene_Stage01();
 	arrScene[(UINT)Group_Scene::Stage_01]->setName(L"Start_Stage_01");
+
+	arrScene[(UINT)Group_Scene::Result] = new CScene_Result();
+	arrScene[(UINT)Group_Scene::Result]->setName(L"Result");
 	
 	curScene = arrScene[(UINT)Group_Scene::Start];
 	curScene->Enter();

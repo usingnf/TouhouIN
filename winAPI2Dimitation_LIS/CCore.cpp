@@ -1,5 +1,6 @@
 #pragma once
 #include "pch.h"
+#include "CPlayer.h"
 
 //전역변수
 int g_level = 0;
@@ -11,6 +12,14 @@ int g_power = 0;
 int g_graze = 0;
 int g_point = 0;
 int g_time = 0;
+double g_progress = 0;
+int g_continue = 0;
+int g_miss = 0;
+int g_bombUse = 0;
+int g_spellBonus = 0;
+double g_omission = 0;
+
+CPlayer* g_player = nullptr;
 
 CCore::CCore()
 {
@@ -35,14 +44,14 @@ CCore::~CCore()
 
 void CCore::update()
 {
+	CEventManager::getInstance()->update();
 	CTimeManager::getInstance()->update();
 	CKeyManager::getInstance()->update();
 	CSceneManager::getInstance()->update();
 	CCollisionManager::getInstance()->update();
 	CCameraManager::getInstance()->update();
 	CSoundManager::getInstance()->update();
-	CUIManager::getInstance()->update();
-	CEventManager::getInstance()->update();
+	CUIManager::getInstance()->update();	
 }
 
 void CCore::render()

@@ -1,0 +1,17 @@
+#pragma once
+class CItem : public CGameObject
+{
+private:
+	bool isNearPlayer;
+public:
+	CItem();
+	virtual CItem* clone();
+	~CItem();
+	virtual void update();
+	virtual void render(HDC& hDC);
+
+	void onCollisionEnter(CCollider* other);
+	void onCollisionStay(CCollider* other);
+	void onCollisionExit(CCollider* other);
+};
+

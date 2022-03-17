@@ -23,7 +23,7 @@ public:
 
 	void addSound(const wstring& name, const wstring& path, bool isBGM, bool isLoop);
 	
-	void play(const wstring& name);
+	void play(const wstring& name, float volume = 1.f);
 	void stop(const wstring& name);
 	void pause(const wstring& name);
 	void resume(const wstring& name);

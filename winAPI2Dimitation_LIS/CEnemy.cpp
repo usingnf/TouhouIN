@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "CEnemy.h"
+#include "CItem.h"
 
 CEnemy::CEnemy()
 {
@@ -11,12 +12,12 @@ CEnemy::CEnemy()
 	createAnimator();
 	CAnimation* ani = nullptr;
 
-	image = CResourceManager::getInstance()->loadD2DImage(L"Enemy", L"\\texture\\Enemy.png");
-	//image = CResourceManager::getInstance()->loadD2DImage(L"Remilia", L"\\texture\\Remilia.png");
+	image = CResourceManager::getInstance()->loadD2DImage(L"Enemy.png", L"\\texture\\Enemy.png");
 
 	getAnimator()->createAnimation(L"stay", image, Vec2(0, 0), Vec2(32, 32), Vec2(32, 0), 0.08, 4);
 	getAnimator()->createAnimation(L"moveleft", image, Vec2(224, 0), Vec2(32, 32), Vec2(-32, 0), 0.1, 4);
 	getAnimator()->createAnimation(L"moveright", image, Vec2(224, 0), Vec2(32, 32), Vec2(-32, 0), 0.1, 4);
+	getAnimator()->createAnimation(L"die", image, Vec2(0, 128), Vec2(64, 64), Vec2(64, 0), 1, 1);
 	getAnimator()->play(L"stay");
 
 
@@ -26,9 +27,9 @@ CEnemy::CEnemy()
 	ani = getAnimator()->findAnimation(L"moveleft");
 	ani->setLoop(false);
 
-	ani = getAnimator()->findAnimation(L"moveright");
-	ani->setLoop(false);
-	ani->setReverse(true);
+		ani = getAnimator()->findAnimation(L"moveright");
+		ani->setLoop(false);
+		ani->setReverse(true);
 }
 
 CEnemy* CEnemy::clone()
@@ -38,50 +39,82 @@ CEnemy* CEnemy::clone()
 
 CEnemy::~CEnemy()
 {
+
 }
 
 
 void CEnemy::update()
 {
+	if (pos.x < -50 || pos.y < -50 || pos.x > STAGE_WIDTH + 50 || pos.y > WS_HEIGHT + 50)
+	{
+		DELETEOBJECT(this);
+	}
+
 	if (KEY(VK_LBUTTON) == (UINT)Key_State::Tap)
 	{
 		accMove(maxSpeed, -100);
 		destPos = GETMOUSEPOS();
 	}
 
-	if (Vec2::distance(destPos, pos) < speed * DT() + 1)
+	if (hp > 0)
 	{
-		accSpeed = 0;
-		destPos = pos;
-		if (getAnimator()->getCurAnimationName() != L"stay")
-			getAnimator()->play(L"stay");
+		if (m_pFunc1 != nullptr)
+		{
+			m_pFunc1((DWORD_PTR)this);
+		}
+
+		if (Vec2::distance(destPos, pos) < speed * DT() + 1)
+		{
+			accSpeed = 0;
+			destPos = pos;
+			if (getAnimator()->getCurAnimationName() != L"stay")
+				getAnimator()->play(L"stay");
+		}
+		else
+		{
+			if (speed < 0)
+			{
+				speed = 0;
+				destPos = pos;
+			}
+			else if (speed <= maxSpeed)
+				speed += accSpeed * DT();
+			else
+				speed = maxSpeed;
+
+			if (destPos.x < pos.x)
+			{
+				if (getAnimator()->getCurAnimationName() != L"moveleft")
+					getAnimator()->play(L"moveleft");
+			}
+			else
+			{
+				if (getAnimator()->getCurAnimationName() != L"moveright")
+					getAnimator()->play(L"moveright");
+			}
+
+			Vec2 vec = (destPos - pos).normalized();
+			pos.x += vec.x * speed * DT();
+			pos.y += vec.y * speed * DT();
+		}
 	}
 	else
 	{
-		if (speed < 0)
+		if (this->timer == 0)
 		{
-			speed = 0;
-			destPos = pos;
+			this->setScale(Vec2(1, 1));
 		}
-		else if (speed <= maxSpeed)
-			speed += accSpeed * DT();
-		else
-			speed = maxSpeed;
-
-		if (destPos.x < pos.x)
+		else if (this->timer >= 0.5)
 		{
-			if (getAnimator()->getCurAnimationName() != L"moveleft")
-				getAnimator()->play(L"moveleft");
+			DELETEOBJECT(this);
 		}
 		else
 		{
-			if (getAnimator()->getCurAnimationName() != L"moveright")
-				getAnimator()->play(L"moveright");
+			double t = DT();
+			this->setScale(getScale() + Vec2(t*200, t*200));
 		}
-
-		Vec2 vec = (destPos - pos).normalized();
-		pos.x += vec.x * speed * DT();
-		pos.y += vec.y * speed * DT();
+		this->timer += DT();
+		
 	}
 
 	CAnimator* ani = getAnimator();
@@ -110,11 +143,24 @@ void CEnemy::accMove(double startSpeed, double accSpeed)
 	this->accSpeed = accSpeed;
 }
 
+void CEnemy::die()
+{
+	CSoundManager::getInstance()->addSound(L"se_enep00.wav", L"se_enep00.wav", false, false);
+	CSoundManager::getInstance()->play(L"se_enep00.wav");
+	getAnimator()->play(L"die");
+	CItem* item = new CItem();
+	item->setPos(pos);
+	item->setScale(Vec2(20, 20));
+	item->setAngle(rand() % 360);
+	item->setHp(10);
+	CREATEOBJECT(item, Group_GameObj::Item);
+}
+
 void CEnemy::onCollisionEnter(CCollider* other)
 {
 	if (hp > 0)
 	{
-		if (other->getOwner()->getName() == L"Wall")
+		if (other->getOwner()->getName() == L"Player")
 		{
 			
 		}
