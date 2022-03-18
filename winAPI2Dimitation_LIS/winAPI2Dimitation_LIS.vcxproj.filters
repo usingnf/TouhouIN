@@ -246,6 +246,9 @@
     <ClInclude Include="CScene_Result.h">
       <Filter>2. Scene</Filter>
     </ClInclude>
+    <ClInclude Include="CSpell.h">
+      <Filter>4. Object\Player</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="winAPI2Dimitation_LIS.cpp">
@@ -370,6 +373,9 @@
     </ClCompile>
     <ClCompile Include="CScene_Result.cpp">
       <Filter>2. Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="CSpell.cpp">
+      <Filter>4. Object\Player</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
