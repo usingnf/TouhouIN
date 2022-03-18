@@ -3,7 +3,6 @@ class CBody : public CGameObject
 {
 private:
 	Vec2 pScale = Vec2(50, 50);
-	int mode = 0;
 	double missileTimer = 0;
 public:
 	CBody();

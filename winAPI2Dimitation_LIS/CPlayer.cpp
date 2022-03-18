@@ -1,7 +1,10 @@
 #include "pch.h"
 #include "CPlayer.h"
 #include "CScene.h"
+#include "CSpell.h"
 
+
+bool CPlayer::isSpell = false;
 
 CPlayer::CPlayer()
 {
@@ -11,7 +14,7 @@ CPlayer::CPlayer()
 	timer = 0;
 
 	createCollider();
-	getCollider()->setColliderScale(Vec2(30, 30));
+	getCollider()->setColliderScale(Vec2(10, 10));
 
 	image = CResourceManager::getInstance()->loadD2DImage(L"Missile.png", L"\\texture\\Missile.png");
 
@@ -82,32 +85,108 @@ void CPlayer::update()
 		if (timer >= 1)
 		{
 			timer = 0;
-			hp = -10;
+			hp = -100;
 			CSoundManager::getInstance()->addSound(L"se_pldead00.wav", L"se_pldead00.wav", false, false);
 			CSoundManager::getInstance()->play(L"se_pldead00.wav", 0.5f);
-			this->die();
 		}
 	}
 	else
 	{
 		if (getAnimator()->getCurAnimationName() == L"die")
 		{
-			timer += DT();
+			timer2 += DT();
 			double t = DT();
-			if (timer <= 0.5)
+			if (timer2 <= 0.5)
 			{
 				this->setScale(this->getScale() + Vec2(300 * t, 300 * t));
 
 			}
 			else
 			{
-				g_player = nullptr;
-				//DELETEOBJECT(this);
-				CEventManager::getInstance()->changeScene(Group_Scene::Start);
+				
+				this->timer2 = 0;
+				if (g_life > 0)
+				{
+					setIsRender(false);
+					g_life += -1;
+					this->setPos(Vec2(PL_STARTPOSX, PL_STARTPOSY));
+					this->setScale(Vec2(64, 64));
+					this->hp = 1;
+					this->isInvincible = true;
+					if ((UINT)g_mode % 2 == 1)
+						g_mode = (Group_CharacterMode)((UINT)g_mode - 1);
+					getAnimator()->play(L"stay");
+				}
+				else
+				{
+					g_player = nullptr;
+					//DELETEOBJECT(this);
+					CEventManager::getInstance()->changeScene(Group_Scene::Result);
+				}
 			}
 		}
 	}
 
+	if (isInvincible == true)
+	{
+		timer2 += DT();
+		if (timer2 >= 2)
+		{
+			timer2 = 0;
+			isInvincible = false;
+		}
+	}
+
+	if (KEY(VK_LSHIFT) == (UINT)Key_State::Tap)
+	{
+		this->setIsRender(true);
+	}
+	else if (KEY(VK_LSHIFT) == (UINT)Key_State::Off)
+	{
+		this->setIsRender(false);
+	}
+
+	if (KEY('X') == (UINT)Key_State::Tap)
+	{
+		if (g_spell > 0 && CPlayer::isSpell == false)
+		{
+			getAnimator()->play(L"stay");
+			this->setScale(Vec2(64, 64));
+			
+			CPlayer::isSpell = true;
+			g_spell += -1;
+			g_bombUse += 1;
+
+			this->hp = 1;
+
+			CSoundManager::getInstance()->addSound(L"se_cat00.wav", L"se_cat00.wav", false, false);
+			CSoundManager::getInstance()->play(L"se_cat00.wav", 0.5f);
+
+			CSpell* spell = new CSpell();
+			spell->setPos(pos);
+			if (g_mode == Group_CharacterMode::Sakuya)
+			{
+				spell->setHp(3);
+				spell->setScale(Vec2(100, 100));
+				spell->getAnimator()->play(L"sakuyaspell");
+			}
+			else if (g_mode == Group_CharacterMode::Remilia)
+			{
+				spell->setHp(3);
+				spell->setScale(Vec2(100, 100));
+				spell->getAnimator()->play(L"remiliaspell");
+			}
+
+			CREATEOBJECT(spell, Group_GameObj::Spell);
+
+			if ((UINT)g_mode % 2 == 1)
+			{
+				g_mode = (Group_CharacterMode)((UINT)g_mode - 1);
+			}
+		}
+
+		
+	}
 	
 
 
@@ -123,6 +202,8 @@ void CPlayer::render(HDC& hDC)
 
 void CPlayer::die()
 {
+	this->setIsRender(true);
 	getAnimator()->play(L"die");
+	g_miss += 1;
 	this->setScale(Vec2(1,1));
 }

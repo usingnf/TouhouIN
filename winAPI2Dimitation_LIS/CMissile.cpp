@@ -59,7 +59,10 @@ void CMissile::onCollisionEnter(CCollider* other)
 {	
 	if (other->getOwner()->getHp() > 0)
 	{
-		g_score += 10;
+		if (other->getOwner()->getName() != L"Player")
+		{
+			g_score += 10 * damage;
+		}
 		other->getOwner()->setHp(other->getOwner()->getHp() - damage);
 		if (other->getOwner()->getHp() <= 0)
 		{

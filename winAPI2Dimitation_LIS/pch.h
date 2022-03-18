@@ -27,6 +27,7 @@ enum class Group_GameObj
 	Player,
 	Missile,
 	EnemyMissile,
+	Spell,
 	UI,
 
 	Size,
@@ -42,6 +43,23 @@ enum class Group_Scene
 	Result,
 	End,
 	Size,
+};
+
+enum class Group_Item
+{
+	Power,
+	Spell,
+	Life,
+	Score,
+	Size,
+};
+
+enum class Group_CharacterMode
+{
+	Sakuya,
+	Remilia,
+
+	Size
 };
 
 enum class Type_Event
@@ -68,6 +86,8 @@ enum class Key_State
 #define WS_STARTY 100
 #define STAGE_WIDTH (400)
 #define STAGE_HEIGHT (WS_HEIGHT - 20)
+#define PL_STARTPOSX 200
+#define PL_STARTPOSY (WS_HEIGHT-50)
 
 extern int g_level;
 extern int g_score;
@@ -84,6 +104,7 @@ extern int g_miss;
 extern int g_bombUse;
 extern int g_spellBonus;
 extern double g_omission;
+extern Group_CharacterMode g_mode;
 
 
 #include "Vec2.h"

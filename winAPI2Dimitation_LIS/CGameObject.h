@@ -33,6 +33,9 @@ protected:
 	double hp;
 	bool isDelete;
 	double timer = 0;
+	double timer2 = 0;
+	int timerCount = 0;
+	int timerCount2 = 0;
 
 	bool isRender;
 	void setIsDelete(bool dead);
@@ -75,6 +78,8 @@ public:
 
 	void setTimer(double time);
 	double getTimer();
+	void setTimerCount(int count);
+	int getTimerCount();
 
 	bool getIsDelete();
 

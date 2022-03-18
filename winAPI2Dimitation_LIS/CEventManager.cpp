@@ -15,14 +15,16 @@ CEventManager::~CEventManager()
 
 void CEventManager::update()
 {
-	for (int i = 0; i < m_vecDelete.size(); i++)
+	if (isSceneChange == false)
 	{
-		if (nullptr != m_vecDelete[i])
+		for (int i = 0; i < m_vecDelete.size(); i++)
 		{
-			delete m_vecDelete[i];
-			m_vecDelete[i] = nullptr;
+			if (nullptr != m_vecDelete[i])
+			{
+				delete m_vecDelete[i];
+				m_vecDelete[i] = nullptr;
+			}
 		}
-			
 	}
 	m_vecDelete.clear();
 
@@ -59,9 +61,11 @@ void CEventManager::execute(const tEvent& _event)
 	}
 	case Type_Event::Change_Scene:
 	{
+		isSceneChange = true;
 		Group_Scene group = (Group_Scene)_event.lParam;
 		CUIManager::getInstance()->setFocusedUI(nullptr);
 		CSceneManager::getInstance()->changeScene(group);
+		isSceneChange = false;
 		break;
 	}
 	}

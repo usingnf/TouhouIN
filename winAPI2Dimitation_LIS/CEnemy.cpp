@@ -63,40 +63,45 @@ void CEnemy::update()
 			m_pFunc1((DWORD_PTR)this);
 		}
 
-		if (Vec2::distance(destPos, pos) < speed * DT() + 1)
+		if (destPos != pos)
 		{
-			accSpeed = 0;
-			destPos = pos;
-			if (getAnimator()->getCurAnimationName() != L"stay")
-				getAnimator()->play(L"stay");
-		}
-		else
-		{
-			if (speed < 0)
+			if (Vec2::distance(destPos, pos) < speed * DT() + 1)
 			{
-				speed = 0;
+				accSpeed = 0;
 				destPos = pos;
-			}
-			else if (speed <= maxSpeed)
-				speed += accSpeed * DT();
-			else
-				speed = maxSpeed;
-
-			if (destPos.x < pos.x)
-			{
-				if (getAnimator()->getCurAnimationName() != L"moveleft")
-					getAnimator()->play(L"moveleft");
+				if (getAnimator()->getCurAnimationName() != L"stay")
+					getAnimator()->play(L"stay");
 			}
 			else
 			{
-				if (getAnimator()->getCurAnimationName() != L"moveright")
-					getAnimator()->play(L"moveright");
-			}
+				if (speed < 0)
+				{
+					speed = 0;
+					destPos = pos;
+				}
+				else if (speed <= maxSpeed)
+					speed += accSpeed * DT();
+				else
+					speed = maxSpeed;
 
-			Vec2 vec = (destPos - pos).normalized();
-			pos.x += vec.x * speed * DT();
-			pos.y += vec.y * speed * DT();
+				if (destPos.x < pos.x)
+				{
+					if (getAnimator()->getCurAnimationName() != L"moveleft")
+						getAnimator()->play(L"moveleft");
+				}
+				else
+				{
+					if (getAnimator()->getCurAnimationName() != L"moveright")
+						getAnimator()->play(L"moveright");
+				}
+
+				Vec2 vec = (destPos - pos).normalized();
+				pos.x += vec.x * speed * DT();
+				pos.y += vec.y * speed * DT();
+			}
 		}
+
+		
 	}
 	else
 	{
@@ -153,7 +158,31 @@ void CEnemy::die()
 	item->setScale(Vec2(20, 20));
 	item->setAngle(rand() % 360);
 	item->setHp(10);
+	item->setItemType(Group_Item::Life);
+	CItem* item2 = new CItem();
+	item2->setPos(pos);
+	item2->setScale(Vec2(20, 20));
+	item2->setAngle(rand() % 360);
+	item2->setHp(10);
+	item2->setItemType(Group_Item::Power);
+	CItem* item3 = new CItem();
+	item3->setPos(pos);
+	item3->setScale(Vec2(20, 20));
+	item3->setAngle(rand() % 360);
+	item3->setHp(10);
+	item3->setItemType(Group_Item::Score);
+	CItem* item4 = new CItem();
+	item4->setPos(pos);
+	item4->setScale(Vec2(20, 20));
+	item4->setAngle(rand() % 360);
+	item4->setHp(10);
+	item4->setItemType(Group_Item::Spell);
+
 	CREATEOBJECT(item, Group_GameObj::Item);
+	CREATEOBJECT(item2, Group_GameObj::Item);
+	CREATEOBJECT(item3, Group_GameObj::Item);
+	CREATEOBJECT(item4, Group_GameObj::Item);
+
 }
 
 void CEnemy::onCollisionEnter(CCollider* other)
@@ -162,7 +191,7 @@ void CEnemy::onCollisionEnter(CCollider* other)
 	{
 		if (other->getOwner()->getName() == L"Player")
 		{
-			
+			other->getOwner()->setHp(0);
 		}
 	}
 

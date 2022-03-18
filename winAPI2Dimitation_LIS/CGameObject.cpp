@@ -26,6 +26,7 @@ CGameObject::CGameObject()
 	isRender = true;
 
 	color = COLORREF(RGB(255, 255, 255));
+	timer = 0;
 }
 
 CGameObject::CGameObject(const CGameObject& other)
@@ -191,6 +192,16 @@ void CGameObject::setTimer(double time)
 double CGameObject::getTimer()
 {
 	return this->timer;
+}
+
+void CGameObject::setTimerCount(int count)
+{
+	this->timerCount = count;
+}
+
+int CGameObject::getTimerCount()
+{
+	return timerCount;
 }
 
 bool CGameObject::getIsDelete()

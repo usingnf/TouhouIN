@@ -45,7 +45,7 @@ public:
 
 	Vec2 getFinalPos();
 	CUI* getParent();
-	const vector<CUI*>& getChild();
+	vector<CUI*>& getChild();
 
 	void AddChild(CUI* ui);
 	virtual void setImage(const wstring& name);

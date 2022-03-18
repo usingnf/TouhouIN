@@ -33,6 +33,18 @@ public:
 
 	double length();
 
+	bool operator==(const Vec2& vec) const
+	{
+		if (this->x == vec.x && this->y == vec.y)
+			return true;
+		return false;
+	}
+
+	bool operator!=(const Vec2& vec) const
+	{
+		return !(*this == vec);
+	}
+
 	Vec2& operator=(const Vec2& vec)
 	{
 		this->x = vec.x;

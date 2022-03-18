@@ -18,11 +18,20 @@ CItem::CItem()
 
 	image = CResourceManager::getInstance()->loadD2DImage(L"Missile.png", L"\\texture\\Missile.png");
 
-	getAnimator()->createAnimation(L"stay", image, Vec2(281, 72), Vec2(12, 12), Vec2(12, 0), 1, 1);
-	getAnimator()->play(L"stay");
+	getAnimator()->createAnimation(L"life", image, Vec2(360, 69), Vec2(16, 16), Vec2(16, 0), 1, 1);
+	getAnimator()->createAnimation(L"power", image, Vec2(312, 69), Vec2(16, 16), Vec2(16, 0), 1, 1);
+	getAnimator()->createAnimation(L"score", image, Vec2(296, 69), Vec2(16, 16), Vec2(16, 0), 1, 1);
+	getAnimator()->createAnimation(L"spell", image, Vec2(328, 69), Vec2(16, 16), Vec2(16, 0), 1, 1);
+	getAnimator()->play(L"power");
 
 
-	ani = getAnimator()->findAnimation(L"stay");
+	ani = getAnimator()->findAnimation(L"life");
+	ani->setLoop(true);
+	ani = getAnimator()->findAnimation(L"power");
+	ani->setLoop(true);
+	ani = getAnimator()->findAnimation(L"score");
+	ani->setLoop(true);
+	ani = getAnimator()->findAnimation(L"spell");
 	ani->setLoop(true);
 }
 
@@ -128,7 +137,23 @@ void CItem::onCollisionStay(CCollider* other)
 			{
 				CSoundManager::getInstance()->addSound(L"se_item00.wav", L"se_item00.WAV", false, false);
 				CSoundManager::getInstance()->play(L"se_item00.wav", 0.5f);
-				g_power += 1;
+				if (itemType == Group_Item::Power)
+				{
+					g_power += 1;
+				}
+				else if (itemType == Group_Item::Life)
+				{
+					g_life += 1;
+				}
+				else if (itemType == Group_Item::Score)
+				{
+					g_score += 1;
+				}
+				else if (itemType == Group_Item::Spell)
+				{
+					g_spell += 1;
+				}
+				
 				DELETEOBJECT(this);
 			}
 		}
@@ -154,4 +179,25 @@ void CItem::onCollisionExit(CCollider* other)
 			isNearPlayer = false;
 		}
 	}
+}
+
+void CItem::setItemType(Group_Item type)
+{
+	if (type == Group_Item::Life)
+	{
+		getAnimator()->play(L"life");
+	}
+	else if (type == Group_Item::Score)
+	{
+		getAnimator()->play(L"score");
+	}
+	else if (type == Group_Item::Power)
+	{
+		getAnimator()->play(L"power");
+	}
+	else if (type == Group_Item::Spell)
+	{
+		getAnimator()->play(L"spell");
+	}
+	this->itemType = type;
 }

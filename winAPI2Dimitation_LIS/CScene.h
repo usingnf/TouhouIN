@@ -13,6 +13,10 @@ private:
 	UINT tileX;
 	UINT tileY;
 
+protected:
+	double timer = 0;
+	int timerCount = 0;
+
 public:
 	CScene();
 	virtual ~CScene();

@@ -7,10 +7,10 @@ CBody::CBody()
 {
 	scale = pScale;
 	name = L"Body";
-	mode = 0;
+	
 
-	createCollider();
-	getCollider()->setColliderScale(Vec2(30, 30));
+	//createCollider();
+	//getCollider()->setColliderScale(Vec2(30, 30));
 	createAnimator();
 	CAnimation* ani = nullptr;
 
@@ -19,8 +19,6 @@ CBody::CBody()
 	getAnimator()->createAnimation(L"stayRemilia", image, Vec2(0, 0), Vec2(48, 48), Vec2(48, 0), 0.08, 4);
 	getAnimator()->createAnimation(L"leftRemilia", image, Vec2(0, 48), Vec2(48, 48), Vec2(48, 0), 0.02, 4);
 	getAnimator()->createAnimation(L"rightRemilia", image, Vec2(0, 48), Vec2(48, 48), Vec2(48, 0), 0.02, 4);
-	getAnimator()->play(L"stayRemilia");
-
 	
 	ani = getAnimator()->findAnimation(L"stayRemilia");
 	ani->setLoop(true);
@@ -63,6 +61,15 @@ CBody::~CBody()
 
 void CBody::update()
 {
+	if (g_mode == Group_CharacterMode::Sakuya)
+	{
+		this->scale = Vec2(32, 48);
+	}
+	else if (g_mode == Group_CharacterMode::Remilia)
+	{
+		this->scale = Vec2(48, 48);
+	}
+
 	if (g_player != nullptr)
 	{
 		this->setPos(g_player->getPos());
@@ -71,87 +78,108 @@ void CBody::update()
 		{
 			if(g_player->getAnimator()->getCurAnimationName() == L"die")
 				this->isRender = false;
+
+			if (g_mode == Group_CharacterMode::Sakuya)
+			{
+				if (getAnimator()->getCurAnimationName() != L"staySakuya")
+					getAnimator()->play(L"staySakuya");
+			}
+			else if (g_mode == Group_CharacterMode::Remilia)
+			{
+				if (getAnimator()->getCurAnimationName() != L"stayRemilia")
+					getAnimator()->play(L"stayRemilia");
+			}
+		}
+		else if (g_player->getHp() > 0)
+		{
+			this->isRender = true;
+			if (KEY(VK_LSHIFT) == (UINT)Key_State::Tap)
+			{
+				if ((UINT)g_mode % 2 == 0)
+					g_mode = (Group_CharacterMode)((UINT)g_mode + 1);
+			}
+
+			if (KEY(VK_LSHIFT) == (UINT)Key_State::Off)
+			{
+				if ((UINT)g_mode % 2 == 1)
+					g_mode = (Group_CharacterMode)((UINT)g_mode - 1);
+			}
+
+			if (KEY(VK_LEFT) == (UINT)Key_State::Hold)
+			{
+				if (g_mode == Group_CharacterMode::Sakuya)
+				{
+					if (getAnimator()->getCurAnimationName() != L"leftSakuya")
+						getAnimator()->play(L"leftSakuya");
+				}
+				else if (g_mode == Group_CharacterMode::Remilia)
+				{
+					if (getAnimator()->getCurAnimationName() != L"leftRemilia")
+						getAnimator()->play(L"leftRemilia");
+				}
+			}
+			if (KEY(VK_RIGHT) == (UINT)Key_State::Hold)
+			{
+				if (g_mode == Group_CharacterMode::Sakuya)
+				{
+					if (getAnimator()->getCurAnimationName() != L"rightSakuya")
+						getAnimator()->play(L"rightSakuya");
+				}
+				else if (g_mode == Group_CharacterMode::Remilia)
+				{
+					if (getAnimator()->getCurAnimationName() != L"rightRemilia")
+						getAnimator()->play(L"rightRemilia");
+				}
+
+			}
+			
+
+			if (KEY('Z') == (UINT)Key_State::Hold)
+			{
+				missileTimer += DT();
+				if (missileTimer >= 0.1)
+				{
+					missileTimer = 0;
+					if (g_mode == Group_CharacterMode::Sakuya)
+					{
+						CSoundManager::getInstance()->addSound(L"se_plst00.wav", L"se_plst00.wav", false, false);
+						CSoundManager::getInstance()->play(L"se_plst00.wav", 0.5f);
+
+						createMissile(L"SakuyaMissile.png", Vec2(0, 0), Vec2(16, 32), this->getPos(), Vec2(16, 32), Vec2(10, 30), 500, 0, 1, Group_GameObj::Missile);
+					}
+					else if (g_mode == Group_CharacterMode::Remilia)
+					{
+						CSoundManager::getInstance()->addSound(L"se_plst00.wav", L"se_plst00.wav", false, false);
+						CSoundManager::getInstance()->play(L"se_plst00.wav", 0.5f);
+						createMissile(L"RemiliaMissile.png", Vec2(14, 0), Vec2(8, 48), this->getPos(), Vec2(8, 48), Vec2(10, 30), 500, 0, 1, Group_GameObj::Missile);
+					}
+
+				}
+			}
 		}
 		else
 		{
 			this->isRender = true;
 		}
-	}
 
-	if (KEY(VK_LEFT) == (UINT)Key_State::Hold)
-	{
-		if (mode == 0)
+		if (KEY(VK_LEFT) == (UINT)Key_State::None && KEY(VK_RIGHT) == (UINT)Key_State::None)
 		{
-			if (getAnimator()->getCurAnimationName() != L"leftSakuya")
-				getAnimator()->play(L"leftSakuya");
+			if (g_mode == Group_CharacterMode::Sakuya)
+			{
+				if (getAnimator()->getCurAnimationName() != L"staySakuya")
+					getAnimator()->play(L"staySakuya");
+			}
+			else if (g_mode == Group_CharacterMode::Remilia)
+			{
+				if (getAnimator()->getCurAnimationName() != L"stayRemilia")
+					getAnimator()->play(L"stayRemilia");
+			}
 		}
-		else
-		{
-			if (getAnimator()->getCurAnimationName() != L"leftRemilia")
-				getAnimator()->play(L"leftRemilia");
-		}
-	}
-	if (KEY(VK_RIGHT) == (UINT)Key_State::Hold)
-	{
-		if (mode == 0)
-		{
-			if (getAnimator()->getCurAnimationName() != L"rightSakuya")
-				getAnimator()->play(L"rightSakuya");
-		}
-		else
-		{
-			if (getAnimator()->getCurAnimationName() != L"rightRemilia")
-				getAnimator()->play(L"rightRemilia");
-		}
+
 		
 	}
-	if (KEY(VK_LEFT) == (UINT)Key_State::None && KEY(VK_RIGHT) == (UINT)Key_State::None)
-	{
-		if (mode == 0)
-		{
-			if (getAnimator()->getCurAnimationName() != L"staySakuya")
-				getAnimator()->play(L"staySakuya");
-		}
-		else
-		{
-			if (getAnimator()->getCurAnimationName() != L"stayRemilia")
-				getAnimator()->play(L"stayRemilia");
-		}
-		
-	}
-	if (KEY(VK_LSHIFT) == (UINT)Key_State::Tap)
-	{
-		this->scale = Vec2(48, 48);
-		mode = 1;
-	}
 
-	if (KEY(VK_LSHIFT) == (UINT)Key_State::Off)
-	{
-		this->scale = Vec2(32, 48);
-		mode = 0;
-	}
-	if (KEY('Z') == (UINT)Key_State::Hold)
-	{
-		missileTimer += DT();
-		if (missileTimer >= 0.1)
-		{
-			missileTimer = 0;
-			if (mode == 0)
-			{
-				CSoundManager::getInstance()->addSound(L"se_plst00.wav", L"se_plst00.wav", false, false);
-				CSoundManager::getInstance()->play(L"se_plst00.wav", 0.5f);
-				
-				createMissile(L"SakuyaMissile.png", Vec2(0, 0), Vec2(16, 32), this->getPos(), Vec2(16, 32), Vec2(10, 30), 500, 45, 1, Group_GameObj::Missile);
-			}
-			else if (mode == 1)
-			{
-				CSoundManager::getInstance()->addSound(L"se_plst00.wav", L"se_plst00.wav", false, false);
-				CSoundManager::getInstance()->play(L"se_plst00.wav", 0.5f);
-				createMissile(L"RemiliaMissile.png", Vec2(14, 0), Vec2(8, 48), this->getPos(), Vec2(8, 48), Vec2(10, 30), 500, 0, 1, Group_GameObj::Missile);
-			}
-			
-		}
-	}
+	
 
 	CAnimator* ani = getAnimator();
 	if (ani != nullptr)

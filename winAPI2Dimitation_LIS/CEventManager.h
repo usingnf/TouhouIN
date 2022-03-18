@@ -14,6 +14,7 @@ class CEventManager
 private:
 	vector<tEvent> m_vecEvent;
 	vector<CGameObject*> m_vecDelete;
+	bool isSceneChange = false;
 public:
 	void update();
 	void execute(const tEvent& _event);

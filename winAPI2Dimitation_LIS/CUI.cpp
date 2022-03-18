@@ -207,7 +207,7 @@ CUI* CUI::getParent()
 	return parent;
 }
 
-const vector<CUI*>& CUI::getChild()
+vector<CUI*>& CUI::getChild()
 {
 	return vecChild;
 }

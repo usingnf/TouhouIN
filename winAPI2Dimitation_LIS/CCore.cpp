@@ -17,6 +17,7 @@ int g_continue = 0;
 int g_miss = 0;
 int g_bombUse = 0;
 int g_spellBonus = 0;
+Group_CharacterMode g_mode = Group_CharacterMode::Sakuya;
 double g_omission = 0;
 
 CPlayer* g_player = nullptr;
