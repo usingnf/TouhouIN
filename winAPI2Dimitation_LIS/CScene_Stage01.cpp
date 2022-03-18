@@ -8,6 +8,21 @@
 #include "CText.h"
 
 
+int getRandomInt(int start, int end)
+{
+	int dis = end - start;
+	int random = rand() % dis;
+	return random + start;
+}
+
+double getToPlayerAngle(CGameObject* obj)
+{
+	if (g_player == nullptr)
+		return 180;
+
+	return Vec2::getAngle(g_player->getPos() - obj->getPos());
+}
+
 
 CScene_Stage01::CScene_Stage01()
 {
@@ -49,15 +64,87 @@ void enemyAi02(DWORD_PTR self)
 		((CGameObject*)self)->setTimerCount(((CGameObject*)self)->getTimerCount() + 1);
 		CSoundManager::getInstance()->addSound(L"se_tan00.wav", L"se_tan00.wav", false, false);
 		CSoundManager::getInstance()->play(L"se_tan00.wav", 0.5f);
+
+		double angle = getToPlayerAngle((CGameObject*)self);
+
 		((CGameObject*)self)->createMissile(L"Missile.png", Vec2(108, 118),
 			Vec2(28, 28), ((CGameObject*)self)->getPos(),
-			Vec2(30, 30), Vec2(30, 30), 200, 170 + rand() % 20, 1, Group_GameObj::EnemyMissile);
+			Vec2(30, 30), Vec2(30, 30), 200, angle + getRandomInt(-10, 10), 1, Group_GameObj::EnemyMissile);
 	}
 
-	if (((CGameObject*)self)->getTimerCount() == 30)
+	if (((CGameObject*)self)->getTimerCount() == 8)
 	{
-		((CGameObject*)self)->setDestPos(((CGameObject*)self)->getPos() + Vec2(-20, -500));
+		((CGameObject*)self)->setTimerCount(((CGameObject*)self)->getTimerCount() + 1);
+		((CGameObject*)self)->setDestPos(((CGameObject*)self)->getPos() + Vec2(-50, -500));
+		((CEnemy*)self)->accMove(10, 50);
 	}	
+}
+
+void enemyAi03(DWORD_PTR self)
+{
+	if (((CGameObject*)self)->getDestPos() == ((CGameObject*)self)->getPos())
+	{
+		((CGameObject*)self)->setTimer(((CGameObject*)self)->getTimer() + DT());
+		if (((CGameObject*)self)->getTimer() >= 0.1)
+		{
+			((CGameObject*)self)->setTimer(0);
+			((CGameObject*)self)->setTimerCount(((CGameObject*)self)->getTimerCount() + 1);
+		}
+	}
+
+	if (((CGameObject*)self)->getTimerCount() % 5 == 1)
+	{
+		((CGameObject*)self)->setTimerCount(((CGameObject*)self)->getTimerCount() + 1);
+		CSoundManager::getInstance()->addSound(L"se_tan00.wav", L"se_tan00.wav", false, false);
+		CSoundManager::getInstance()->play(L"se_tan00.wav", 0.5f);
+
+		double angle = getToPlayerAngle((CGameObject*)self);
+
+		((CGameObject*)self)->createMissile(L"Missile.png", Vec2(108, 118),
+			Vec2(28, 28), ((CGameObject*)self)->getPos(),
+			Vec2(30, 30), Vec2(30, 30), 200, angle + getRandomInt(-10, 10), 1, Group_GameObj::EnemyMissile);
+	}
+
+	if (((CGameObject*)self)->getTimerCount() == 8)
+	{
+		((CGameObject*)self)->setTimerCount(((CGameObject*)self)->getTimerCount() + 1);
+		((CGameObject*)self)->setDestPos(((CGameObject*)self)->getPos() + Vec2(50, -500));
+		((CEnemy*)self)->accMove(10, 50);
+	}
+}
+
+void enemyAi04(DWORD_PTR self)
+{
+	if (((CGameObject*)self)->getDestPos() == ((CGameObject*)self)->getPos())
+	{
+		((CGameObject*)self)->setTimer(((CGameObject*)self)->getTimer() + DT());
+		if (((CGameObject*)self)->getTimer() >= 0.1)
+		{
+			((CGameObject*)self)->setTimer(0);
+			((CGameObject*)self)->setTimerCount(((CGameObject*)self)->getTimerCount() + 1);
+		}
+	}
+
+	if (((CGameObject*)self)->getTimerCount() % 30 == 1)
+	{
+		((CGameObject*)self)->setTimerCount(((CGameObject*)self)->getTimerCount() + 1);
+		CSoundManager::getInstance()->addSound(L"se_tan00.wav", L"se_tan00.wav", false, false);
+		CSoundManager::getInstance()->play(L"se_tan00.wav", 0.5f);
+
+		for (int i = 0; i < 36; i++)
+		{
+			((CGameObject*)self)->createMissile(L"Missile.png", Vec2(108, 118),
+				Vec2(28, 28), ((CGameObject*)self)->getPos(),
+				Vec2(20, 20), Vec2(20, 20), 200, 10*i, 1, Group_GameObj::EnemyMissile);
+		}	
+	}
+
+	if (((CGameObject*)self)->getTimerCount() == 60)
+	{
+		((CGameObject*)self)->setTimerCount(((CGameObject*)self)->getTimerCount() + 1);
+		((CGameObject*)self)->setDestPos(((CGameObject*)self)->getPos() + Vec2(0, -500));
+		((CEnemy*)self)->accMove(100, 0);
+	}
 }
 
 void CScene_Stage01::update()
@@ -83,16 +170,73 @@ void CScene_Stage01::update()
 		timerCount += 1;
 	}
 
-	if (timerCount == 1)
+	int random1 = 0;
+	int random2 = 0;
+	int random3 = 0;
+	int random4 = 0;
+	CEnemy* enemy = nullptr;
+	if (timerCount >= 1 && timerCount <= 20 && timerCount%8 == 1)
 	{
+		random1 = getRandomInt(0, 50);
+		random2 = getRandomInt(0, 20);
+		random3 = -getRandomInt(0, 30);
+		random4 = -getRandomInt(0, 30);
+
 		timerCount += 1;
-		CEnemy* enemy = new CEnemy();
-		enemy->setPos(Vec2(100, -10));
-		enemy->setDestPos(Vec2(50, 50));
+		enemy = new CEnemy();
+		enemy->setPos(Vec2(0 + random1, -10 + random2));
+		enemy->setDestPos(Vec2(STAGE_WIDTH / 3 + random3, STAGE_HEIGHT / 3 + random4));
 		enemy->setMaxSpeed(300);
+		enemy->setSpeed(100);
 		enemy->setHp(10);
 		enemy->setScale(Vec2(32, 32));
 		enemy->setUpdateCallBack(enemyAi02);
+		AddObject(enemy, Group_GameObj::Enemy);
+	}
+	else if (timerCount >= 31 && timerCount <= 50 && timerCount % 8 == 1)
+	{
+		random1 = getRandomInt(0, 50);
+		random2 = getRandomInt(0, 20);
+		random3 = -getRandomInt(0, 30);
+		random4 = -getRandomInt(0, 30);
+
+		timerCount += 1;
+		enemy = new CEnemy();
+		enemy->setPos(Vec2(STAGE_WIDTH - random1, -10 + random2));
+		enemy->setDestPos(Vec2(STAGE_WIDTH /2 + STAGE_WIDTH / 3 + random3, STAGE_HEIGHT / 3 + random4));
+		enemy->setMaxSpeed(300);
+		enemy->setSpeed(100);
+		enemy->setHp(10);
+		enemy->setScale(Vec2(32, 32));
+		enemy->setUpdateCallBack(enemyAi03);
+		AddObject(enemy, Group_GameObj::Enemy);
+	}
+	else if (timerCount == 61)
+	{
+		random1 = getRandomInt(-30, 30);
+		random4 = getRandomInt(0, 30);
+
+		timerCount += 1;
+		enemy = new CEnemy();
+		enemy->setPos(Vec2(100 + random1, -10));
+		enemy->setDestPos(Vec2(100 + random1, STAGE_HEIGHT / 3 + random4));
+		enemy->setMaxSpeed(300);
+		enemy->setSpeed(100);
+		enemy->setHp(10);
+		enemy->setScale(Vec2(32, 32));
+		enemy->setUpdateCallBack(enemyAi04);
+		AddObject(enemy, Group_GameObj::Enemy);
+
+		random1 = getRandomInt(-30, 30);
+
+		enemy = new CEnemy();
+		enemy->setPos(Vec2(STAGE_WIDTH - 100 + random1, -10));
+		enemy->setDestPos(Vec2(STAGE_WIDTH - 100 + random1, STAGE_HEIGHT / 3 + random4));
+		enemy->setMaxSpeed(300);
+		enemy->setSpeed(100);
+		enemy->setHp(10);
+		enemy->setScale(Vec2(32, 32));
+		enemy->setUpdateCallBack(enemyAi04);
 		AddObject(enemy, Group_GameObj::Enemy);
 	}
 

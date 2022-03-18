@@ -2,7 +2,7 @@
 #include "CPlayer.h"
 #include "CScene.h"
 #include "CSpell.h"
-
+#include "CMissile.h"
 
 bool CPlayer::isSpell = false;
 
@@ -206,4 +206,18 @@ void CPlayer::die()
 	getAnimator()->play(L"die");
 	g_miss += 1;
 	this->setScale(Vec2(1,1));
+}
+
+void CPlayer::createMissile(const wstring& image, Vec2 leftTop, Vec2 imageSize, Vec2 pos, Vec2 size, Vec2 colSize, double speed, double angle, double damage, Group_GameObj type)
+{
+	CMissile* missile = new CMissile();
+	missile->setPos(pos);
+	missile->setScale(size);
+	missile->getCollider()->setColliderScale(colSize);
+	missile->setSpeed(speed);
+	missile->setAngle(angle);
+	missile->setDamage(damage);
+	missile->setImage(image, leftTop, imageSize);
+	missile->setIsUse(true);
+	CREATEOBJECT(missile, type);
 }

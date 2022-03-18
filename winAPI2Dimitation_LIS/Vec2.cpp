@@ -58,12 +58,12 @@ double Vec2::distance(Vec2 left, Vec2 right)
 
 double Vec2::getAngle(Vec2 vec)
 {
-	return atan((vec.y / vec.x)) / RADIAN;
+	return atan2(vec.y, vec.x) / RADIAN + 90;
 }
 
 double Vec2::getAngle(Vec2 left, Vec2 right)
 {
-	return atan(-(right.y - left.y) / (right.x - left.x)) / RADIAN;
+	return atan2(-(right.y - left.y), (right.x - left.x)) / RADIAN + 90;
 }
 
 double Vec2::length()

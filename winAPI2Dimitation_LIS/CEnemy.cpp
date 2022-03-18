@@ -148,40 +148,72 @@ void CEnemy::accMove(double startSpeed, double accSpeed)
 	this->accSpeed = accSpeed;
 }
 
+void CEnemy::setItemDrop(Group_Item type, int count)
+{
+	if (type == Group_Item::Life)
+	{
+		this->lifeItem = count;
+	}
+	else if (type == Group_Item::Power)
+	{
+		this->powerItem = count;
+	}
+	else if (type == Group_Item::Score)
+	{
+		this->scoreItem = count;
+	}
+	else if (type == Group_Item::Spell)
+	{
+		this->spellItem = count;
+	}
+}
+
 void CEnemy::die()
 {
 	CSoundManager::getInstance()->addSound(L"se_enep00.wav", L"se_enep00.wav", false, false);
 	CSoundManager::getInstance()->play(L"se_enep00.wav");
 	getAnimator()->play(L"die");
-	CItem* item = new CItem();
-	item->setPos(pos);
-	item->setScale(Vec2(20, 20));
-	item->setAngle(rand() % 360);
-	item->setHp(10);
-	item->setItemType(Group_Item::Life);
-	CItem* item2 = new CItem();
-	item2->setPos(pos);
-	item2->setScale(Vec2(20, 20));
-	item2->setAngle(rand() % 360);
-	item2->setHp(10);
-	item2->setItemType(Group_Item::Power);
-	CItem* item3 = new CItem();
-	item3->setPos(pos);
-	item3->setScale(Vec2(20, 20));
-	item3->setAngle(rand() % 360);
-	item3->setHp(10);
-	item3->setItemType(Group_Item::Score);
-	CItem* item4 = new CItem();
-	item4->setPos(pos);
-	item4->setScale(Vec2(20, 20));
-	item4->setAngle(rand() % 360);
-	item4->setHp(10);
-	item4->setItemType(Group_Item::Spell);
-
-	CREATEOBJECT(item, Group_GameObj::Item);
-	CREATEOBJECT(item2, Group_GameObj::Item);
-	CREATEOBJECT(item3, Group_GameObj::Item);
-	CREATEOBJECT(item4, Group_GameObj::Item);
+	for (int i = 0; i < lifeItem; i++)
+	{
+		CItem* item = new CItem();
+		item->setPos(pos);
+		item->setScale(Vec2(20, 20));
+		item->setAngle(rand() % 360);
+		item->setHp(10);
+		item->setItemType(Group_Item::Life);
+		CREATEOBJECT(item, Group_GameObj::Item);
+	}
+	for (int i = 0; i < powerItem; i++)
+	{
+		CItem* item2 = new CItem();
+		item2->setPos(pos);
+		item2->setScale(Vec2(20, 20));
+		item2->setAngle(rand() % 360);
+		item2->setHp(10);
+		item2->setItemType(Group_Item::Power);
+		CREATEOBJECT(item2, Group_GameObj::Item);
+	}
+	for (int i = 0; i < scoreItem; i++)
+	{
+		CItem* item3 = new CItem();
+		item3->setPos(pos);
+		item3->setScale(Vec2(20, 20));
+		item3->setAngle(rand() % 360);
+		item3->setHp(10);
+		item3->setItemType(Group_Item::Score);
+		CREATEOBJECT(item3, Group_GameObj::Item);
+	}
+	
+	for (int i = 0; i < spellItem; i++)
+	{
+		CItem* item4 = new CItem();
+		item4->setPos(pos);
+		item4->setScale(Vec2(20, 20));
+		item4->setAngle(rand() % 360);
+		item4->setHp(10);
+		item4->setItemType(Group_Item::Spell);
+		CREATEOBJECT(item4, Group_GameObj::Item);
+	}
 
 }
 

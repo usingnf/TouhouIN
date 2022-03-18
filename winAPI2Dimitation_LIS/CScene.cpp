@@ -221,12 +221,9 @@ void CScene::clearObject()
 {
 	for (int i = 0; i < (UINT)Group_GameObj::Size; i++)
 	{
-		for (int j = 0; j < m_arrObj[i].size(); j++)
-		{
-			//CEventManager::getInstance()->deleteGameObject(m_arrObj[i][j]);
-		}
-		
-		
+		if (i == (UINT)Group_GameObj::EnemyMissile)
+			continue;
+
 		while (!m_arrObj[i].empty())
 		{
 			delete m_arrObj[i][m_arrObj[i].size() - 1];

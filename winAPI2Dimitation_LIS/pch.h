@@ -88,6 +88,7 @@ enum class Key_State
 #define STAGE_HEIGHT (WS_HEIGHT - 20)
 #define PL_STARTPOSX 200
 #define PL_STARTPOSY (WS_HEIGHT-50)
+#define MAX_MISSILE 200
 
 extern int g_level;
 extern int g_score;
@@ -105,7 +106,6 @@ extern int g_bombUse;
 extern int g_spellBonus;
 extern double g_omission;
 extern Group_CharacterMode g_mode;
-
 
 #include "Vec2.h"
 #include "logger.h"
@@ -127,7 +127,11 @@ extern Group_CharacterMode g_mode;
 #include "CUIManager.h"
 
 class CPlayer;
+//class CMissile;
+#include "CMissile.h"
 extern CPlayer* g_player;
+extern CMissile* g_missile[MAX_MISSILE];
+extern int g_missileIndex;
 
 
 #define DT() CTimeManager::getInstance()->getDeltaTime()

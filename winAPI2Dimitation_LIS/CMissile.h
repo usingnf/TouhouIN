@@ -3,6 +3,7 @@ class CMissile : public CGameObject
 {
 private:
 	double damage = 0;
+	bool isUse = true;
 public:
 	CMissile();
 	virtual CMissile* clone();
@@ -13,5 +14,9 @@ public:
 	void setDamage(double damage);
 
 	virtual void onCollisionEnter(CCollider* other);
+
+	void setIsUse(bool use);
+	bool getIsUse();
+	void recycleMissile();
 };
 

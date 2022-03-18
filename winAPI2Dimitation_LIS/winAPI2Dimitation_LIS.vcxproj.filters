@@ -237,9 +237,6 @@
     <ClInclude Include="CEnemy.h">
       <Filter>4. Object\Enemy</Filter>
     </ClInclude>
-    <ClInclude Include="CMissile.h">
-      <Filter>4. Object\Player</Filter>
-    </ClInclude>
     <ClInclude Include="CItem.h">
       <Filter>4. Object\Item</Filter>
     </ClInclude>
@@ -248,6 +245,9 @@
     </ClInclude>
     <ClInclude Include="CSpell.h">
       <Filter>4. Object\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="CMissile.h">
+      <Filter>4. Object</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -365,9 +365,6 @@
     <ClCompile Include="CEnemy.cpp">
       <Filter>4. Object\Enemy</Filter>
     </ClCompile>
-    <ClCompile Include="CMissile.cpp">
-      <Filter>4. Object\Player</Filter>
-    </ClCompile>
     <ClCompile Include="CItem.cpp">
       <Filter>4. Object\Item</Filter>
     </ClCompile>
@@ -376,6 +373,9 @@
     </ClCompile>
     <ClCompile Include="CSpell.cpp">
       <Filter>4. Object\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="CMissile.cpp">
+      <Filter>4. Object</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

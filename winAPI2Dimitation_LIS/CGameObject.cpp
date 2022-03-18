@@ -290,7 +290,24 @@ void CGameObject::setAngle(Vec2 vec)
 
 void CGameObject::createMissile(const wstring& image, Vec2 leftTop, Vec2 imageSize, Vec2 pos, Vec2 size, Vec2 colSize, double speed, double angle, double damage, Group_GameObj type)
 {
-	CMissile* missile = new CMissile();
+	if (g_missileIndex >= MAX_MISSILE)
+		g_missileIndex = 0;
+
+	int startIndex = g_missileIndex;
+
+	
+	while (g_missile[g_missileIndex]->getIsUse() == true)
+	{
+		if (g_missileIndex >= MAX_MISSILE)
+			g_missileIndex = 0;
+		g_missileIndex += 1;
+
+		if (g_missileIndex == startIndex)
+			break;
+	}
+	
+
+	CMissile* missile = g_missile[g_missileIndex];
 	missile->setPos(pos);
 	missile->setScale(size);
 	missile->getCollider()->setColliderScale(colSize);
@@ -298,5 +315,8 @@ void CGameObject::createMissile(const wstring& image, Vec2 leftTop, Vec2 imageSi
 	missile->setAngle(angle);
 	missile->setDamage(damage);
 	missile->setImage(image, leftTop, imageSize);
-	CREATEOBJECT(missile, type);
+	missile->setIsUse(true);
+	//CREATEOBJECT(missile, type);
+
+	g_missileIndex += 1;
 }

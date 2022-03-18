@@ -1,6 +1,7 @@
 #pragma once
 #include "pch.h"
 #include "CPlayer.h"
+#include "CMissile.h"
 
 //전역변수
 int g_level = 0;
@@ -20,10 +21,29 @@ int g_spellBonus = 0;
 Group_CharacterMode g_mode = Group_CharacterMode::Sakuya;
 double g_omission = 0;
 
+CMissile* g_missile[MAX_MISSILE];
+int g_missileIndex = 0;
+
 CPlayer* g_player = nullptr;
 
 CCore::CCore()
 {
+	for (int i = 0; i < sizeof(g_missile) / sizeof(CMissile*); i++)
+	{
+		g_missile[i] = new CMissile();
+		g_missile[i]->setPos(Vec2(-49, -49));
+		g_missile[i]->setScale(Vec2(0,0));
+		g_missile[i]->createCollider();
+		g_missile[i]->getCollider()->setColliderScale(Vec2(0, 0));
+		
+		g_missile[i]->setSpeed(0);
+		g_missile[i]->setAngle(0);
+		g_missile[i]->setDamage(0);
+		g_missile[i]->setIsUse(false);
+		CREATEOBJECT(g_missile[i], Group_GameObj::EnemyMissile);
+		//g_missile[i]->setImage(image, leftTop, imageSize);
+	}
+	
 	m_hDC = 0;
 	m_MemTexture = nullptr;
 	//m_hMemDC = 0;
