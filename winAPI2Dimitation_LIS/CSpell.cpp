@@ -59,8 +59,11 @@ void CSpell::update()
 			{
 				if (Vec2::distance(vec[i]->getPos(), pos) < this->scale.length() / 2 - 10)
 				{
+					vec[i]->setHp(0);
+					/*
 					if (vec[i]->getIsDelete() == false)
 						DELETEOBJECT(vec[i]);
+						*/
 				}
 			}
 		}

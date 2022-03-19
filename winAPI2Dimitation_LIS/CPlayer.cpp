@@ -45,22 +45,22 @@ void CPlayer::update()
 
 		if (KEY(VK_UP) == (UINT)Key_State::Hold)
 		{
-			if (pos.y > 10 + 10)
+			if (pos.y-DT()*speed > 10 + 10)
 				vec.y += -1;
 		}
 		if (KEY(VK_LEFT) == (UINT)Key_State::Hold)
 		{
-			if (pos.x > 20 + 10)
+			if (pos.x-DT() * speed > 20 + 10)
 				vec.x += -1;
 		}
 		if (KEY(VK_DOWN) == (UINT)Key_State::Hold)
 		{
-			if (pos.y < STAGE_HEIGHT + 10 - 10)
+			if (pos.y + DT() * speed < STAGE_HEIGHT + 10 - 10)
 				vec.y += 1;
 		}
 		if (KEY(VK_RIGHT) == (UINT)Key_State::Hold)
 		{
-			if (pos.x < STAGE_WIDTH + 20 - 10)
+			if (pos.x + DT() * speed < STAGE_WIDTH + 20 - 10)
 				vec.x += 1;
 		}
 		if (KEY(VK_LSHIFT) == (UINT)Key_State::Tap)

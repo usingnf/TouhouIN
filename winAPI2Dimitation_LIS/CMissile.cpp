@@ -100,4 +100,13 @@ void CMissile::recycleMissile()
 	m_pFunc1 = nullptr;
 	isUse = false;
 	this->pos = Vec2(-49, -49);
+	delete getAnimator();
+	setAnimator(nullptr);
+	delete getCollider();
+	setColldier(nullptr);
+
+	if (this->name == L"PMissile")
+	{
+		DELETEOBJECT(this);
+	}
 }

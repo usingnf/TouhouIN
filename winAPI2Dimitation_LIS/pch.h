@@ -130,6 +130,7 @@ class CPlayer;
 //class CMissile;
 #include "CMissile.h"
 extern CPlayer* g_player;
+
 extern CMissile* g_missile[MAX_MISSILE];
 extern int g_missileIndex;
 

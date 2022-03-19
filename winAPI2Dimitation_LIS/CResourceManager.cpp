@@ -188,7 +188,7 @@ CD2DImage* CResourceManager::loadD2DImage(const wstring& strKey, const wstring& 
 	img->setImage(bitmap);
 	img->setName(strKey);
 	img->setPath(strRelativePath);
-	m_mapD2DImg.insert(std::make_pair(strFilePath.c_str(), img));
+	m_mapD2DImg.insert(std::make_pair(strKey.c_str(), img));
 
 	p_converter->Release();		// 이미지 변환 객체 제거
 	p_frame->Release();			// 그림파일에 있는 이미지를 선택하기 위해 사용한 객체 제거

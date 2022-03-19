@@ -56,6 +56,10 @@ void CEventManager::execute(const tEvent& _event)
 			return;
 		}
 		obj->setIsDelete(true);
+		if (obj->getName() == L"Missile")
+		{
+			int a = 0;
+		}
 		m_vecDelete.push_back(obj);
 		break;
 	}

@@ -364,6 +364,22 @@ void updateTime(DWORD_PTR self)
 
 void CScene_Stage01::Enter()
 {
+	for (int i = 0; i < sizeof(g_missile) / sizeof(CMissile*); i++)
+	{
+		g_missile[i] = new CMissile();
+		g_missile[i]->setPos(Vec2(-49, -49));
+		g_missile[i]->setScale(Vec2(0, 0));
+		g_missile[i]->createCollider();
+		g_missile[i]->getCollider()->setColliderScale(Vec2(0, 0));
+
+		g_missile[i]->setSpeed(0);
+		g_missile[i]->setAngle(0);
+		g_missile[i]->setDamage(0);
+		g_missile[i]->setIsUse(false);
+		CREATEOBJECT(g_missile[i], Group_GameObj::EnemyMissile);
+		//g_missile[i]->setImage(image, leftTop, imageSize);
+	}
+
 	timer = 0;
 	timerCount = 0;
 

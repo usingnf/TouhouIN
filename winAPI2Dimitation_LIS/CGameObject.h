@@ -84,6 +84,7 @@ public:
 	bool getIsDelete();
 
 	void createCollider();
+	void setColldier(CCollider* col);
 	CCollider* getCollider();
 
 	void addForce(Vec2 vec);
@@ -95,6 +96,7 @@ public:
 	virtual void onCollisionExit(CCollider* other) {} ;
 
 	CAnimator* getAnimator();
+	void setAnimator(CAnimator* ani);
 	void createAnimator();
 
 	void setColor(COLORREF color);

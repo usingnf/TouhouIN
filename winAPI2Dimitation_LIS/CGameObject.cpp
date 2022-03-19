@@ -220,6 +220,11 @@ void CGameObject::createCollider()
 	collider->owner = this;
 }
 
+void CGameObject::setColldier(CCollider* col)
+{
+	this->collider = col;
+}
+
 CCollider* CGameObject::getCollider()
 {
 	return collider;
@@ -234,6 +239,11 @@ void CGameObject::addForce(Vec2 vec)
 CAnimator* CGameObject::getAnimator()
 {
 	return animator;
+}
+
+void CGameObject::setAnimator(CAnimator* ani)
+{
+	this->animator = ani;
 }
 
 void CGameObject::createAnimator()
@@ -258,8 +268,8 @@ void CGameObject::setImage(const wstring& name, Vec2 leftTop, Vec2 imageSize)
 	image = CResourceManager::getInstance()->loadD2DImage(name, L"\\texture\\" + name);
 	
 	createAnimator();
-	getAnimator()->createAnimation(L"stay", image, leftTop, imageSize, imageSize, 1, 1);
-	getAnimator()->play(L"stay");
+	animator->createAnimation(L"stay", image, leftTop, imageSize, imageSize, 1, 1);
+	animator->play(L"stay");
 }
 
 bool CGameObject::getIsRender()
@@ -290,26 +300,32 @@ void CGameObject::setAngle(Vec2 vec)
 
 void CGameObject::createMissile(const wstring& image, Vec2 leftTop, Vec2 imageSize, Vec2 pos, Vec2 size, Vec2 colSize, double speed, double angle, double damage, Group_GameObj type)
 {
-	if (g_missileIndex >= MAX_MISSILE)
+	if (g_missileIndex >= MAX_MISSILE - 1)
 		g_missileIndex = 0;
 
 	int startIndex = g_missileIndex;
 
-	
 	while (g_missile[g_missileIndex]->getIsUse() == true)
 	{
-		if (g_missileIndex >= MAX_MISSILE)
-			g_missileIndex = 0;
 		g_missileIndex += 1;
+		if (g_missileIndex >= MAX_MISSILE - 1)
+			g_missileIndex = 0;
 
 		if (g_missileIndex == startIndex)
 			break;
 	}
-	
+	string str = std::to_string(g_missileIndex);
+	wstring w;
+	w.assign(str.begin(), str.end());
+	Logger::debug(w.c_str());
 
 	CMissile* missile = g_missile[g_missileIndex];
 	missile->setPos(pos);
 	missile->setScale(size);
+	if (missile->getCollider() == nullptr)
+	{
+		missile->createCollider();
+	}
 	missile->getCollider()->setColliderScale(colSize);
 	missile->setSpeed(speed);
 	missile->setAngle(angle);

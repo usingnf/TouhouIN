@@ -194,6 +194,7 @@ void CBody::render(HDC& hDC)
 void CBody::createMissile(const wstring& image, Vec2 leftTop, Vec2 imageSize, Vec2 pos, Vec2 size, Vec2 colSize, double speed, double angle, double damage, Group_GameObj type)
 {
 	CMissile* missile = new CMissile();
+	missile->setName(L"PMissile");
 	missile->setPos(pos);
 	missile->setScale(size);
 	missile->getCollider()->setColliderScale(colSize);
