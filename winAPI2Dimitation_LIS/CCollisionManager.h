@@ -1,6 +1,7 @@
 #pragma once
 #include "CCollider.h"
 
+//충돌체 exit 안되는 버그 찾기
 
 union ColliderID
 {

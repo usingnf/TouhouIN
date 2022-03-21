@@ -1,8 +1,6 @@
 #include "pch.h"
 #include "CAnimation.h"
 
-
-
 CAnimation::CAnimation()
 {
 	name = L"Noname";
