@@ -4,6 +4,10 @@
 
 class CGameObject;
 
+class CPanelUI;
+class CText;
+class CUI;
+
 class CScene
 {
 private:
@@ -13,9 +17,18 @@ private:
 	UINT tileX;
 	UINT tileY;
 
+	vector<wstring> text;
+	
+
 protected:
 	double timer = 0;
 	int timerCount = 0;
+
+	CPanelUI* dialogPanel = nullptr;
+	CText* dialogText = nullptr;
+	CUI* dialogLeftChr = nullptr;
+	CUI* dialogRightChr = nullptr;
+	int dialogNum = 0;
 
 public:
 	CScene();
@@ -43,6 +56,10 @@ public:
 	void loadTile(const wstring& path);
 	UINT getTileX();
 	UINT getTileY();
+
+	void startDialog();
+	void nextDialog();
+	void endDialog();
 
 protected:
 	void clearObject();

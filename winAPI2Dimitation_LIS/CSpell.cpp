@@ -34,6 +34,11 @@ CSpell::~CSpell()
 
 void CSpell::update()
 {
+	if (g_gameState != Group_GameState::Play)
+	{
+		return;
+	}
+
 	wstring tname = getAnimator()->getCurAnimationName();
 	double t = DT();
 
@@ -59,11 +64,7 @@ void CSpell::update()
 			{
 				if (Vec2::distance(vec[i]->getPos(), pos) < this->scale.length() / 2 - 10)
 				{
-					vec[i]->setHp(0);
-					/*
-					if (vec[i]->getIsDelete() == false)
-						DELETEOBJECT(vec[i]);
-						*/
+					((CMissile*)vec[i])->recycleMissile();
 				}
 			}
 		}

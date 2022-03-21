@@ -1,5 +1,6 @@
 #pragma once
 #include "CAnimator.h"
+class CMissile;
 
 class CCollider;
 //class CAnimator;
@@ -75,6 +76,7 @@ public:
 	void setFixed(bool fix);
 
 	void setSpeed(double speed);
+	double getSpeed();
 
 	bool getIsInvincible();
 	void setIsInvincible(bool b);
@@ -94,7 +96,7 @@ public:
 
 	void addForce(Vec2 vec);
 
-	virtual void createMissile(const wstring& image, Vec2 leftTop, Vec2 imageSize, Vec2 pos, Vec2 size, Vec2 colSize, double speed, double angle, double damage, Group_GameObj type);
+	virtual CMissile* createMissile(const wstring& image, Vec2 leftTop, Vec2 imageSize, Vec2 pos, Vec2 size, Vec2 colSize, double speed, double angle, double damage, Group_GameObj type);
 
 	virtual void onCollisionEnter(CCollider* other) {};
 	virtual void onCollisionStay(CCollider* other) {};

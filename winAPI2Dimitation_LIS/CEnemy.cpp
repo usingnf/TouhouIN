@@ -45,6 +45,11 @@ CEnemy::~CEnemy()
 
 void CEnemy::update()
 {
+	if (g_gameState != Group_GameState::Play)
+	{
+		return;
+	}
+
 	if (pos.x < -50 || pos.y < -50 || pos.x > STAGE_WIDTH + 50 || pos.y > WS_HEIGHT + 50)
 	{
 		DELETEOBJECT(this);

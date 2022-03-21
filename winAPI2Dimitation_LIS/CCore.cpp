@@ -22,6 +22,7 @@ int g_bombUse = 0;
 int g_spellBonus = 0;
 Group_CharacterMode g_mode = Group_CharacterMode::Sakuya;
 double g_omission = 0;
+Group_GameState g_gameState = Group_GameState::Play;
 
 CMissile* g_missile[MAX_MISSILE];
 int g_missileIndex = 0;

@@ -15,6 +15,15 @@ using std::map;
 using std::string;
 using std::wstring;
 
+enum class Group_GameState
+{
+	Play,
+	Stop,
+	Dialog,
+
+	Size,
+};
+
 enum class Group_GameObj
 {
 	Default,
@@ -91,6 +100,7 @@ enum class Key_State
 #define PL_STARTPOSY (WS_HEIGHT-50)
 #define MAX_MISSILE 200
 
+extern Group_GameState g_gameState;
 extern bool g_isDeveloperMode;
 extern int g_level;
 extern int g_score;
@@ -128,6 +138,10 @@ extern Group_CharacterMode g_mode;
 #include "CSceneManager.h"
 #include "CCameraManager.h"
 #include "CUIManager.h"
+//#include "CUI.h"
+//#include "CPanelUI.h"
+//#include "CText.h"
+
 
 class CPlayer;
 #include "CMissile.h"

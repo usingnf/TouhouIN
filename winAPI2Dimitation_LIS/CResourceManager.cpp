@@ -92,8 +92,8 @@ CSound* CResourceManager::loadBGM(const wstring& name, const wstring& path)
 	if (sound != nullptr)
 		return sound;
 
-	wstring contentPath = CPathManager::getInstance()->getContentPath();
-	contentPath += L"\\content\\sound\\";
+	wstring contentPath = CPathManager::getInstance()->getContentRelativePath();
+	contentPath += L"\\sound\\";
 	contentPath += path;
 
 	sound = new CSound();

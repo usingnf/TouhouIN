@@ -184,6 +184,11 @@ void CGameObject::setSpeed(double speed)
 	this->speed = speed;
 }
 
+double CGameObject::getSpeed()
+{
+	return this->speed;
+}
+
 bool CGameObject::getIsInvincible()
 {
 	return this->isInvincible;
@@ -335,7 +340,7 @@ void CGameObject::setAngle(Vec2 vec)
 	this->angle = Vec2::getAngle(vec);
 }
 
-void CGameObject::createMissile(const wstring& image, Vec2 leftTop, Vec2 imageSize, Vec2 pos, Vec2 size, Vec2 colSize, double speed, double angle, double damage, Group_GameObj type)
+CMissile* CGameObject::createMissile(const wstring& image, Vec2 leftTop, Vec2 imageSize, Vec2 pos, Vec2 size, Vec2 colSize, double speed, double angle, double damage, Group_GameObj type)
 {
 	if (g_missileIndex >= MAX_MISSILE - 1)
 		g_missileIndex = 0;
@@ -369,4 +374,6 @@ void CGameObject::createMissile(const wstring& image, Vec2 leftTop, Vec2 imageSi
 	//CREATEOBJECT(missile, type);
 
 	g_missileIndex += 1;
+
+	return missile;
 }

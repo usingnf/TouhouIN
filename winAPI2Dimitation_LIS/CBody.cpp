@@ -61,6 +61,11 @@ CBody::~CBody()
 
 void CBody::update()
 {
+	if (g_gameState != Group_GameState::Play)
+	{
+		return;
+	}
+
 	if (g_mode == Group_CharacterMode::Sakuya)
 	{
 		this->scale = Vec2(32, 48);
@@ -191,7 +196,7 @@ void CBody::render(HDC& hDC)
 	component_render(hDC);
 }
 
-void CBody::createMissile(const wstring& image, Vec2 leftTop, Vec2 imageSize, Vec2 pos, Vec2 size, Vec2 colSize, double speed, double angle, double damage, Group_GameObj type)
+CMissile* CBody::createMissile(const wstring& image, Vec2 leftTop, Vec2 imageSize, Vec2 pos, Vec2 size, Vec2 colSize, double speed, double angle, double damage, Group_GameObj type)
 {
 	CMissile* missile = new CMissile();
 	missile->setName(L"PMissile");
@@ -204,4 +209,6 @@ void CBody::createMissile(const wstring& image, Vec2 leftTop, Vec2 imageSize, Ve
 	missile->setImage(image, leftTop, imageSize);
 	missile->setIsUse(true);
 	CREATEOBJECT(missile, type);
+
+	return missile;
 }

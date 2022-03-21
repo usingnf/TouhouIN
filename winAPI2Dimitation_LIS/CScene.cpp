@@ -217,6 +217,19 @@ UINT CScene::getTileY()
 	return tileY;
 }
 
+void CScene::startDialog()
+{
+	g_gameState = Group_GameState::Dialog;
+}
+
+void CScene::nextDialog()
+{
+}
+
+void CScene::endDialog()
+{
+}
+
 void CScene::clearObject()
 {
 	for (int i = 0; i < (UINT)Group_GameObj::Size; i++)

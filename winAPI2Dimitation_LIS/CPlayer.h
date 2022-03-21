@@ -1,9 +1,6 @@
 #pragma once
 
 class CSpell;
-
-
-
 class CPlayer : public CGameObject
 {
 private:
@@ -21,6 +18,6 @@ public:
 
 	virtual void die();
 
-	virtual void createMissile(const wstring& image, Vec2 leftTop, Vec2 imageSize, Vec2 pos, Vec2 size, Vec2 colSize, double speed, double angle, double damage, Group_GameObj type);
+	virtual CMissile* createMissile(const wstring& image, Vec2 leftTop, Vec2 imageSize, Vec2 pos, Vec2 size, Vec2 colSize, double speed, double angle, double damage, Group_GameObj type);
 };
 

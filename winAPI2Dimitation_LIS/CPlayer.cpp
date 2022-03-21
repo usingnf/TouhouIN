@@ -39,6 +39,12 @@ CPlayer::~CPlayer()
 
 void CPlayer::update()
 {
+
+	if (g_gameState != Group_GameState::Play)
+	{
+		return;
+	}
+
 	if (hp > 0)
 	{
 		Vec2 vec = Vec2(0, 0);
@@ -207,7 +213,7 @@ void CPlayer::die()
 	this->setScale(Vec2(1,1));
 }
 
-void CPlayer::createMissile(const wstring& image, Vec2 leftTop, Vec2 imageSize, Vec2 pos, Vec2 size, Vec2 colSize, double speed, double angle, double damage, Group_GameObj type)
+CMissile* CPlayer::createMissile(const wstring& image, Vec2 leftTop, Vec2 imageSize, Vec2 pos, Vec2 size, Vec2 colSize, double speed, double angle, double damage, Group_GameObj type)
 {
 	CMissile* missile = new CMissile();
 	missile->setPos(pos);
@@ -219,4 +225,6 @@ void CPlayer::createMissile(const wstring& image, Vec2 leftTop, Vec2 imageSize, 
 	missile->setImage(image, leftTop, imageSize);
 	missile->setIsUse(true);
 	CREATEOBJECT(missile, type);
+
+	return missile;
 }

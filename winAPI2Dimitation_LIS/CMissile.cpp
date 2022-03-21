@@ -26,6 +26,11 @@ CMissile::~CMissile()
 
 void CMissile::update()
 {
+	if (g_gameState != Group_GameState::Play)
+	{
+		return;
+	}
+
 	if (isUse)
 	{
 		if (m_pFunc1 != nullptr)
@@ -70,6 +75,10 @@ void CMissile::setDamage(double damage)
 
 void CMissile::onCollisionEnter(CCollider* other)
 {	
+	if (g_gameState != Group_GameState::Play)
+	{
+		return;
+	}
 	if (other->getOwner()->getIsInvincible() == false)
 	{
 		if (other->getOwner()->getHp() > 0)
@@ -106,6 +115,8 @@ bool CMissile::getIsUse()
 
 void CMissile::recycleMissile()
 {
+	timer = 0;
+	timerCount = 0;
 	m_pFunc1 = nullptr;
 	isUse = false;
 	this->pos = Vec2(-49, -49);
