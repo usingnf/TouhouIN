@@ -42,7 +42,11 @@ CGameObject* CAnimator::getOwner()
 void CAnimator::createAnimation(const wstring& strName, CD2DImage* tex, Vec2 lt, Vec2 slice, Vec2 step, float duration, UINT frmCount)
 {
 	CAnimation* pAni = findAnimation(strName);
-	assert(nullptr == pAni);
+	if (pAni != nullptr)
+	{
+		m_mapAni.erase(m_mapAni.find(strName));
+	}
+	//assert(nullptr == pAni);
 
 	pAni = new CAnimation;
 
@@ -97,7 +101,12 @@ void CAnimator::selectAnimator()
 
 void CAnimator::play(const wstring& name)
 {
-	curAnimation = findAnimation(name);
-	curAnimation->accTime = 0;
-	curAnimation->curFrame = 0;
+	CAnimation* ani = findAnimation(name);
+	if (ani != nullptr)
+	{
+		curAnimation = ani;
+		curAnimation->accTime = 0;
+		curAnimation->curFrame = 0;
+	}
+	
 }

@@ -37,6 +37,7 @@ CScene_Stage01::~CScene_Stage01()
 {
 }
 
+//테스트용 ai
 void enemyAi01(DWORD_PTR self)
 {
 	((CGameObject*)self)->setTimer(((CGameObject*)self)->getTimer() + DT());
@@ -52,6 +53,7 @@ void enemyAi01(DWORD_PTR self)
 	}
 }
 
+//좌측에서 한마리 이동 + 유도 공격
 void enemyAi02(DWORD_PTR self)
 {
 	if (((CGameObject*)self)->getDestPos() == ((CGameObject*)self)->getPos())
@@ -85,6 +87,7 @@ void enemyAi02(DWORD_PTR self)
 	}	
 }
 
+//우측에서 한마리 이동 + 유도 공격
 void enemyAi03(DWORD_PTR self)
 {
 	if (((CGameObject*)self)->getDestPos() == ((CGameObject*)self)->getPos())
@@ -118,6 +121,7 @@ void enemyAi03(DWORD_PTR self)
 	}
 }
 
+//원형 공격
 void enemyAi04(DWORD_PTR self)
 {
 	if (((CGameObject*)self)->getDestPos() == ((CGameObject*)self)->getPos())
@@ -136,15 +140,69 @@ void enemyAi04(DWORD_PTR self)
 		CSoundManager::getInstance()->addSound(L"se_tan00.wav", L"se_tan00.wav", false, false);
 		CSoundManager::getInstance()->play(L"se_tan00.wav", 0.5f);
 
-		for (int i = 0; i < 36; i++)
+		for (int i = 0; i < 30; i++)
 		{
 			((CGameObject*)self)->createMissile(L"Missile.png", Vec2(108, 118),
 				Vec2(28, 28), ((CGameObject*)self)->getPos(),
-				Vec2(20, 20), Vec2(20, 20), 200, 10*i, 1, Group_GameObj::EnemyMissile);
+				Vec2(15, 15), Vec2(15, 15), 100, 12*i, 1, Group_GameObj::EnemyMissile);
 		}	
 	}
 
 	if (((CGameObject*)self)->getTimerCount() == 60)
+	{
+		((CGameObject*)self)->setTimerCount(((CGameObject*)self)->getTimerCount() + 1);
+		((CGameObject*)self)->setDestPos(((CGameObject*)self)->getPos() + Vec2(0, -500));
+		((CEnemy*)self)->accMove(100, 0);
+	}
+}
+
+//원형 공격
+void enemyAi05(DWORD_PTR self)
+{
+	int timerCount = ((CGameObject*)self)->getTimerCount();
+	if (((CGameObject*)self)->getDestPos() == ((CGameObject*)self)->getPos())
+	{
+		((CGameObject*)self)->setTimer(((CGameObject*)self)->getTimer() + DT());
+		if (((CGameObject*)self)->getTimer() >= 0.1)
+		{
+			((CGameObject*)self)->setTimer(0);
+			((CGameObject*)self)->setTimerCount(((CGameObject*)self)->getTimerCount() + 1);
+		}
+	}
+
+	if (timerCount % 33 == 1)
+	{
+		((CGameObject*)self)->setTimerCount(((CGameObject*)self)->getTimerCount() + 1);
+		CSoundManager::getInstance()->addSound(L"se_tan00.wav", L"se_tan00.wav", false, false);
+		CSoundManager::getInstance()->play(L"se_tan00.wav", 0.5f);
+
+		for (int i = 0; i < 30; i++)
+		{
+			((CGameObject*)self)->createMissile(L"Missile.png", Vec2(108, 118),
+				Vec2(28, 28), ((CGameObject*)self)->getPos(),
+				Vec2(15, 15), Vec2(15, 15), 100, 12 * i, 1, Group_GameObj::EnemyMissile);
+		}
+	}
+	if (timerCount == 1 || timerCount == 8 || timerCount == 15)
+	{
+		double ang = getToPlayerAngle((CGameObject*)self);
+		((CGameObject*)self)->setAngle(ang);
+	}
+	
+	if (timerCount % 7 == 1 && timerCount < 16)
+	{
+		((CGameObject*)self)->setTimerCount(((CGameObject*)self)->getTimerCount() + 1);
+		double ang2 = ((CGameObject*)self)->getAngle();
+		for (int i = 0; i < 3; i++)
+		{
+			((CGameObject*)self)->createMissile(L"Missile.png", Vec2(108, 118),
+				Vec2(28, 28), ((CGameObject*)self)->getPos(),
+				Vec2(15, 15), Vec2(15, 15), 50, ang2 + 15 * (i - 1), 1, Group_GameObj::EnemyMissile);
+		}
+	}
+	
+
+	if (((CGameObject*)self)->getTimerCount() == 65)
 	{
 		((CGameObject*)self)->setTimerCount(((CGameObject*)self)->getTimerCount() + 1);
 		((CGameObject*)self)->setDestPos(((CGameObject*)self)->getPos() + Vec2(0, -500));
@@ -162,10 +220,18 @@ void CScene_Stage01::update()
 				getArrObj()[i][j]->update();
 		}
 	}
-
-	if (KEY('R') == (UINT)Key_State::Tap)
+	if (g_isDeveloperMode == true)
 	{
-		CHANGESCENE(Group_Scene::Start);
+		if (KEY('R') == (UINT)Key_State::Tap)
+		{
+			CHANGESCENE(Group_Scene::Start);
+		}
+	}
+	
+
+	if (KEY('T') == (UINT)Key_State::Tap)
+	{
+		g_isDeveloperMode = !g_isDeveloperMode;
 	}
 
 	timer += DT();
@@ -181,14 +247,15 @@ void CScene_Stage01::update()
 	int random4 = 0;
 	
 	CEnemy* enemy = nullptr;
+	//왼쪽 등장
 	if (timerCount >= 1 && timerCount <= 20 && timerCount%8 == 1)
 	{
+		timerCount += 1;
 		random1 = getRandomInt(0, 50);
 		random2 = getRandomInt(0, 20);
 		random3 = -getRandomInt(0, 30);
 		random4 = -getRandomInt(0, 30);
 
-		timerCount += 1;
 		enemy = new CEnemy();
 		enemy->setPos(Vec2(0 + random1, -10 + random2));
 		enemy->setDestPos(Vec2(STAGE_WIDTH / 3 + random3, STAGE_HEIGHT / 3 + random4));
@@ -199,14 +266,16 @@ void CScene_Stage01::update()
 		enemy->setUpdateCallBack(enemyAi02);
 		AddObject(enemy, Group_GameObj::Enemy);
 	}
+	//오른쪽 등장
 	else if (timerCount >= 31 && timerCount <= 50 && timerCount % 8 == 1)
 	{
+		timerCount += 1;
 		random1 = getRandomInt(0, 50);
 		random2 = getRandomInt(0, 20);
 		random3 = -getRandomInt(0, 30);
 		random4 = -getRandomInt(0, 30);
 
-		timerCount += 1;
+		
 		enemy = new CEnemy();
 		enemy->setPos(Vec2(STAGE_WIDTH - random1, -10 + random2));
 		enemy->setDestPos(Vec2(STAGE_WIDTH /2 + STAGE_WIDTH / 3 + random3, STAGE_HEIGHT / 3 + random4));
@@ -217,12 +286,14 @@ void CScene_Stage01::update()
 		enemy->setUpdateCallBack(enemyAi03);
 		AddObject(enemy, Group_GameObj::Enemy);
 	}
+	//좌측 원형공격
 	else if (timerCount == 61)
 	{
+		timerCount += 1;
 		random1 = getRandomInt(-30, 30);
 		random4 = getRandomInt(0, 30);
 
-		timerCount += 1;
+		
 		enemy = new CEnemy();
 		enemy->setPos(Vec2(100 + random1, -10));
 		enemy->setDestPos(Vec2(100 + random1, STAGE_HEIGHT / 3 + random4));
@@ -232,26 +303,72 @@ void CScene_Stage01::update()
 		enemy->setScale(Vec2(32, 32));
 		enemy->setUpdateCallBack(enemyAi04);
 		AddObject(enemy, Group_GameObj::Enemy);
-
-		random1 = getRandomInt(-30, 30);
-
-		enemy = new CEnemy();
-		enemy->setPos(Vec2(STAGE_WIDTH - 100 + random1, -10));
-		enemy->setDestPos(Vec2(STAGE_WIDTH - 100 + random1, STAGE_HEIGHT / 3 + random4));
-		enemy->setMaxSpeed(300);
-		enemy->setSpeed(100);
-		enemy->setHp(10);
-		enemy->setScale(Vec2(32, 32));
-		enemy->setUpdateCallBack(enemyAi04);
-		AddObject(enemy, Group_GameObj::Enemy);
 	}
 
+	//우측 원형공격
 	else if (timerCount == 91)
 	{
+		timerCount += 1;
+		random1 = getRandomInt(-30, 30);
+
+		enemy = new CEnemy();
+		enemy->setPos(Vec2(STAGE_WIDTH - 100 + random1, -10));
+		enemy->setDestPos(Vec2(STAGE_WIDTH - 100 + random1, STAGE_HEIGHT / 3 + random4));
+		enemy->setMaxSpeed(300);
+		enemy->setSpeed(100);
+		enemy->setHp(10);
+		enemy->setScale(Vec2(32, 32));
+		enemy->setUpdateCallBack(enemyAi04);
+		AddObject(enemy, Group_GameObj::Enemy);
+
+	}
+	//좌측 등장
+	else if (timerCount >= 110 && timerCount <= 140 && timerCount % 8 == 1)
+	{
+		timerCount += 1;
+		random1 = getRandomInt(0, 50);
+		random2 = getRandomInt(0, 20);
+		random3 = -getRandomInt(0, 30);
+		random4 = -getRandomInt(0, 30);
+
+
+		enemy = new CEnemy();
+		enemy->setPos(Vec2(0 + random1, -10 + random2));
+		enemy->setDestPos(Vec2(STAGE_WIDTH / 3 + random3, STAGE_HEIGHT / 3 + random4));
+		enemy->setMaxSpeed(300);
+		enemy->setSpeed(100);
+		enemy->setHp(10);
+		enemy->setScale(Vec2(32, 32));
+		enemy->setUpdateCallBack(enemyAi02);
+		AddObject(enemy, Group_GameObj::Enemy);
+	}
+	//오른쪽 등장
+	else if (timerCount >= 151 && timerCount <= 180 && timerCount % 8 == 1)
+	{
+		timerCount += 1;
+		random1 = getRandomInt(0, 50);
+		random2 = getRandomInt(0, 20);
+		random3 = -getRandomInt(0, 30);
+		random4 = -getRandomInt(0, 30);
+
+
+		enemy = new CEnemy();
+		enemy->setPos(Vec2(STAGE_WIDTH - random1, -10 + random2));
+		enemy->setDestPos(Vec2(STAGE_WIDTH / 2 + STAGE_WIDTH / 3 + random3, STAGE_HEIGHT / 3 + random4));
+		enemy->setMaxSpeed(300);
+		enemy->setSpeed(100);
+		enemy->setHp(10);
+		enemy->setScale(Vec2(32, 32));
+		enemy->setUpdateCallBack(enemyAi03);
+		AddObject(enemy, Group_GameObj::Enemy);
+	}
+	//양쪽 원형 공격
+	else if (timerCount == 190)
+	{
+		timerCount += 1;
 		random1 = getRandomInt(-30, 30);
 		random4 = getRandomInt(0, 30);
 
-		timerCount += 1;
 		enemy = new CEnemy();
 		enemy->setPos(Vec2(100 + random1, -10));
 		enemy->setDestPos(Vec2(100 + random1, STAGE_HEIGHT / 3 + random4));
@@ -274,7 +391,157 @@ void CScene_Stage01::update()
 		enemy->setUpdateCallBack(enemyAi04);
 		AddObject(enemy, Group_GameObj::Enemy);
 	}
-	
+	//양쪽 원형 공격 + 유도공격
+	else if (timerCount == 225)
+	{
+		timerCount += 1;
+		random1 = getRandomInt(-30, 30);
+		random4 = getRandomInt(0, 30);
+
+		enemy = new CEnemy();
+		enemy->setPos(Vec2(100 + random1, -10));
+		enemy->setDestPos(Vec2(100 + random1, STAGE_HEIGHT / 3 + random4));
+		enemy->setMaxSpeed(300);
+		enemy->setSpeed(100);
+		enemy->setHp(10);
+		enemy->setScale(Vec2(32, 32));
+		enemy->setUpdateCallBack(enemyAi05);
+		enemy->setFixed(true);
+		AddObject(enemy, Group_GameObj::Enemy);
+
+		random1 = getRandomInt(-30, 30);
+
+		enemy = new CEnemy();
+		enemy->setPos(Vec2(STAGE_WIDTH - 100 + random1, -10));
+		enemy->setDestPos(Vec2(STAGE_WIDTH - 100 + random1, STAGE_HEIGHT / 3 + random4));
+		enemy->setMaxSpeed(300);
+		enemy->setSpeed(100);
+		enemy->setHp(10);
+		enemy->setScale(Vec2(32, 32));
+		enemy->setFixed(true);
+		enemy->setUpdateCallBack(enemyAi05);
+		AddObject(enemy, Group_GameObj::Enemy);
+	}
+	//좌측 등장
+	else if (timerCount >= 235 && timerCount <= 265 && timerCount % 8 == 1)
+	{
+		timerCount += 1;
+		random1 = getRandomInt(0, 50);
+		random2 = getRandomInt(0, 20);
+		random3 = -getRandomInt(0, 30);
+		random4 = -getRandomInt(0, 30);
+
+
+		enemy = new CEnemy();
+		enemy->setPos(Vec2(0 + random1, -10 + random2));
+		enemy->setDestPos(Vec2(STAGE_WIDTH / 3 + random3, STAGE_HEIGHT / 3 + random4));
+		enemy->setMaxSpeed(300);
+		enemy->setSpeed(100);
+		enemy->setHp(10);
+		enemy->setScale(Vec2(32, 32));
+		enemy->setUpdateCallBack(enemyAi02);
+		AddObject(enemy, Group_GameObj::Enemy);
+	}
+	//오른쪽 등장
+	else if (timerCount >= 266 && timerCount <= 296 && timerCount % 8 == 1)
+	{
+		timerCount += 1;
+		random1 = getRandomInt(0, 50);
+		random2 = getRandomInt(0, 20);
+		random3 = -getRandomInt(0, 30);
+		random4 = -getRandomInt(0, 30);
+
+		enemy = new CEnemy();
+		enemy->setPos(Vec2(STAGE_WIDTH - random1, -10 + random2));
+		enemy->setDestPos(Vec2(STAGE_WIDTH / 2 + STAGE_WIDTH / 3 + random3, STAGE_HEIGHT / 3 + random4));
+		enemy->setMaxSpeed(300);
+		enemy->setSpeed(100);
+		enemy->setHp(10);
+		enemy->setScale(Vec2(32, 32));
+		enemy->setUpdateCallBack(enemyAi03);
+		AddObject(enemy, Group_GameObj::Enemy);
+	}
+	//좌우 등장
+	else if (timerCount >= 297 && timerCount <= 315 && timerCount % 4 == 1)
+	{
+		timerCount += 1;
+
+		if (timerCount == 302)
+		{
+			random1 = getRandomInt(-30, 30);
+			random4 = getRandomInt(0, 30);
+
+			enemy = new CEnemy();
+			enemy->setPos(Vec2(100 + random1, -10));
+			enemy->setDestPos(Vec2(100 + random1, STAGE_HEIGHT / 3 + random4));
+			enemy->setMaxSpeed(300);
+			enemy->setSpeed(100);
+			enemy->setHp(10);
+			enemy->setScale(Vec2(32, 32));
+			enemy->setUpdateCallBack(enemyAi05);
+			enemy->setFixed(true);
+			AddObject(enemy, Group_GameObj::Enemy);
+
+			random1 = getRandomInt(-30, 30);
+
+			enemy = new CEnemy();
+			enemy->setPos(Vec2(STAGE_WIDTH - 100 + random1, -10));
+			enemy->setDestPos(Vec2(STAGE_WIDTH - 100 + random1, STAGE_HEIGHT / 3 + random4));
+			enemy->setMaxSpeed(300);
+			enemy->setSpeed(100);
+			enemy->setHp(10);
+			enemy->setScale(Vec2(32, 32));
+			enemy->setFixed(true);
+			enemy->setUpdateCallBack(enemyAi05);
+			AddObject(enemy, Group_GameObj::Enemy);
+		}
+		
+		random1 = getRandomInt(0, 10);
+		random2 = getRandomInt(0, 200);
+		random3 = -getRandomInt(0, 30);
+		random4 = -getRandomInt(0, 30);
+
+		enemy = new CEnemy();
+		enemy->setPos(Vec2(-30 + random1, 50 + random2));
+		enemy->setDestPos(Vec2(STAGE_WIDTH + 150 + random1, 50 + random2));
+		enemy->setMaxSpeed(300);
+		enemy->setSpeed(200);
+		enemy->setHp(10);
+		enemy->setScale(Vec2(32, 32));
+		AddObject(enemy, Group_GameObj::Enemy);
+
+		random1 = getRandomInt(0, 10);
+		random2 = getRandomInt(0, 200);
+		random3 = -getRandomInt(0, 30);
+		random4 = -getRandomInt(0, 30);
+
+		enemy = new CEnemy();
+		enemy->setPos(Vec2(STAGE_WIDTH + 30 - random1, 50 + random2));
+		enemy->setDestPos(Vec2(-30 + random1, 50 + random2));
+		enemy->setMaxSpeed(300);
+		enemy->setSpeed(200);
+		enemy->setHp(10);
+		enemy->setScale(Vec2(32, 32));
+		AddObject(enemy, Group_GameObj::Enemy);
+	}
+	//리글 등장
+	else if (timerCount == 340)
+	{
+		timerCount += 1;
+		g_boss = new CEnemy();
+		g_boss->setPos(Vec2(30, -30));
+		g_boss->setDestPos(Vec2(STAGE_WIDTH /2, STAGE_HEIGHT /3));
+		g_boss->setMaxSpeed(300);
+		g_boss->setSpeed(200);
+		g_boss->setHp(10);
+		g_boss->setScale(Vec2(48, 64));
+		g_boss->getCollider()->setColliderScale(Vec2(48, 64));
+		g_boss->setImage(L"Boss.png");
+		g_boss->addAnimation(L"stay", Vec2(560, 12), Vec2(48, 64), 0.2, 5, true);
+		g_boss->addAnimation(L"moveleft", Vec2(560, 12), Vec2(48, 64), 0.2, 5, true);
+		g_boss->addAnimation(L"moveright", Vec2(560, 12), Vec2(48, 64), 0.2, 5, true, true);
+		AddObject(g_boss, Group_GameObj::Enemy);
+	}
 
 }
 
@@ -622,6 +889,7 @@ void CScene_Stage01::Exit()
 		g_missile[i]->recycleMissile();
 	}
 	this->clearObject();
+	g_boss = nullptr;
 }
 
 int CScene_Stage01::getLevel()

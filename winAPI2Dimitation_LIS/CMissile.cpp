@@ -70,19 +70,28 @@ void CMissile::setDamage(double damage)
 
 void CMissile::onCollisionEnter(CCollider* other)
 {	
-	if (other->getOwner()->getHp() > 0)
+	if (other->getOwner()->getIsInvincible() == false)
 	{
-		if (other->getOwner()->getName() != L"Player")
+		if (other->getOwner()->getHp() > 0)
 		{
-			g_score += 10 * damage;
+			if (other->getOwner()->getName() == L"Player")
+			{
+				other->getOwner()->setHp(other->getOwner()->getHp() - damage);
+			}
+			else
+			{
+				g_score += 10 * damage;
+				other->getOwner()->setHp(other->getOwner()->getHp() - damage);
+			}
+
+			if (other->getOwner()->getHp() <= 0)
+			{
+				other->getOwner()->die();
+			}
+			recycleMissile();
 		}
-		other->getOwner()->setHp(other->getOwner()->getHp() - damage);
-		if (other->getOwner()->getHp() <= 0)
-		{
-			other->getOwner()->die();
-		}
-		recycleMissile();
 	}
+	
 }
 
 void CMissile::setIsUse(bool use)
@@ -100,12 +109,6 @@ void CMissile::recycleMissile()
 	m_pFunc1 = nullptr;
 	isUse = false;
 	this->pos = Vec2(-49, -49);
-	/*
-	delete getAnimator();
-	setAnimator(nullptr);
-	delete getCollider();
-	setColldier(nullptr);
-	*/
 
 	if (this->name == L"PMissile")
 	{

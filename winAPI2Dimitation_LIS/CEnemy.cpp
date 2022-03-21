@@ -27,9 +27,9 @@ CEnemy::CEnemy()
 	ani = getAnimator()->findAnimation(L"moveleft");
 	ani->setLoop(false);
 
-		ani = getAnimator()->findAnimation(L"moveright");
-		ani->setLoop(false);
-		ani->setReverse(true);
+	ani = getAnimator()->findAnimation(L"moveright");
+	ani->setLoop(false);
+	ani->setReverse(true);
 }
 
 CEnemy* CEnemy::clone()
@@ -50,12 +50,6 @@ void CEnemy::update()
 		DELETEOBJECT(this);
 	}
 
-	if (KEY(VK_LBUTTON) == (UINT)Key_State::Tap)
-	{
-		accMove(maxSpeed, -100);
-		destPos = GETMOUSEPOS();
-	}
-
 	if (hp > 0)
 	{
 		if (m_pFunc1 != nullptr)
@@ -63,45 +57,46 @@ void CEnemy::update()
 			m_pFunc1((DWORD_PTR)this);
 		}
 
-		if (destPos != pos)
+		if (ai == 1)
 		{
-			if (Vec2::distance(destPos, pos) < speed * DT() + 1)
+			if (destPos != pos)
 			{
-				accSpeed = 0;
-				destPos = pos;
-				if (getAnimator()->getCurAnimationName() != L"stay")
-					getAnimator()->play(L"stay");
-			}
-			else
-			{
-				if (speed < 0)
+				if (Vec2::distance(destPos, pos) < speed * DT() + 1)
 				{
-					speed = 0;
+					accSpeed = 0;
 					destPos = pos;
-				}
-				else if (speed <= maxSpeed)
-					speed += accSpeed * DT();
-				else
-					speed = maxSpeed;
-
-				if (destPos.x < pos.x)
-				{
-					if (getAnimator()->getCurAnimationName() != L"moveleft")
-						getAnimator()->play(L"moveleft");
+					if (getAnimator()->getCurAnimationName() != L"stay")
+						getAnimator()->play(L"stay");
 				}
 				else
 				{
-					if (getAnimator()->getCurAnimationName() != L"moveright")
-						getAnimator()->play(L"moveright");
-				}
+					if (speed < 0)
+					{
+						speed = 0;
+						destPos = pos;
+					}
+					else if (speed <= maxSpeed)
+						speed += accSpeed * DT();
+					else
+						speed = maxSpeed;
 
-				Vec2 vec = (destPos - pos).normalized();
-				pos.x += vec.x * speed * DT();
-				pos.y += vec.y * speed * DT();
+					if (destPos.x < pos.x)
+					{
+						if (getAnimator()->getCurAnimationName() != L"moveleft")
+							getAnimator()->play(L"moveleft");
+					}
+					else
+					{
+						if (getAnimator()->getCurAnimationName() != L"moveright")
+							getAnimator()->play(L"moveright");
+					}
+
+					Vec2 vec = (destPos - pos).normalized();
+					pos.x += vec.x * speed * DT();
+					pos.y += vec.y * speed * DT();
+				}
 			}
 		}
-
-		
 	}
 	else
 	{
@@ -140,6 +135,7 @@ void CEnemy::setMaxSpeed(double speed)
 void CEnemy::setDestPos(Vec2 pos)
 {
 	this->destPos = pos;
+	this->ai = 1;
 }
 
 void CEnemy::accMove(double startSpeed, double accSpeed)

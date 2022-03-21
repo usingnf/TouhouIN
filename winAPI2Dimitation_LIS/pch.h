@@ -91,6 +91,7 @@ enum class Key_State
 #define PL_STARTPOSY (WS_HEIGHT-50)
 #define MAX_MISSILE 200
 
+extern bool g_isDeveloperMode;
 extern int g_level;
 extern int g_score;
 extern int g_highScore;
@@ -107,6 +108,7 @@ extern int g_bombUse;
 extern int g_spellBonus;
 extern double g_omission;
 extern Group_CharacterMode g_mode;
+
 
 #include "Vec2.h"
 #include "logger.h"
@@ -128,12 +130,13 @@ extern Group_CharacterMode g_mode;
 #include "CUIManager.h"
 
 class CPlayer;
-//class CMissile;
 #include "CMissile.h"
+class CEnemy;
 extern CPlayer* g_player;
 
 extern CMissile* g_missile[MAX_MISSILE];
 extern int g_missileIndex;
+extern CEnemy* g_boss;
 
 
 #define DT() CTimeManager::getInstance()->getDeltaTime()
@@ -151,13 +154,3 @@ extern int g_missileIndex;
 
 extern HINSTANCE hInst;
 extern HWND hWnd;
-
-class CPlayer;
-class CPlayer_Right;
-class CBall;
-//extern CPlayer* leftPlayer;
-//extern CPlayer_Right* rightPlayer;
-//extern CBall* ball;
-//CPlayer* leftPlayer = new CPlayer();
-//CPlayer_Right* rightPlayer = nullptr;
-//CBall* ball = nullptr;

@@ -4,6 +4,7 @@ class CEnemy : public CGameObject
 private:
 	double maxSpeed;
 	double accSpeed = 0;
+	int ai = 0;
 	int powerItem = 0;
 	int lifeItem = 0;
 	int spellItem = 0;

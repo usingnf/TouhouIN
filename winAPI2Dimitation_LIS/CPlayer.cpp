@@ -103,7 +103,6 @@ void CPlayer::update()
 			}
 			else
 			{
-				
 				this->timer2 = 0;
 				if (g_life > 0)
 				{

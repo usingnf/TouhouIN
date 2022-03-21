@@ -68,18 +68,21 @@ void CScene_Start::update()
 		}
 	}
 
-
-	if (KEY('R') == (UINT)Key_State::Tap)
+	if (g_isDeveloperMode == true)
 	{
-		CHANGESCENE(Group_Scene::Stage_01);
+		if (KEY('R') == (UINT)Key_State::Tap)
+		{
+			CHANGESCENE(Group_Scene::Stage_01);
+		}
+		if (KEY('Y') == (UINT)Key_State::Tap)
+		{
+			CHANGESCENE(Group_Scene::Result);
+		}
 	}
+
 	if (KEY('T') == (UINT)Key_State::Tap)
 	{
-		CHANGESCENE(Group_Scene::Stage_Tile);
-	}
-	if (KEY('Y') == (UINT)Key_State::Tap)
-	{
-		CHANGESCENE(Group_Scene::Result);
+		g_isDeveloperMode = !g_isDeveloperMode;
 	}
 
 

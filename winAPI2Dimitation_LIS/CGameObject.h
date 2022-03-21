@@ -23,6 +23,7 @@ protected:
 	double drag;
 	COLORREF color;
 	bool isFixed;
+	bool isInvincible = false;
 
 	CTexture* texture;
 	CD2DImage* image;
@@ -71,8 +72,12 @@ public:
 	virtual void setAngle(Vec2 vec);
 	virtual double getAngle();
 	bool getFixed();
+	void setFixed(bool fix);
 
 	void setSpeed(double speed);
+
+	bool getIsInvincible();
+	void setIsInvincible(bool b);
 
 	virtual void die();
 
@@ -102,6 +107,7 @@ public:
 	void setColor(COLORREF color);
 	void setImage(const wstring& name);
 	void setImage(const wstring& name, Vec2 leftTop, Vec2 imageSize);
+	void addAnimation(const wstring& name, Vec2 leftTop, Vec2 imageSize, double aniSpeed = 1, int frame = 1, bool loop = false, bool reverse = false);
 
 	bool getIsRender();
 	void setIsRender(bool render);

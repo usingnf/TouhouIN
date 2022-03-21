@@ -43,6 +43,8 @@ void CCollider::finalupdate()
 
 void CCollider::render(HDC& hDC)
 {
+	if (g_isDeveloperMode == false)
+		return;
 	Group_Pen pType;
 	COLORREF color = RGB(0, 0, 0);
 	if (collCount)

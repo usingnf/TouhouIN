@@ -2,8 +2,10 @@
 #include "pch.h"
 #include "CPlayer.h"
 #include "CMissile.h"
+#include "CEnemy.h"
 
 //전역변수
+bool g_isDeveloperMode = true;
 int g_level = 0;
 int g_score = 0;
 int g_highScore = 0;
@@ -25,6 +27,7 @@ CMissile* g_missile[MAX_MISSILE];
 int g_missileIndex = 0;
 
 CPlayer* g_player = nullptr;
+CEnemy* g_boss = nullptr;
 
 CCore::CCore()
 {

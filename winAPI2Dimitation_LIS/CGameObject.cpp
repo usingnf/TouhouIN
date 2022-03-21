@@ -174,9 +174,24 @@ bool CGameObject::getFixed()
 	return isFixed;
 }
 
+void CGameObject::setFixed(bool fix)
+{
+	this->isFixed = fix;
+}
+
 void CGameObject::setSpeed(double speed)
 {
 	this->speed = speed;
+}
+
+bool CGameObject::getIsInvincible()
+{
+	return this->isInvincible;
+}
+
+void CGameObject::setIsInvincible(bool b)
+{
+	this->isInvincible = b;
 }
 
 void CGameObject::die()
@@ -269,8 +284,19 @@ void CGameObject::setImage(const wstring& name, Vec2 leftTop, Vec2 imageSize)
 	image = CResourceManager::getInstance()->loadD2DImage(name, L"\\texture\\" + name);
 	
 	createAnimator();
-	animator->createAnimation(L"stay", image, leftTop, imageSize, imageSize, 1, 1);
+	animator->createAnimation(L"stay", image, leftTop, imageSize, Vec2(imageSize.x, 0), 1, 1);
 	animator->play(L"stay");
+}
+
+void CGameObject::addAnimation(const wstring& name, Vec2 leftTop, Vec2 imageSize, double aniSpeed, int frame, bool loop, bool reverse)
+{
+	createAnimator();
+	animator->createAnimation(name, image, leftTop, imageSize, Vec2(imageSize.x, 0), aniSpeed, frame);
+	animator->play(name);
+
+	CAnimation* ani = animator->findAnimation(name);
+	ani->setLoop(loop);
+	ani->setReverse(reverse);
 }
 
 bool CGameObject::getIsRender()
@@ -325,11 +351,6 @@ void CGameObject::createMissile(const wstring& image, Vec2 leftTop, Vec2 imageSi
 		if (g_missileIndex == startIndex)
 			break;
 	}
-	
-	string str = std::to_string(g_missileIndex);
-	wstring w;
-	w.assign(str.begin(), str.end());
-	Logger::debug(w.c_str());
 	
 	CMissile* missile = g_missile[g_missileIndex];
 	missile->setPos(pos);
