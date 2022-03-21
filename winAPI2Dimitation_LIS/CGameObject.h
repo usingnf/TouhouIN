@@ -106,6 +106,7 @@ public:
 	bool getIsRender();
 	void setIsRender(bool render);
 
+	void deleteComponent();
 	virtual void setUpdateCallBack(BTN_FUNC1 pFunc1);
 };
 

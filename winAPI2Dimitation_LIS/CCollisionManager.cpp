@@ -28,6 +28,7 @@ void CCollisionManager::collisionGroupUpdate(Group_GameObj left, Group_GameObj r
 		{
 			if (vecRight[j]->getCollider() == nullptr)
 				continue;
+				
 			if (vecLeft[i] == vecRight[j])
 				continue;
 			//충돌 판정

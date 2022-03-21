@@ -28,6 +28,18 @@ void CEventManager::update()
 	}
 	m_vecDelete.clear();
 
+	if (isSceneChange == false)
+	{
+		for (int i = 0; i < m_vecComponentDelete.size(); i++)
+		{
+			if (nullptr != m_vecComponentDelete[i])
+			{
+				m_vecComponentDelete[i]->deleteComponent();
+			}
+		}
+	}
+	m_vecComponentDelete.clear();
+
 	for (int i = 0; i < m_vecEvent.size(); i++)
 	{
 		execute(m_vecEvent[i]);
@@ -56,10 +68,6 @@ void CEventManager::execute(const tEvent& _event)
 			return;
 		}
 		obj->setIsDelete(true);
-		if (obj->getName() == L"Missile")
-		{
-			int a = 0;
-		}
 		m_vecDelete.push_back(obj);
 		break;
 	}
@@ -71,6 +79,11 @@ void CEventManager::execute(const tEvent& _event)
 		CSceneManager::getInstance()->changeScene(group);
 		isSceneChange = false;
 		break;
+	}
+	case Type_Event::Delete_Component:
+	{
+		CGameObject* obj = (CGameObject*)_event.lParam;
+		m_vecComponentDelete.push_back(obj);
 	}
 	}
 }
@@ -106,3 +119,10 @@ void CEventManager::changeScene(Group_Scene scene)
 	addEvent(_event);
 }
 
+void CEventManager::deleteComponent(CGameObject* obj)
+{
+	tEvent _event;
+	_event.type = Type_Event::Delete_Component;
+	_event.lParam = (DWORD_PTR)obj;
+	addEvent(_event);
+}

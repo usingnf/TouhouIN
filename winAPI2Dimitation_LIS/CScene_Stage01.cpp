@@ -26,6 +26,11 @@ double getToPlayerAngle(CGameObject* obj)
 
 CScene_Stage01::CScene_Stage01()
 {
+	for (int i = 0; i < sizeof(g_missile) / sizeof(CMissile*); i++)
+	{
+		g_missile[i] = nullptr;
+		Logger::debug(L"1");
+	}
 }
 
 CScene_Stage01::~CScene_Stage01()
@@ -35,7 +40,7 @@ CScene_Stage01::~CScene_Stage01()
 void enemyAi01(DWORD_PTR self)
 {
 	((CGameObject*)self)->setTimer(((CGameObject*)self)->getTimer() + DT());
-	if (((CGameObject*)self)->getTimer() >= 3)
+	if (((CGameObject*)self)->getTimer() >= 0.1)
 	{
 		((CGameObject*)self)->setTimer(0);
 		//action
@@ -43,7 +48,7 @@ void enemyAi01(DWORD_PTR self)
 		CSoundManager::getInstance()->play(L"se_tan00.wav", 0.5f);
 		((CGameObject*)self)->createMissile(L"Missile.png", Vec2(108, 118),
 			Vec2(28, 28), ((CGameObject*)self)->getPos(),
-			Vec2(30, 30), Vec2(30, 30), 200, 170 + rand() % 20, 1, Group_GameObj::EnemyMissile);
+			Vec2(30, 30), Vec2(30, 30), 200, 180, 1, Group_GameObj::EnemyMissile);
 	}
 }
 
@@ -169,11 +174,12 @@ void CScene_Stage01::update()
 		timer = 0;
 		timerCount += 1;
 	}
-
+	
 	int random1 = 0;
 	int random2 = 0;
 	int random3 = 0;
 	int random4 = 0;
+	
 	CEnemy* enemy = nullptr;
 	if (timerCount >= 1 && timerCount <= 20 && timerCount%8 == 1)
 	{
@@ -239,6 +245,36 @@ void CScene_Stage01::update()
 		enemy->setUpdateCallBack(enemyAi04);
 		AddObject(enemy, Group_GameObj::Enemy);
 	}
+
+	else if (timerCount == 91)
+	{
+		random1 = getRandomInt(-30, 30);
+		random4 = getRandomInt(0, 30);
+
+		timerCount += 1;
+		enemy = new CEnemy();
+		enemy->setPos(Vec2(100 + random1, -10));
+		enemy->setDestPos(Vec2(100 + random1, STAGE_HEIGHT / 3 + random4));
+		enemy->setMaxSpeed(300);
+		enemy->setSpeed(100);
+		enemy->setHp(10);
+		enemy->setScale(Vec2(32, 32));
+		enemy->setUpdateCallBack(enemyAi04);
+		AddObject(enemy, Group_GameObj::Enemy);
+
+		random1 = getRandomInt(-30, 30);
+
+		enemy = new CEnemy();
+		enemy->setPos(Vec2(STAGE_WIDTH - 100 + random1, -10));
+		enemy->setDestPos(Vec2(STAGE_WIDTH - 100 + random1, STAGE_HEIGHT / 3 + random4));
+		enemy->setMaxSpeed(300);
+		enemy->setSpeed(100);
+		enemy->setHp(10);
+		enemy->setScale(Vec2(32, 32));
+		enemy->setUpdateCallBack(enemyAi04);
+		AddObject(enemy, Group_GameObj::Enemy);
+	}
+	
 
 }
 
@@ -366,18 +402,20 @@ void CScene_Stage01::Enter()
 {
 	for (int i = 0; i < sizeof(g_missile) / sizeof(CMissile*); i++)
 	{
-		g_missile[i] = new CMissile();
-		g_missile[i]->setPos(Vec2(-49, -49));
-		g_missile[i]->setScale(Vec2(0, 0));
-		g_missile[i]->createCollider();
-		g_missile[i]->getCollider()->setColliderScale(Vec2(0, 0));
+		if (g_missile[i] == nullptr)
+		{
+			g_missile[i] = new CMissile();
+			g_missile[i]->setPos(Vec2(-49, -49));
+			g_missile[i]->setScale(Vec2(0, 0));
+			g_missile[i]->createCollider();
+			g_missile[i]->getCollider()->setColliderScale(Vec2(0, 0));
 
-		g_missile[i]->setSpeed(0);
-		g_missile[i]->setAngle(0);
-		g_missile[i]->setDamage(0);
-		g_missile[i]->setIsUse(false);
-		CREATEOBJECT(g_missile[i], Group_GameObj::EnemyMissile);
-		//g_missile[i]->setImage(image, leftTop, imageSize);
+			g_missile[i]->setSpeed(0);
+			g_missile[i]->setAngle(0);
+			g_missile[i]->setDamage(0);
+			g_missile[i]->setIsUse(false);
+			CREATEOBJECT(g_missile[i], Group_GameObj::EnemyMissile);
+		}
 	}
 
 	timer = 0;
@@ -392,11 +430,24 @@ void CScene_Stage01::Enter()
 	g_graze = 0;
 	g_point = 0;
 	g_time = 0;
+	g_bombUse = false;
 
 	CSoundManager::getInstance()->addSound(L"stage1-1bgm.wav", L"stage1-1bgm.wav", true, true);
 	CSoundManager::getInstance()->play(L"stage1-1bgm.wav");
 
 	CCameraManager::getInstance()->setLookAt(Vec2(WS_WIDTH / 2, WS_HEIGHT / 2));
+
+	/*
+	CEnemy* enemy = new CEnemy();
+	enemy->setPos(Vec2(STAGE_WIDTH - 200, 200));
+	enemy->setDestPos(Vec2(STAGE_WIDTH - 200, 200));
+	enemy->setMaxSpeed(300);
+	enemy->setSpeed(100);
+	enemy->setHp(10);
+	enemy->setScale(Vec2(32, 32));
+	AddObject(enemy, Group_GameObj::Enemy);
+	enemy->setUpdateCallBack(enemyAi01);
+	*/
 
 	g_player = new CPlayer();
 	g_player->setPos(Vec2(PL_STARTPOSX, PL_STARTPOSY));
@@ -566,6 +617,10 @@ void CScene_Stage01::Enter()
 void CScene_Stage01::Exit()
 {
 	CSoundManager::getInstance()->stop(L"stage1-1bgm.wav");
+	for (int i = 0; i < sizeof(g_missile) / sizeof(CMissile*); i++)
+	{
+		g_missile[i]->recycleMissile();
+	}
 	this->clearObject();
 }
 

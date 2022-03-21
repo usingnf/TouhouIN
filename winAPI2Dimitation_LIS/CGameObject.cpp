@@ -216,7 +216,8 @@ void CGameObject::setIsDelete(bool dead)
 
 void CGameObject::createCollider()
 {
-	collider = new CCollider();
+	if(collider == nullptr)
+		collider = new CCollider();
 	collider->owner = this;
 }
 
@@ -282,6 +283,16 @@ void CGameObject::setIsRender(bool render)
 	this->isRender = render;
 }
 
+void CGameObject::deleteComponent()
+{
+	if(animator != nullptr)
+		delete this->animator;
+	animator = nullptr;
+	if(collider != nullptr)
+		delete this->collider;
+	collider = nullptr;
+}
+
 void CGameObject::setUpdateCallBack(BTN_FUNC1 pFunc1)
 {
 	this->m_pFunc1 = pFunc1;
@@ -314,11 +325,12 @@ void CGameObject::createMissile(const wstring& image, Vec2 leftTop, Vec2 imageSi
 		if (g_missileIndex == startIndex)
 			break;
 	}
+	
 	string str = std::to_string(g_missileIndex);
 	wstring w;
 	w.assign(str.begin(), str.end());
 	Logger::debug(w.c_str());
-
+	
 	CMissile* missile = g_missile[g_missileIndex];
 	missile->setPos(pos);
 	missile->setScale(size);
@@ -332,6 +344,7 @@ void CGameObject::createMissile(const wstring& image, Vec2 leftTop, Vec2 imageSi
 	missile->setDamage(damage);
 	missile->setImage(image, leftTop, imageSize);
 	missile->setIsUse(true);
+	missile->setHp(10);
 	//CREATEOBJECT(missile, type);
 
 	g_missileIndex += 1;

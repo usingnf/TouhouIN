@@ -67,6 +67,7 @@ enum class Type_Event
 	Create_Object,
 	Delete_Object,
 	Change_Scene,
+	Delete_Component,
 
 	Size,
 };
@@ -139,6 +140,7 @@ extern int g_missileIndex;
 #define KEY(vk_key) CKeyManager::getInstance()->getButtonState(vk_key)
 #define CREATEOBJECT(obj, type) CEventManager::getInstance()->createGameObject(obj, type)
 #define DELETEOBJECT(obj) CEventManager::getInstance()->deleteGameObject(obj);
+#define DELETECOMPONENT(obj) CEventManager::getInstance()->deleteComponent(obj);
 #define CHANGESCENE(scene) CEventManager::getInstance()->changeScene(scene);
 #define GETMOUSEPOS() CKeyManager::getInstance()->getMousePos();
 
