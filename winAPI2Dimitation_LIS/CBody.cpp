@@ -206,6 +206,7 @@ CMissile* CBody::createMissile(const wstring& image, Vec2 leftTop, Vec2 imageSiz
 	missile->setSpeed(speed);
 	missile->setAngle(angle);
 	missile->setDamage(damage);
+	missile->setDamage(9);
 	missile->setImage(image, leftTop, imageSize);
 	missile->setIsUse(true);
 	CREATEOBJECT(missile, type);

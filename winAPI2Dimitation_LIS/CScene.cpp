@@ -14,6 +14,9 @@ CScene::CScene()
 	text.push_back(L"감사해요");
 	text.push_back(L"잘있어요");
 	text.push_back(L"다시 만나요");
+	text.push_back(L"null");
+	text.push_back(L"제 패배입니다");
+	text.push_back(L"좋은 승부였다");
 }
 
 CScene::~CScene()
@@ -231,6 +234,7 @@ void CScene::nextDialog()
 	if (dialogNum >= text.size())
 	{
 		endDialog();
+		CEventManager::getInstance()->changeScene(Group_Scene::Result);
 		return;
 	}
 
@@ -263,7 +267,22 @@ void CScene::nextDialog()
 		dialogRightChr->setAlpha(1.0);
 		dialogText->setColor(RGB(50, 255, 50));
 	}
-	
+	else if (dialogNum == 4)
+	{
+		endDialog();
+	}
+	else if (dialogNum == 5)
+	{
+		dialogLeftChr->setAlpha(0.5);
+		dialogRightChr->setAlpha(1.0);
+		dialogText->setColor(RGB(50, 255, 50));
+	}
+	else if (dialogNum == 6)
+	{
+		dialogLeftChr->setAlpha(1.0);
+		dialogRightChr->setAlpha(0.5);
+		dialogText->setColor(RGB(255, 50, 50));
+	}
 
 	dialogNum += 1;
 }

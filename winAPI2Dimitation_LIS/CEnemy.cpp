@@ -105,21 +105,30 @@ void CEnemy::update()
 	}
 	else
 	{
-		if (this->timer == 0)
+		if (this != g_boss)
 		{
-			this->setScale(Vec2(1, 1));
-		}
-		else if (this->timer >= 0.5)
-		{
-			DELETEOBJECT(this);
+			if (this->timer == 0)
+			{
+				this->setScale(Vec2(1, 1));
+			}
+			else if (this->timer >= 0.5)
+			{
+				DELETEOBJECT(this);
+			}
+			else
+			{
+				double t = DT();
+				this->setScale(getScale() + Vec2(t * 200, t * 200));
+			}
+			this->timer += DT();
 		}
 		else
 		{
-			double t = DT();
-			this->setScale(getScale() + Vec2(t*200, t*200));
+			if (m_pFunc1 != nullptr)
+			{
+				m_pFunc1((DWORD_PTR)this);
+			}
 		}
-		this->timer += DT();
-		
 	}
 
 	CAnimator* ani = getAnimator();

@@ -71,6 +71,10 @@ void CAnimation::render(HDC& hDC)
 
 	Vec2 scale = obj->getScale();
 	float alpha = obj->getAlpha();
+	if (g_gameState == Group_GameState::Stop)
+	{
+		alpha += -0.5;
+	}
 
 	double angle = obj->getAngle();
 	if (obj->getFixed() == true)

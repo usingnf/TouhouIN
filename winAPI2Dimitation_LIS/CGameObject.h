@@ -33,6 +33,7 @@ protected:
 	CAnimator* animator;
 
 	double speed;
+	double maxHp = 0;
 	double hp;
 	bool isDelete;
 	double timer = 0;
@@ -72,6 +73,8 @@ public:
 
 	void setHp(double hp);
 	double getHp();
+	void setMaxHp(double hp);
+	double getMaxHp();
 
 	virtual void setAngle(double ang);
 	virtual void setAngle(Vec2 vec);

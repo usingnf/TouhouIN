@@ -16,7 +16,7 @@ CText* CText::clone()
 
 CText::~CText()
 {
-
+	int a = 0;
 }
 
 void CText::update()

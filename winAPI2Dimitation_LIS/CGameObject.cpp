@@ -166,12 +166,24 @@ Vec2 CGameObject::getScale()
 
 void CGameObject::setHp(double hp)
 {
+	if (maxHp == 0)
+		maxHp = hp;
 	this->hp = hp;
 }
 
 double CGameObject::getHp()
 {
 	return hp;
+}
+
+void CGameObject::setMaxHp(double hp)
+{
+	this->maxHp = hp;
+}
+
+double CGameObject::getMaxHp()
+{
+	return maxHp;
 }
 
 double CGameObject::getAngle()

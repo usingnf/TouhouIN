@@ -42,8 +42,6 @@ void CMissile::update()
 			if (pos.x < 0 || pos.x > STAGE_WIDTH + 21 || pos.y < 0 || pos.y > WS_HEIGHT)
 			{
 				hp = 0;
-				//DELETEOBJECT(this);
-				//파괴하지 않고 재사용.
 			}
 			if (hp > 0)
 			{
@@ -95,7 +93,8 @@ void CMissile::onCollisionEnter(CCollider* other)
 
 			if (other->getOwner()->getHp() <= 0)
 			{
-				other->getOwner()->die();
+				if(g_boss != (CEnemy*)other->getOwner())
+					other->getOwner()->die();
 			}
 			recycleMissile();
 		}
