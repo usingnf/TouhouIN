@@ -70,6 +70,7 @@ void CAnimation::render(HDC& hDC)
 	pos = CCameraManager::getInstance()->getRenderPos(pos);
 
 	Vec2 scale = obj->getScale();
+	float alpha = obj->getAlpha();
 
 	double angle = obj->getAngle();
 	if (obj->getFixed() == true)
@@ -89,7 +90,7 @@ void CAnimation::render(HDC& hDC)
 			frm.leftTop.y,
 			frm.leftTop.x + frm.slice.x,
 			frm.leftTop.y + frm.slice.y,
-			pos, angle
+			alpha, pos, angle
 		);
 	}
 	else
@@ -104,7 +105,7 @@ void CAnimation::render(HDC& hDC)
 			frm.leftTop.y,
 			frm.leftTop.x + frm.slice.x,
 			frm.leftTop.y + frm.slice.y,
-			pos, angle
+			alpha, pos, angle
 		);
 	}
 }

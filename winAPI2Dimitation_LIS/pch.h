@@ -71,6 +71,20 @@ enum class Group_CharacterMode
 	Size
 };
 
+enum class Type_TextWidthAlignment
+{
+	Left,
+	Right,
+	Center,
+};
+
+enum class Type_TextHeightAlignment
+{
+	Top,
+	Bottom,
+	Center,
+};
+
 enum class Type_Event
 {
 	Create_Object,

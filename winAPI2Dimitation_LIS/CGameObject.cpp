@@ -80,6 +80,16 @@ CGameObject::~CGameObject()
 		
 }
 
+CGameObject* CGameObject::getParent()
+{
+	return parent;
+}
+
+void CGameObject::setParent(CGameObject* obj)
+{
+	this->parent = obj;
+}
+
 void CGameObject::update()
 {
 	
@@ -187,6 +197,16 @@ void CGameObject::setSpeed(double speed)
 double CGameObject::getSpeed()
 {
 	return this->speed;
+}
+
+void CGameObject::setAlpha(float alpha)
+{
+	this->alpha = alpha;
+}
+
+float CGameObject::getAlpha()
+{
+	return this->alpha;
 }
 
 bool CGameObject::getIsInvincible()

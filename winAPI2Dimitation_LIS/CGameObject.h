@@ -23,6 +23,7 @@ protected:
 	double gravity;
 	double drag;
 	COLORREF color;
+	float alpha = 1.0f;
 	bool isFixed;
 	bool isInvincible = false;
 
@@ -48,6 +49,9 @@ public:
 	CGameObject(const CGameObject& other);
 	virtual CGameObject* clone() = 0;
 	virtual ~CGameObject();
+
+	CGameObject* getParent();
+	void setParent(CGameObject* obj);
 
 	virtual void update();
 	virtual void finalupdate(); //collider¿ë
@@ -77,6 +81,9 @@ public:
 
 	void setSpeed(double speed);
 	double getSpeed();
+
+	void setAlpha(float alpha);
+	float getAlpha();
 
 	bool getIsInvincible();
 	void setIsInvincible(bool b);

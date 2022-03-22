@@ -87,7 +87,7 @@ void CRenderManager::RenderImage(CD2DImage* img, float dstX, float dstY, float d
 	}
 }
 
-void CRenderManager::RenderFrame(CD2DImage* img, float dstX, float dstY, float dstW, float dstH, float srcX, float srcY, float srcW, float srcH, Vec2 pos, float angle)
+void CRenderManager::RenderFrame(CD2DImage* img, float dstX, float dstY, float dstW, float dstH, float srcX, float srcY, float srcW, float srcH, float alpha, Vec2 pos, float angle)
 {
 	D2D1_RECT_F imgRect = { dstX, dstY, dstW, dstH };
 	D2D1_RECT_F srcRect = { srcX, srcY, srcW, srcH };
@@ -96,11 +96,11 @@ void CRenderManager::RenderFrame(CD2DImage* img, float dstX, float dstY, float d
 	{
 		Matrix3x2F matrot = D2D1::Matrix3x2F::Rotation(angle, D2D1::Point2F(pos.x, pos.y));
 		m_pRenderTarget->SetTransform(matrot);
-		m_pRenderTarget->DrawBitmap(img->getImage(), imgRect, 1.0f, D2D1_BITMAP_INTERPOLATION_MODE_NEAREST_NEIGHBOR, srcRect);
+		m_pRenderTarget->DrawBitmap(img->getImage(), imgRect, alpha, D2D1_BITMAP_INTERPOLATION_MODE_NEAREST_NEIGHBOR, srcRect);
 	}	
 }
 
-void CRenderManager::RenderRevFrame(CD2DImage* img, float dstX, float dstY, float dstW, float dstH, float srcX, float srcY, float srcW, float srcH, Vec2 pos, float angle)
+void CRenderManager::RenderRevFrame(CD2DImage* img, float dstX, float dstY, float dstW, float dstH, float srcX, float srcY, float srcW, float srcH, float alpha, Vec2 pos, float angle)
 {
 	D2D1_RECT_F imgRect = { dstX, dstY, dstW, dstH };
 	D2D1_RECT_F srcRect = { srcX, srcY, srcW, srcH };
@@ -120,7 +120,7 @@ void CRenderManager::RenderRevFrame(CD2DImage* img, float dstX, float dstY, floa
 		D2D1_POINT_2F{ (dstX + dstW) / 2.f, (dstY + dstH) / 2.f }));
 }
 
-void CRenderManager::RenderText(wstring str, float dstX, float dstY, float dstW, float dstH, float fontSize, COLORREF color, Vec2 pos, float angle)
+void CRenderManager::RenderText(wstring str, float dstX, float dstY, float dstW, float dstH, float fontSize, COLORREF color, Vec2 pos, float angle, int wAlign, int hAlign)
 {
 	int red = color & 0xFF;
 	int green = (color >> 8) & 0xFF;
@@ -138,9 +138,9 @@ void CRenderManager::RenderText(wstring str, float dstX, float dstY, float dstW,
 			fontSize,
 			L"ko",
 			&m_pTextFormat);
-		m_pTextFormat->SetTextAlignment(DWRITE_TEXT_ALIGNMENT_LEADING);
-		m_pTextFormat->SetParagraphAlignment(DWRITE_PARAGRAPH_ALIGNMENT_CENTER);
 	}
+	m_pTextFormat->SetTextAlignment((DWRITE_TEXT_ALIGNMENT)wAlign);
+	m_pTextFormat->SetParagraphAlignment((DWRITE_PARAGRAPH_ALIGNMENT)hAlign);
 
 	m_pBrush->SetColor(D2D1::ColorF(red / 255.f, green / 255.0f, blue / 255.0f, 1.f));
 

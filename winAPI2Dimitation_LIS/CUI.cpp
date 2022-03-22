@@ -4,7 +4,6 @@
 CUI::CUI()
 {
 	texture = CResourceManager::getInstance()->loadTexture(L"Star", L"Mario_Item2.bmp");
-	parent = nullptr;
 	bCameraAffected = false;
 	bMouseOn = false;
 	bLbtnDown = false;
@@ -93,39 +92,10 @@ void CUI::render(HDC& hDC)
 			p.x, p.y,
 			p.x + s.x, p.y + s.y,
 			startImagePos.x, startImagePos.y,
-			endImagePos.x, endImagePos.y
+			endImagePos.x, endImagePos.y,
+			alpha
 		);
 	}
-
-	
-	
-	/*
-	if (texture == nullptr)
-	{
-		if (bLbtnDown == true)
-		{
-			SelectGDI pen = SelectGDI(hDC, Group_Pen::Green);
-			Rectangle(hDC, p.x, p.y, p.x + s.x, p.y + s.y);
-		}
-		else
-		{
-			Rectangle(hDC, p.x, p.y, p.x + s.x, p.y + s.y);
-		}
-	}
-	else
-	{
-		int width = texture->getBitmapWidth();
-		int height = texture->getBitmapHeight();
-
-		TransparentBlt(hDC,
-			p.x,
-			p.y,
-			s.x, s.y,
-			texture->getDC(),
-			0, 0, width, height,
-			RGB(255, 0, 255));
-	}
-	*/
 
 	render_child(hDC);
 }
@@ -200,11 +170,6 @@ void CUI::setCameraAffected(bool b)
 Vec2 CUI::getFinalPos()
 {
 	return finalPos;
-}
-
-CUI* CUI::getParent()
-{
-	return parent;
 }
 
 vector<CUI*>& CUI::getChild()

@@ -29,12 +29,12 @@ public:
 
 	void RenderImage(CD2DImage* img, float dstX, float dstY, float dstW, float dstH, float alpha = 1.0f, Vec2 pos = Vec2(0, 0), float angle = 0);
 	void RenderFrame(CD2DImage* img, float dstX, float dstY, float dstW, float dstH,
-		float srcX, float srcY, float srcW, float srcH, Vec2 pos = Vec2(0, 0), float angle = 0);
+		float srcX, float srcY, float srcW, float srcH, float alpha = 1.0f, Vec2 pos = Vec2(0, 0), float angle = 0);
 	void RenderRevFrame(CD2DImage* img, float dstX, float dstY, float dstW, float dstH,
-		float srcX, float srcY, float srcW, float srcH, Vec2 pos = Vec2(0, 0), float angle = 0);
+		float srcX, float srcY, float srcW, float srcH, float alpha = 1.0f, Vec2 pos = Vec2(0, 0), float angle = 0);
 
 	void RenderText(wstring str, float dstX, float dstY, float dstW, float dstH, float fontSize = 12.f, COLORREF color = RGB(0, 0, 0),
-		Vec2 pos = Vec2(0, 0), float angle = 0);
+		Vec2 pos = Vec2(0, 0), float angle = 0, int wAlign = 0, int hAlign = 2);
 	void RenderRectangle(float dstX, float dstY, float dstW, float dstH, COLORREF color = RGB(0, 0, 0), Vec2 pos = Vec2(0, 0), float angle = 0);
 	void RenderFillRectangle(float dstX, float dstY, float dstW, float dstH, COLORREF color = RGB(0, 0, 0), float alpha = 1.0f, Vec2 pos = Vec2(0, 0), float angle = 0);
 	void RenderEllipse(float dstX, float dstY, float dstW, float dstH, COLORREF color = RGB(0, 0, 0), Vec2 pos = Vec2(0, 0), float angle = 0);

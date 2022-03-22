@@ -427,7 +427,6 @@ void WriggleAi01(DWORD_PTR self)
 			}
 		}
 	}
-
 	obj = nullptr;
 }
 
@@ -461,6 +460,18 @@ void CScene_Stage01::update()
 			g_gameState = Group_GameState::Stop;
 		else if (g_gameState == Group_GameState::Stop)
 			g_gameState = Group_GameState::Play;
+	}
+
+	if (KEY('Z') == (UINT)Key_State::Tap)
+	{
+		if (g_gameState == Group_GameState::Play)
+		{
+			startDialog();
+		}
+		else if (g_gameState == Group_GameState::Dialog)
+		{
+			nextDialog();
+		}
 	}
 
 	if (g_gameState != Group_GameState::Play)
@@ -777,7 +788,11 @@ void CScene_Stage01::update()
 		g_boss->setUpdateCallBack(WriggleAi01);
 		AddObject(g_boss, Group_GameObj::Enemy);
 	}
-
+	else if (timerCount == 5)
+	{
+		timerCount += 1;
+		startDialog();
+	}
 }
 
 void CScene_Stage01::render(HDC& hDC)
@@ -923,6 +938,7 @@ void CScene_Stage01::Enter()
 	timer = 0;
 	timerCount = 0;
 
+	dialogNum = 0;
 	level = g_level;
 	g_highScore = 100;
 	g_score = 0;
@@ -933,15 +949,47 @@ void CScene_Stage01::Enter()
 	g_point = 0;
 	g_time = 0;
 	g_bombUse = false;
+	CPlayer::isSpell = false;
+	string str;
+	wstring w;
 
 	dialogPanel = new CPanelUI();
 	dialogPanel->setIsRender(false);
+	dialogPanel->setPos(Vec2(30 , STAGE_WIDTH - 50));
+	dialogPanel->setScale(Vec2(STAGE_WIDTH - 20, STAGE_HEIGHT / 4));
+	dialogPanel->setImage(L"background.png");
+	dialogPanel->setImagePos(Vec2(730, 1540), Vec2(800, 1600));
+	dialogPanel->setAlpha(0.5);
+	AddObject(dialogPanel, Group_GameObj::UI);
+
 	dialogText = new CText();
-	dialogText->setIsRender(false);
+	dialogText->setIsRender(true);
+	dialogText->setPos(Vec2(20, 0));
+	dialogText->setScale(Vec2(STAGE_WIDTH - 50, 200));
+	dialogText->setHeightAlignment(Type_TextHeightAlignment::Top);
+	dialogText->setText(L"asdaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+	dialogText->setSize(30);
+	dialogText->setColor(RGB(255, 255, 255));
+	dialogPanel->AddChild(dialogText);
+
 	dialogLeftChr = new CUI();
-	dialogLeftChr->setIsRender(false);
+	dialogLeftChr->setIsRender(true);
+	dialogLeftChr->setPos(Vec2(0, -100));
+	dialogLeftChr->setScale(Vec2(100, 100));
+	dialogLeftChr->setImage(L"RemiliaPortrait.png");
+	dialogLeftChr->setImagePos(Vec2(0, 0), Vec2(0, 0));
+	dialogLeftChr->setAlpha(1.0f);
+	dialogPanel->AddChild(dialogLeftChr);
+	
+
 	dialogRightChr = new CUI();
-	dialogRightChr->setIsRender(false);
+	dialogRightChr->setIsRender(true);
+	dialogRightChr->setPos(Vec2(STAGE_WIDTH - 20 - 100, -100));
+	dialogRightChr->setScale(Vec2(100, 100));
+	dialogRightChr->setImage(L"WrigglePortrait.png");
+	dialogRightChr->setImagePos(Vec2(0, 0), Vec2(0, 0));
+	dialogRightChr->setAlpha(1.0f);
+	dialogPanel->AddChild(dialogRightChr);
 
 
 	CSoundManager::getInstance()->addSound(L"stage1-1bgm.wav", L"stage1-1bgm.wav", true, true);
@@ -1011,8 +1059,7 @@ void CScene_Stage01::Enter()
 	CText* highScoreText = new CText();
 	highScoreText->setPos(Vec2(STAGE_WIDTH + 100, 25));
 	highScoreText->setScale(Vec2(200, 30));
-	string str = std::to_string(g_highScore);
-	wstring w;
+	str = std::to_string(g_highScore);
 	w.assign(str.begin(), str.end());
 	highScoreText->setText(w.c_str());
 	highScoreText->setSize(30);

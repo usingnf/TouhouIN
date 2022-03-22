@@ -7,7 +7,6 @@ class CUI : public CGameObject
 	friend class CUIManager;
 private:
 	vector<CUI*> vecChild;
-	CUI* parent;
 
 	Vec2 finalPos;
 	Vec2 startImagePos;
@@ -44,7 +43,6 @@ public:
 	void setCameraAffected(bool b);
 
 	Vec2 getFinalPos();
-	CUI* getParent();
 	vector<CUI*>& getChild();
 
 	void AddChild(CUI* ui);

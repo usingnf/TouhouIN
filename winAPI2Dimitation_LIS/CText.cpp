@@ -27,7 +27,12 @@ void CText::update()
 
 void CText::render(HDC& hDC)
 {
-	CRenderManager::getInstance()->RenderText(mtext, pos.x, pos.y, scale.x, scale.y, fontSize, color);
+	if(getParent() == nullptr)
+		CRenderManager::getInstance()->RenderText(mtext, pos.x, pos.y, scale.x, scale.y, 
+			fontSize, color, Vec2(0,0), 0, (int)widthAlign, (int)heightAlign);
+	else
+		CRenderManager::getInstance()->RenderText(mtext, getParent()->getPos().x + pos.x, getParent()->getPos().y + pos.y, scale.x, scale.y, 
+			fontSize, color, Vec2(0, 0), 0, (int)widthAlign, (int)heightAlign);
 }
 
 void CText::setText(const WCHAR* text)
@@ -38,4 +43,14 @@ void CText::setText(const WCHAR* text)
 void CText::setSize(float size)
 {
 	this->fontSize = size;
+}
+
+void CText::setHeightAlignment(Type_TextHeightAlignment align)
+{
+	this->heightAlign = align;
+}
+
+void CText::setWidthAlignment(Type_TextWidthAlignment align)
+{
+	this->widthAlign = align;
 }

@@ -1,12 +1,19 @@
 #include "pch.h"
 #include "CScene.h"
 #include "CTile.h"
+#include "CPanelUI.h"
+#include "CText.h"
 
 CScene::CScene()
 {
 	strName = L"Noname";
 	tileX = 0;
 	tileY = 0;
+
+	text.push_back(L"안녕하세요");
+	text.push_back(L"감사해요");
+	text.push_back(L"잘있어요");
+	text.push_back(L"다시 만나요");
 }
 
 CScene::~CScene()
@@ -95,11 +102,6 @@ void CScene::render(HDC& hDC)
 {
 	for (int i = 0; i < (UINT)Group_GameObj::Size; i++)
 	{
-		/*for (int j = 0; j < getArrObj()[i].size(); j++)
-		{
-			getArrObj()[i][j]->render(hDC);
-		}*/
-
 		if (i == (UINT)Group_GameObj::Tile)
 		{
 			render_tile(hDC);
@@ -220,14 +222,57 @@ UINT CScene::getTileY()
 void CScene::startDialog()
 {
 	g_gameState = Group_GameState::Dialog;
+	dialogPanel->setIsRender(true);
+	nextDialog();
 }
 
 void CScene::nextDialog()
 {
+	if (dialogNum >= text.size())
+	{
+		endDialog();
+		return;
+	}
+
+	dialogText->setText(text[dialogNum].c_str());
+	
+	dialogText->setColor(RGB(255, 255, 255));
+	dialogLeftChr->setAlpha(0.5);
+	dialogRightChr->setAlpha(0.5);
+	if (dialogNum == 0)
+	{
+		dialogLeftChr->setAlpha(1.0);
+		dialogRightChr->setAlpha(0.5);
+		dialogText->setColor(RGB(255, 50, 50));
+	}
+	else if (dialogNum == 1)
+	{
+		dialogLeftChr->setAlpha(0.5);
+		dialogRightChr->setAlpha(1.0);
+		dialogText->setColor(RGB(50, 255, 50));
+	}
+	else if (dialogNum == 2)
+	{
+		dialogLeftChr->setAlpha(1.0);
+		dialogRightChr->setAlpha(0.5);
+		dialogText->setColor(RGB(255, 50, 50));
+	}
+	else if (dialogNum == 3)
+	{
+		dialogLeftChr->setAlpha(0.5);
+		dialogRightChr->setAlpha(1.0);
+		dialogText->setColor(RGB(50, 255, 50));
+	}
+	
+
+	dialogNum += 1;
 }
 
 void CScene::endDialog()
 {
+	g_gameState = Group_GameState::Play;
+	dialogPanel->setIsRender(false);
+	
 }
 
 void CScene::clearObject()
