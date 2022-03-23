@@ -56,6 +56,8 @@ void CScene_Result::render(HDC& hDC)
 
 void CScene_Result::Enter()
 {
+	saveHighScore();
+
 	CPanelUI* title = new CPanelUI();
 	title->setPos(Vec2(0, 0));
 	title->setScale(Vec2(WS_WIDTH, WS_HEIGHT));
@@ -237,4 +239,21 @@ void CScene_Result::Exit()
 {
 	CSoundManager::getInstance()->stop(L"titlebgm.wav");
 	this->clearObject();
+}
+
+void CScene_Result::saveHighScore()
+{
+	wstring filePath = CPathManager::getInstance()->getContentRelativePath();
+	filePath += L"\\score.dat";
+	FILE* file = nullptr;
+
+	_wfopen_s(&file, filePath.c_str(), L"wb");
+	if (file == nullptr)
+		return;
+
+	int score = g_highScore;
+
+	fwrite(&score, sizeof(int), 1, file);
+
+	fclose(file);
 }

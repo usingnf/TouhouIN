@@ -20,8 +20,22 @@ CSound::~CSound()
 void CSound::play(float volume)
 {
 	FMOD_RESULT result;
-	m_channel->setVolume(volume);
+	//FMOD_Channel_SetVolume(m_channel, volume);
+	
 	result = CSoundManager::getInstance()->getSystem()->playSound(m_sound, nullptr, false, &m_channel);
+	m_channel->setVolume(volume * g_volume);
+	assert(!result);
+}
+
+void CSound::playMusic(float volume)
+{
+	FMOD_RESULT result;
+	//CSoundManager::getInstance()->getSystem()->getChannel()
+	//m_channel->setVolume(-1);
+	//m_sound->setMusicChannelVolume((int)m_channel, g_musicVolume);
+	result = CSoundManager::getInstance()->getSystem()->playSound(m_sound, nullptr, false, &m_channel);
+	m_channel->setVolume(volume * g_musicVolume);
+	CSoundManager::getInstance()->setMusicChannel(m_channel);
 	assert(!result);
 }
 

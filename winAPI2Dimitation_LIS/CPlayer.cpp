@@ -69,6 +69,7 @@ void CPlayer::update()
 			if (pos.x + DT() * speed < STAGE_WIDTH + 20 - 10)
 				vec.x += 1;
 		}
+		
 		if (KEY(VK_LSHIFT) == (UINT)Key_State::Tap)
 		{
 			if (pos.y < 120)
@@ -100,6 +101,8 @@ void CPlayer::update()
 	{
 		if (getAnimator()->getCurAnimationName() == L"die")
 		{
+			if(this->isInvincible == false)
+				this->isInvincible = true;
 			timer2 += DT();
 			double t = DT();
 			if (timer2 <= 0.5)
@@ -117,7 +120,7 @@ void CPlayer::update()
 					this->setPos(Vec2(PL_STARTPOSX, PL_STARTPOSY));
 					this->setScale(Vec2(64, 64));
 					this->hp = 1;
-					this->isInvincible = true;
+					
 					if ((UINT)g_mode % 2 == 1)
 						g_mode = (Group_CharacterMode)((UINT)g_mode - 1);
 					getAnimator()->play(L"stay");

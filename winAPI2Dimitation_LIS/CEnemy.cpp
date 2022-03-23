@@ -61,7 +61,7 @@ void CEnemy::update()
 		{
 			m_pFunc1((DWORD_PTR)this);
 		}
-
+		
 		if (ai == 1)
 		{
 			if (destPos != pos)
@@ -233,7 +233,11 @@ void CEnemy::onCollisionEnter(CCollider* other)
 	{
 		if (other->getOwner()->getName() == L"Player")
 		{
-			other->getOwner()->setHp(0);
+			if (other->getOwner()->getIsInvincible() == false)
+			{
+				other->getOwner()->setHp(0);
+				other->getOwner()->die();
+			}
 		}
 	}
 

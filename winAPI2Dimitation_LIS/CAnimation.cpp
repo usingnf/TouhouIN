@@ -94,8 +94,7 @@ void CAnimation::render(HDC& hDC)
 			frm.leftTop.y,
 			frm.leftTop.x + frm.slice.x,
 			frm.leftTop.y + frm.slice.y,
-			alpha, pos, angle
-		);
+			alpha, pos, angle);
 	}
 	else
 	{

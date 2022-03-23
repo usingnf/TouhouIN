@@ -80,6 +80,9 @@ void CUI::render(HDC& hDC)
 	Vec2 p = getFinalPos();
 	Vec2 s = getScale();
 
+	if (isRender == false)
+		return;
+
 	if (bCameraAffected == true)
 	{
 		p = CCameraManager::getInstance()->getRenderPos(p);

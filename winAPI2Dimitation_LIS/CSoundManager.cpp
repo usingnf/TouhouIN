@@ -61,6 +61,14 @@ void CSoundManager::play(const wstring& name, float volume)
 	iter->second->play(volume);
 }
 
+void CSoundManager::playMusic(const wstring& name, float volume)
+{
+	map<wstring, CSound*>::iterator iter = mapSound.find(name);
+	if (iter == mapSound.end())
+		return;
+	iter->second->playMusic(volume);
+}
+
 void CSoundManager::stop(const wstring& name)
 {
 	map<wstring, CSound*>::iterator iter = mapSound.find(name);
@@ -112,4 +120,14 @@ bool CSoundManager::isPaused(const wstring& name)
 	}
 
 	return iter->second->IsPaused();
+}
+
+Channel* CSoundManager::getMusicChannel()
+{
+	return this->m_musicChannel;
+}
+
+void CSoundManager::setMusicChannel(Channel* channel)
+{
+	this->m_musicChannel = channel;
 }

@@ -29,7 +29,6 @@ CScene_Stage01::CScene_Stage01()
 	for (int i = 0; i < sizeof(g_missile) / sizeof(CMissile*); i++)
 	{
 		g_missile[i] = nullptr;
-		Logger::debug(L"1");
 	}
 }
 
@@ -70,7 +69,7 @@ void enemyAi02(DWORD_PTR self)
 	{
 		((CGameObject*)self)->setTimerCount(((CGameObject*)self)->getTimerCount() + 1);
 		CSoundManager::getInstance()->addSound(L"se_tan00.wav", L"se_tan00.wav", false, false);
-		CSoundManager::getInstance()->play(L"se_tan00.wav", 0.2f);
+		CSoundManager::getInstance()->play(L"se_tan00.wav", 0.2f );
 
 		double angle = getToPlayerAngle((CGameObject*)self);
 
@@ -104,7 +103,7 @@ void enemyAi03(DWORD_PTR self)
 	{
 		((CGameObject*)self)->setTimerCount(((CGameObject*)self)->getTimerCount() + 1);
 		CSoundManager::getInstance()->addSound(L"se_tan00.wav", L"se_tan00.wav", false, false);
-		CSoundManager::getInstance()->play(L"se_tan00.wav", 0.2f);
+		CSoundManager::getInstance()->play(L"se_tan00.wav", 0.2f );
 
 		double angle = getToPlayerAngle((CGameObject*)self);
 
@@ -138,7 +137,7 @@ void enemyAi04(DWORD_PTR self)
 	{
 		((CGameObject*)self)->setTimerCount(((CGameObject*)self)->getTimerCount() + 1);
 		CSoundManager::getInstance()->addSound(L"se_tan00.wav", L"se_tan00.wav", false, false);
-		CSoundManager::getInstance()->play(L"se_tan00.wav", 0.2f);
+		CSoundManager::getInstance()->play(L"se_tan00.wav", 0.2f );
 
 		for (int i = 0; i < 30; i++)
 		{
@@ -174,7 +173,7 @@ void enemyAi05(DWORD_PTR self)
 	{
 		((CGameObject*)self)->setTimerCount(((CGameObject*)self)->getTimerCount() + 1);
 		CSoundManager::getInstance()->addSound(L"se_tan00.wav", L"se_tan00.wav", false, false);
-		CSoundManager::getInstance()->play(L"se_tan00.wav", 0.2f);
+		CSoundManager::getInstance()->play(L"se_tan00.wav", 0.2f );
 
 		for (int i = 0; i < 30; i++)
 		{
@@ -192,7 +191,7 @@ void enemyAi05(DWORD_PTR self)
 	if (timerCount % 7 == 1 && timerCount < 16)
 	{
 		CSoundManager::getInstance()->addSound(L"se_tan00.wav", L"se_tan00.wav", false, false);
-		CSoundManager::getInstance()->play(L"se_tan00.wav", 0.2f);
+		CSoundManager::getInstance()->play(L"se_tan00.wav", 0.2f );
 		((CGameObject*)self)->setTimerCount(((CGameObject*)self)->getTimerCount() + 1);
 		double ang2 = ((CGameObject*)self)->getAngle();
 		for (int i = 0; i < 3; i++)
@@ -447,7 +446,7 @@ void WriggleAi02(DWORD_PTR self)
 	{
 		obj->setTimerCount(obj->getTimerCount() + 1);
 		CSoundManager::getInstance()->addSound(L"se_tan00.wav", L"se_tan00.wav", false, false);
-		CSoundManager::getInstance()->play(L"se_tan00.wav", 0.2f);
+		CSoundManager::getInstance()->play(L"se_tan00.wav", 0.2f );
 		for (int i = 0; i < 4; i++)
 		{
 			CMissile* missile = ((CGameObject*)self)->createMissile(L"Missile.png", Vec2(124, 68),
@@ -471,7 +470,7 @@ void WriggleAi02(DWORD_PTR self)
 	{
 		obj->setTimerCount(obj->getTimerCount() + 1);
 		CSoundManager::getInstance()->addSound(L"se_tan00.wav", L"se_tan00.wav", false, false);
-		CSoundManager::getInstance()->play(L"se_tan00.wav", 0.2f);
+		CSoundManager::getInstance()->play(L"se_tan00.wav", 0.2f );
 		for (int i = 0; i < 4; i++)
 		{
 			CMissile* missile = ((CGameObject*)self)->createMissile(L"Missile.png", Vec2(124, 68),
@@ -495,7 +494,7 @@ void WriggleAi02(DWORD_PTR self)
 	{
 		obj->setTimerCount(obj->getTimerCount() + 1);
 		CSoundManager::getInstance()->addSound(L"se_tan00.wav", L"se_tan00.wav", false, false);
-		CSoundManager::getInstance()->play(L"se_tan00.wav", 0.2f);
+		CSoundManager::getInstance()->play(L"se_tan00.wav", 0.2f );
 		for (int i = 0; i < 4; i++)
 		{
 			CMissile* missile = ((CGameObject*)self)->createMissile(L"Missile.png", Vec2(124, 68),
@@ -519,7 +518,7 @@ void WriggleAi02(DWORD_PTR self)
 	{
 		obj->setTimerCount(obj->getTimerCount() + 1);
 		CSoundManager::getInstance()->addSound(L"se_tan00.wav", L"se_tan00.wav", false, false);
-		CSoundManager::getInstance()->play(L"se_tan00.wav", 0.2f);
+		CSoundManager::getInstance()->play(L"se_tan00.wav", 0.2f );
 		for (int i = 0; i < 4; i++)
 		{
 			CMissile* missile = ((CGameObject*)self)->createMissile(L"Missile.png", Vec2(124, 68),
@@ -543,7 +542,7 @@ void WriggleAi02(DWORD_PTR self)
 	{
 		obj->setTimerCount(obj->getTimerCount() + 1);
 		CSoundManager::getInstance()->addSound(L"se_tan00.wav", L"se_tan00.wav", false, false);
-		CSoundManager::getInstance()->play(L"se_tan00.wav", 0.2f);
+		CSoundManager::getInstance()->play(L"se_tan00.wav", 0.2f );
 		for (int i = 0; i < 4; i++)
 		{
 			CMissile* missile = ((CGameObject*)self)->createMissile(L"Missile.png", Vec2(124, 68),
@@ -567,7 +566,7 @@ void WriggleAi02(DWORD_PTR self)
 	{
 		obj->setTimerCount(obj->getTimerCount() + 1);
 		CSoundManager::getInstance()->addSound(L"se_tan00.wav", L"se_tan00.wav", false, false);
-		CSoundManager::getInstance()->play(L"se_tan00.wav", 0.2f);
+		CSoundManager::getInstance()->play(L"se_tan00.wav", 0.2f );
 		for (int i = 0; i < 4; i++)
 		{
 			CMissile* missile = ((CGameObject*)self)->createMissile(L"Missile.png", Vec2(124, 68),
@@ -591,7 +590,7 @@ void WriggleAi02(DWORD_PTR self)
 	{
 		obj->setTimerCount(obj->getTimerCount() + 1);
 		CSoundManager::getInstance()->addSound(L"se_tan00.wav", L"se_tan00.wav", false, false);
-		CSoundManager::getInstance()->play(L"se_tan00.wav", 0.2f);
+		CSoundManager::getInstance()->play(L"se_tan00.wav", 0.2f );
 		for (int i = 0; i < 4; i++)
 		{
 			CMissile* missile = ((CGameObject*)self)->createMissile(L"Missile.png", Vec2(124, 68),
@@ -615,7 +614,7 @@ void WriggleAi02(DWORD_PTR self)
 	{
 		obj->setTimerCount(obj->getTimerCount() + 1);
 		CSoundManager::getInstance()->addSound(L"se_tan00.wav", L"se_tan00.wav", false, false);
-		CSoundManager::getInstance()->play(L"se_tan00.wav", 0.2f);
+		CSoundManager::getInstance()->play(L"se_tan00.wav", 0.2f );
 		for (int i = 0; i < 4; i++)
 		{
 			CMissile* missile = ((CGameObject*)self)->createMissile(L"Missile.png", Vec2(124, 68),
@@ -639,7 +638,7 @@ void WriggleAi02(DWORD_PTR self)
 	{
 		obj->setTimerCount(obj->getTimerCount() + 1);
 		CSoundManager::getInstance()->addSound(L"se_tan00.wav", L"se_tan00.wav", false, false);
-		CSoundManager::getInstance()->play(L"se_tan00.wav", 0.2f);
+		CSoundManager::getInstance()->play(L"se_tan00.wav", 0.2f );
 		for (int i = 0; i < 4; i++)
 		{
 			CMissile* missile = ((CGameObject*)self)->createMissile(L"Missile.png", Vec2(124, 68),
@@ -663,7 +662,7 @@ void WriggleAi02(DWORD_PTR self)
 	{
 		obj->setTimerCount(obj->getTimerCount() + 1);
 		CSoundManager::getInstance()->addSound(L"se_tan00.wav", L"se_tan00.wav", false, false);
-		CSoundManager::getInstance()->play(L"se_tan00.wav", 0.2f);
+		CSoundManager::getInstance()->play(L"se_tan00.wav", 0.2f );
 		for (int i = 0; i < 4; i++)
 		{
 			CMissile* missile = ((CGameObject*)self)->createMissile(L"Missile.png", Vec2(124, 68),
@@ -687,7 +686,7 @@ void WriggleAi02(DWORD_PTR self)
 	{
 		obj->setTimerCount(obj->getTimerCount() + 1);
 		CSoundManager::getInstance()->addSound(L"se_tan00.wav", L"se_tan00.wav", false, false);
-		CSoundManager::getInstance()->play(L"se_tan00.wav", 0.2f);
+		CSoundManager::getInstance()->play(L"se_tan00.wav", 0.2f );
 		for (int i = 0; i < 4; i++)
 		{
 			CMissile* missile = ((CGameObject*)self)->createMissile(L"Missile.png", Vec2(124, 68),
@@ -711,7 +710,7 @@ void WriggleAi02(DWORD_PTR self)
 	{
 		obj->setTimerCount(obj->getTimerCount() + 1);
 		CSoundManager::getInstance()->addSound(L"se_tan00.wav", L"se_tan00.wav", false, false);
-		CSoundManager::getInstance()->play(L"se_tan00.wav", 0.2f);
+		CSoundManager::getInstance()->play(L"se_tan00.wav", 0.2f );
 		for (int i = 0; i < 4; i++)
 		{
 			CMissile* missile = ((CGameObject*)self)->createMissile(L"Missile.png", Vec2(124, 68),
@@ -764,7 +763,7 @@ void WriggleAi01(DWORD_PTR self)
 	{
 		obj->setTimerCount(obj->getTimerCount() + 1);
 		CSoundManager::getInstance()->addSound(L"se_tan00.wav", L"se_tan00.wav", false, false);
-		CSoundManager::getInstance()->play(L"se_tan00.wav", 0.5f);
+		CSoundManager::getInstance()->play(L"se_tan00.wav", 0.2f );
 		for (int j = 0; j < 10; j++)
 		{
 			for (int i = 0; i < 4; i++)
@@ -783,7 +782,7 @@ void WriggleAi01(DWORD_PTR self)
 	{
 		obj->setTimerCount(obj->getTimerCount() + 1);
 		CSoundManager::getInstance()->addSound(L"se_tan00.wav", L"se_tan00.wav", false, false);
-		CSoundManager::getInstance()->play(L"se_tan00.wav", 0.5f);
+		CSoundManager::getInstance()->play(L"se_tan00.wav", 0.2f );
 		for (int j = 0; j < 10; j++)
 		{
 			for (int i = 0; i < 4; i++)
@@ -810,7 +809,7 @@ void WriggleAi01(DWORD_PTR self)
 	{
 		obj->setTimerCount(obj->getTimerCount() + 1);
 		CSoundManager::getInstance()->addSound(L"se_tan00.wav", L"se_tan00.wav", false, false);
-		CSoundManager::getInstance()->play(L"se_tan00.wav", 0.5f);
+		CSoundManager::getInstance()->play(L"se_tan00.wav", 0.2f );
 		
 		double angle = getToPlayerAngle(obj);
 		for (int j = 0; j < 3; j++)
@@ -1435,7 +1434,6 @@ void CScene_Stage01::Enter()
 	g_gameState = Group_GameState::Play;
 	dialogNum = 0;
 	level = g_level;
-	g_highScore = 100;
 	g_score = 0;
 	g_life = 2;
 	g_spell = 2;
@@ -1519,7 +1517,7 @@ void CScene_Stage01::Enter()
 
 
 	CSoundManager::getInstance()->addSound(L"stage1-1bgm.wav", L"stage1-1bgm.wav", true, true);
-	CSoundManager::getInstance()->play(L"stage1-1bgm.wav");
+	CSoundManager::getInstance()->playMusic(L"stage1-1bgm.wav");
 
 	CCameraManager::getInstance()->setLookAt(Vec2(WS_WIDTH / 2, WS_HEIGHT / 2));
 

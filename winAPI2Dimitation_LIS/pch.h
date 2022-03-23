@@ -115,6 +115,8 @@ enum class Key_State
 #define MAX_MISSILE 200
 
 extern Group_GameState g_gameState;
+extern float g_volume;
+extern float g_musicVolume;
 extern bool g_isDeveloperMode;
 extern int g_level;
 extern int g_score;

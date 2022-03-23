@@ -11,11 +11,13 @@ class CSound : public CResource
 private:
 	Sound* m_sound;
 	Channel* m_channel;
+	//FMOD_CHANNEL* m_channel;
 public:
 	CSound();
 	~CSound();
 	
 	void play(float volume = 1.f);
+	void playMusic(float volume = 1.f);
 	void stop();
 	void pause();
 	void resume();

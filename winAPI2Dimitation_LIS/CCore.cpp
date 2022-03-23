@@ -6,6 +6,8 @@
 
 //전역변수
 bool g_isDeveloperMode = true;
+float g_volume = 1.0f;
+float g_musicVolume = 1.0f;
 int g_level = 0;
 int g_score = 0;
 int g_highScore = 0;

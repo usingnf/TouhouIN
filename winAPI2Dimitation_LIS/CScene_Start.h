@@ -9,9 +9,12 @@ class CScene_Start : public CScene
 private:
 	int menuIndex = 0;
 	vector<CText*> vecMenu = { };
+	vector<CText*> vecOption = { };
 	vector<CText*> vecLevel = { };
 	CPanelUI* title;
 	CPanelUI* level;
+	CUI* textGroup = nullptr;
+	CUI* optionGroup = nullptr;
 
 	double timer = 0;
 	double timerCount = 0;
@@ -24,6 +27,10 @@ public:
 	virtual void render(HDC& hDC);
 	virtual void Enter();
 	virtual void Exit();
+
+	int loadHighScore();
+	float loadOption();
+	void saveOption();
 };
 
 

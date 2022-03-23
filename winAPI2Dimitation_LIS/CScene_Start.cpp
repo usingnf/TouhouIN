@@ -90,15 +90,27 @@ void CScene_Start::update()
 	{
 		if (title->getIsRender() == true)
 		{
-			vecMenu[menuIndex]->setColor(RGB(150, 150, 150));
-			menuIndex += 1;
-			if (menuIndex == 1)
+			if (textGroup->getIsRender() == true)
+			{
+				vecMenu[menuIndex]->setColor(RGB(150, 150, 150));
 				menuIndex += 1;
-			if (menuIndex == 2)
+				if (menuIndex == 1)
+					menuIndex += 1;
+				if (menuIndex == 2)
+					menuIndex += 1;
+				if (menuIndex >= vecMenu.size())
+					menuIndex = 0;
+				vecMenu[menuIndex]->setColor(RGB(255, 255, 255));
+			}
+			else if (optionGroup->getIsRender() == true)
+			{
+				vecOption[menuIndex]->setColor(RGB(150, 150, 150));
 				menuIndex += 1;
-			if (menuIndex >= vecMenu.size())
-				menuIndex = 0;
-			vecMenu[menuIndex]->setColor(RGB(255, 255, 255));
+				if (menuIndex >= vecOption.size())
+					menuIndex = 0;
+				vecOption[menuIndex]->setColor(RGB(255, 255, 255));
+			}
+			
 		}
 		else
 		{
@@ -114,15 +126,26 @@ void CScene_Start::update()
 	{
 		if (title->getIsRender() == true)
 		{
-			vecMenu[menuIndex]->setColor(RGB(150, 150, 150));
-			menuIndex += -1;
-			if (menuIndex < 0)
-				menuIndex = vecMenu.size() - 1;
-			if (menuIndex == 2)
+			if (textGroup->getIsRender() == true)
+			{
+				vecMenu[menuIndex]->setColor(RGB(150, 150, 150));
 				menuIndex += -1;
-			if (menuIndex == 1)
+				if (menuIndex < 0)
+					menuIndex = vecMenu.size() - 1;
+				if (menuIndex == 2)
+					menuIndex += -1;
+				if (menuIndex == 1)
+					menuIndex += -1;
+				vecMenu[menuIndex]->setColor(RGB(255, 255, 255));
+			}
+			else if (optionGroup->getIsRender() == true)
+			{
+				vecOption[menuIndex]->setColor(RGB(150, 150, 150));
 				menuIndex += -1;
-			vecMenu[menuIndex]->setColor(RGB(255, 255, 255));
+				if (menuIndex < 0)
+					menuIndex = vecOption.size() - 1;
+				vecOption[menuIndex]->setColor(RGB(255, 255, 255));
+			}
 		}
 		else
 		{
@@ -132,7 +155,49 @@ void CScene_Start::update()
 				menuIndex = vecLevel.size() - 1;
 			vecLevel[menuIndex]->setColor(RGB(255, 255, 255));
 		}
-		
+	}
+
+	if (KEY(VK_LEFT) == (UINT)Key_State::Tap)
+	{
+		if (optionGroup->getIsRender() == true)
+		{
+			CSoundManager::getInstance()->play(L"se_ok00.wav");
+			if (menuIndex == 0)
+			{
+				g_volume += -0.1;
+				if (g_volume < 0)
+					g_volume = 0;
+			}
+			else if (menuIndex == 1)
+			{
+				g_musicVolume += -0.1;
+				if (g_musicVolume < 0)
+					g_musicVolume = 0;
+				
+				CSoundManager::getInstance()->getMusicChannel()->setVolume(g_musicVolume);
+			}
+		}
+	}
+
+	if (KEY(VK_RIGHT) == (UINT)Key_State::Tap)
+	{
+		if (optionGroup->getIsRender() == true)
+		{
+			CSoundManager::getInstance()->play(L"se_ok00.wav");
+			if (menuIndex == 0)
+			{
+				g_volume += 0.1;
+				if (g_volume > 1)
+					g_volume = 1;
+			}
+			else if (menuIndex == 1)
+			{
+				g_musicVolume += 0.1;
+				if (g_musicVolume > 1)
+					g_musicVolume = 1;
+				CSoundManager::getInstance()->getMusicChannel()->setVolume(g_musicVolume);
+			}
+		}
 	}
 
 	if (KEY('Z') == (UINT)Key_State::Tap)
@@ -143,14 +208,24 @@ void CScene_Start::update()
 		{
 			if (menuIndex == 0)
 			{
-				title->setIsRender(false);
-				level->setIsRender(true);
-				menuIndex = 1;
-				//CHANGESCENE(Group_Scene::Stage_01);
+				if (textGroup->getIsRender() == true)
+				{
+					title->setIsRender(false);
+					level->setIsRender(true);
+					menuIndex = 1;
+				}
 			}
 			else if (menuIndex == 1)
 			{
 
+			}
+			else if (menuIndex == 7)
+			{
+				textGroup->setIsRender(false);
+				optionGroup->setIsRender(true);
+				vecOption[0]->setColor(RGB(255, 255, 255));
+				vecOption[1]->setColor(RGB(150, 150, 150));
+				menuIndex = 0;
 			}
 			else if (menuIndex == 8)
 			{
@@ -170,7 +245,13 @@ void CScene_Start::update()
 		CSoundManager::getInstance()->play(L"se_cancel00.wav");
 		if (title->getIsRender() == true)
 		{
-			
+			if (optionGroup->getIsRender() == true)
+			{
+				textGroup->setIsRender(true);
+				optionGroup->setIsRender(false);
+				saveOption();
+				menuIndex = 7;
+			}
 		}
 		else
 		{
@@ -203,14 +284,27 @@ void CScene_Start::render(HDC& hDC)
 	}
 }
 
+void updateVolumeBar(DWORD_PTR self)
+{
+	CUI* ui = (CUI*)self;
+	ui->setScale(Vec2(WS_WIDTH / 2 * g_volume , 10));
+}
+
+void updateMusicVolumeBar(DWORD_PTR self)
+{
+	CUI* ui = (CUI*)self;
+	ui->setScale(Vec2(WS_WIDTH / 2 * g_musicVolume, 10));
+}
+
 void CScene_Start::Enter()
 {
 	timer = 0;
 	menuIndex = 0;
-	vecMenu.clear();
+	g_highScore = loadHighScore();
+	loadOption();
 
 	CSoundManager::getInstance()->addSound(L"titlebgm.wav", L"titlebgm.wav", true, true);
-	CSoundManager::getInstance()->play(L"titlebgm.wav");
+	CSoundManager::getInstance()->playMusic(L"titlebgm.wav");
 
 	title = new CPanelUI();
 	title->setPos(Vec2(0, 0));
@@ -219,12 +313,63 @@ void CScene_Start::Enter()
 	AddObject(title, Group_GameObj::Background);
 	title->setIsRender(true);
 
+	textGroup = new CUI();
+	textGroup->setIsRender(true);
+	title->AddChild(textGroup);
+
+	optionGroup = new CUI();
+	optionGroup->setIsRender(false);
+	title->AddChild(optionGroup);
+
+	CText* volumeText = new CText();
+	volumeText->setPos(Vec2(50, WS_HEIGHT/2-50));
+	volumeText->setHeightAlignment(Type_TextHeightAlignment::Top);
+	volumeText->setWidthAlignment(Type_TextWidthAlignment::Center);
+	volumeText->setScale(Vec2(120, 50));
+	volumeText->setText(L"Volume");
+	volumeText->setSize(30);
+	volumeText->setColor(RGB(255, 255, 255));
+	volumeText->setIsRender(true);
+	optionGroup->AddChild(volumeText);
+	vecOption.push_back(volumeText);
+
+	CUI* volumeBar = new CUI();
+	volumeBar->setIsRender(true);
+	volumeBar->setPos(Vec2(180, WS_HEIGHT / 2 - 30));
+	volumeBar->setScale(Vec2(WS_WIDTH / 2, 10));
+	volumeBar->setImage(L"background.png");
+	volumeBar->setImagePos(Vec2(160, 1400), Vec2(170, 1500));
+	volumeBar->setAlpha(0.9f);
+	volumeBar->setUpdateCallBack(updateVolumeBar);
+	optionGroup->AddChild(volumeBar);
+
+	CText* musicVolumeText = new CText();
+	musicVolumeText->setPos(Vec2(50, WS_HEIGHT / 2));
+	musicVolumeText->setWidthAlignment(Type_TextWidthAlignment::Center);
+	musicVolumeText->setScale(Vec2(120, 50));
+	musicVolumeText->setText(L"Music");
+	musicVolumeText->setSize(30);
+	musicVolumeText->setColor(RGB(255, 255, 255));
+	musicVolumeText->setIsRender(true);
+	optionGroup->AddChild(musicVolumeText);
+	vecOption.push_back(musicVolumeText);
+
+	CUI* musicVolumeBar = new CUI();
+	musicVolumeBar->setIsRender(true);
+	musicVolumeBar->setPos(Vec2(180, WS_HEIGHT / 2 + 25));
+	musicVolumeBar->setScale(Vec2(WS_WIDTH / 2, 10));
+	musicVolumeBar->setImage(L"background.png");
+	musicVolumeBar->setImagePos(Vec2(160, 1400), Vec2(170, 1500));
+	musicVolumeBar->setAlpha(0.9f);
+	musicVolumeBar->setUpdateCallBack(updateMusicVolumeBar);
+	optionGroup->AddChild(musicVolumeBar);
+
 	CPanelUI* gname = new CPanelUI();
 	gname->setPos(Vec2(480, 20));
 	gname->setScale(Vec2(130, 400));
 	gname->setImage(L"text2.png");
 	gname->setImagePos(Vec2(420, 22), Vec2(540, 260));
-	title->AddChild(gname);
+	textGroup->AddChild(gname);
 
 	int top = 120;
 	int space = 28;
@@ -234,7 +379,7 @@ void CScene_Start::Enter()
 	start->setText(L"Start");
 	start->setSize(30);
 	start->setColor(RGB(255,255,255));
-	title->AddChild(start);
+	textGroup->AddChild(start);
 	vecMenu.push_back(start);
 	
 	CText* extraStart = new CText();
@@ -243,7 +388,7 @@ void CScene_Start::Enter()
 	extraStart->setText(L"Extra Start");
 	extraStart->setSize(30);
 	extraStart->setColor(RGB(50, 50, 50));
-	title->AddChild(extraStart);
+	textGroup->AddChild(extraStart);
 	vecMenu.push_back(extraStart);
 	
 	CText* spellPractice = new CText();
@@ -252,7 +397,7 @@ void CScene_Start::Enter()
 	spellPractice->setText(L"Spell Practice");
 	spellPractice->setSize(30);
 	spellPractice->setColor(RGB(50, 50, 50));
-	title->AddChild(spellPractice);
+	textGroup->AddChild(spellPractice);
 	vecMenu.push_back(spellPractice);
 	
 	CText* practiceStart = new CText();
@@ -261,7 +406,7 @@ void CScene_Start::Enter()
 	practiceStart->setText(L"Practice Start");
 	practiceStart->setSize(30);
 	practiceStart->setColor(RGB(150, 150, 150));
-	title->AddChild(practiceStart);
+	textGroup->AddChild(practiceStart);
 	vecMenu.push_back(practiceStart);
 	
 	CText* replay = new CText();
@@ -270,7 +415,7 @@ void CScene_Start::Enter()
 	replay->setText(L"Replay");
 	replay->setSize(30);
 	replay->setColor(RGB(150, 150, 150));
-	title->AddChild(replay);
+	textGroup->AddChild(replay);
 	vecMenu.push_back(replay);
 	
 	CText* result = new CText();
@@ -279,7 +424,7 @@ void CScene_Start::Enter()
 	result->setText(L"Result");
 	result->setSize(30);
 	result->setColor(RGB(150, 150, 150));
-	title->AddChild(result);
+	textGroup->AddChild(result);
 	vecMenu.push_back(result);
 
 	CText* musicRoom = new CText();
@@ -288,7 +433,7 @@ void CScene_Start::Enter()
 	musicRoom->setText(L"Music Room");
 	musicRoom->setSize(30);
 	musicRoom->setColor(RGB(150, 150, 150));
-	title->AddChild(musicRoom);
+	textGroup->AddChild(musicRoom);
 	vecMenu.push_back(musicRoom);
 
 	CText* option = new CText();
@@ -297,7 +442,7 @@ void CScene_Start::Enter()
 	option->setText(L"Option");
 	option->setSize(30);
 	option->setColor(RGB(150, 150, 150));
-	title->AddChild(option);
+	textGroup->AddChild(option);
 	vecMenu.push_back(option);
 
 	CText* quit = new CText();
@@ -306,7 +451,7 @@ void CScene_Start::Enter()
 	quit->setText(L"Quit");
 	quit->setSize(30);
 	quit->setColor(RGB(150, 150, 150));
-	title->AddChild(quit);
+	textGroup->AddChild(quit);
 	vecMenu.push_back(quit);
 	
 	level = new CPanelUI();
@@ -365,6 +510,77 @@ void CScene_Start::Enter()
 
 void CScene_Start::Exit()
 {
+	vecMenu.clear();
+	vecLevel.clear();
+	vecOption.clear();
 	CSoundManager::getInstance()->stop(L"titlebgm.wav");
 	this->clearObject();
+}
+
+int CScene_Start::loadHighScore()
+{
+	FILE* pFile = nullptr;
+
+	wstring path = CPathManager::getInstance()->getContentRelativePath();
+	path += L"\\score.dat";
+
+	_wfopen_s(&pFile, path.c_str(), L"rb");      // w : write, b : binary
+	if (pFile == nullptr)
+	{
+		return 0;
+	}
+	int score = 0;
+
+	fread(&score, sizeof(int), 1, pFile);
+
+	g_score = score;
+
+	fclose(pFile);
+
+	return score;
+}
+
+float CScene_Start::loadOption()
+{
+	FILE* pFile = nullptr;
+
+	wstring path = CPathManager::getInstance()->getContentRelativePath();
+	path += L"\\option.dat";
+
+	_wfopen_s(&pFile, path.c_str(), L"rb");      // w : write, b : binary
+	if (pFile == nullptr)
+	{
+		return 0.5f;
+	}
+	float volume = 0.5f;
+	float musicVolume = 0.5f;
+
+	fread(&volume, sizeof(float), 1, pFile);
+	fread(&musicVolume, sizeof(float), 1, pFile);
+
+	g_volume = volume;
+	g_musicVolume = musicVolume;
+
+	fclose(pFile);
+
+	return volume;
+}
+
+void CScene_Start::saveOption()
+{
+	wstring filePath = CPathManager::getInstance()->getContentRelativePath();
+	filePath += L"\\option.dat";
+	FILE* file = nullptr;
+
+	_wfopen_s(&file, filePath.c_str(), L"wb");
+	if (file == nullptr)
+		return;
+
+	float volume = g_volume;
+	float musicVolume = g_musicVolume;
+
+	fwrite(&volume, sizeof(float), 1, file);
+	fwrite(&musicVolume, sizeof(float), 1, file);
+
+	fclose(file);
 }

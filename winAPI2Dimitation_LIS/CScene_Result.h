@@ -12,5 +12,6 @@ public:
 	virtual void render(HDC& hDC);
 	virtual void Enter();
 	virtual void Exit();
+	void saveHighScore();
 };
 
