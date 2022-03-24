@@ -68,19 +68,7 @@ void CScene_Start::update()
 		}
 	}
 
-	if (g_isDeveloperMode == true)
-	{
-		if (KEY('R') == (UINT)Key_State::Tap)
-		{
-			CHANGESCENE(Group_Scene::Stage_01);
-		}
-		if (KEY('Y') == (UINT)Key_State::Tap)
-		{
-			CHANGESCENE(Group_Scene::Result);
-		}
-	}
-
-	if (KEY('T') == (UINT)Key_State::Tap)
+	if (KEY('E') == (UINT)Key_State::Tap)
 	{
 		g_isDeveloperMode = !g_isDeveloperMode;
 	}

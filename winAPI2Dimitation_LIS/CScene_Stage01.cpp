@@ -868,16 +868,8 @@ void CScene_Stage01::update()
 				getArrObj()[i][j]->update();
 		}
 	}
-	
-	if (g_isDeveloperMode == true)
-	{
-		if (KEY('R') == (UINT)Key_State::Tap)
-		{
-			CHANGESCENE(Group_Scene::Start);
-		}
-	}
 
-	if (KEY('T') == (UINT)Key_State::Tap)
+	if (KEY('E') == (UINT)Key_State::Tap)
 	{
 		g_isDeveloperMode = !g_isDeveloperMode;
 	}
@@ -957,8 +949,6 @@ void CScene_Stage01::update()
 	}
 
 	timer += DT();
-	if (timerCount == 0)
-		timerCount = 369;
 	if (timer >= 0.1)
 	{
 		timer = 0;
@@ -1289,6 +1279,17 @@ void CScene_Stage01::render()
 		{
 			if ((*iter)->getIsDelete() == false)
 			{
+				if (g_isDeveloperMode == true)
+				{
+					if (i == (UINT)Group_GameObj::Enemy ||
+						i == (UINT)Group_GameObj::Player || 
+						i == (UINT)Group_GameObj::Item)
+					{
+						(*iter)->viewData();
+					}
+				}
+				
+				
 				if ((*iter)->getIsRender() == true)
 				{
 					(*iter)->render();

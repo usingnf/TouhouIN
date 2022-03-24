@@ -356,6 +356,18 @@ void CGameObject::setUpdateCallBack(BTN_FUNC1 pFunc1)
 	this->m_pFunc1 = pFunc1;
 }
 
+void CGameObject::viewData()
+{
+	string str = "pos: " + std::to_string((int)pos.x) + "/" + std::to_string((int)pos.y) + "\n";
+	str += "hp: " + std::to_string((int)hp) + "\n";
+	str += "speed: " + std::to_string((int)speed) + "\n";
+	str += "invinsible: " + std::to_string(isInvincible) +"\n";
+	wstring w;
+	w.assign(str.begin(), str.end());
+	CRenderManager::getInstance()->RenderText(w.c_str(), pos.x, pos.y, 200, 50,
+		10, RGB(255,255,255), Vec2(0, 0), 0, 0, 0);
+}
+
 
 void CGameObject::setAngle(double ang)
 {

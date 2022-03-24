@@ -197,8 +197,6 @@ void CPlayer::update()
 			}
 		}
 	}
-	
-
 
 	CAnimator* ani = getAnimator();
 	if (ani != nullptr)

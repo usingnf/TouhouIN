@@ -122,5 +122,7 @@ public:
 
 	void deleteComponent();
 	virtual void setUpdateCallBack(BTN_FUNC1 pFunc1);
+
+	void viewData();
 };
 
