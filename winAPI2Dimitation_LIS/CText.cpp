@@ -6,7 +6,7 @@ CText::CText()
 {
 	color = RGB(255, 255, 255);
 	fontSize = 10;
-	wcscpy_s(mtext, L"123");
+	wcscpy_s(mtext, L"null");
 }
 
 CText* CText::clone()
@@ -25,7 +25,7 @@ void CText::update()
 		m_pFunc1((DWORD_PTR)this);
 }
 
-void CText::render(HDC& hDC)
+void CText::render()
 {
 	if(getParent() == nullptr)
 		CRenderManager::getInstance()->RenderText(mtext, pos.x, pos.y, scale.x, scale.y, 

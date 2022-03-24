@@ -21,11 +21,6 @@ CPathManager::~CPathManager()
 
 }
 
-void CPathManager::init()
-{
-
-}
-
 const WCHAR* CPathManager::getContentPath()
 {
 	return szContentPath;

@@ -92,18 +92,6 @@ void CCameraManager::render(HDC& hDC)
 		(int)texture->getBitmapWidth(),
 		(int)texture->getBitmapHeight(),
 		bf);
-
-	
-	/*
-	BitBlt(hDC, 0, 0,
-		(int)texture->getBitmapWidth(),
-		(int)texture->getBitmapHeight(),
-		texture->getDC(),
-		0,
-		0, 
-		SRCCOPY
-	);
-	*/
 }
 
 void CCameraManager::update()

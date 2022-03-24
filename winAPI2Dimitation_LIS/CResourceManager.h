@@ -10,7 +10,6 @@ private:
 	map<wstring, CSound*> soundData;
 	map<wstring, CD2DImage*> m_mapD2DImg;
 public:
-	//void init();
 	CTexture* findTexture(const wstring& name);
 	CTexture* loadTexture(const wstring& name, const wstring& path);
 	CTexture* createTexture(const wstring& name, UINT width, UINT height);

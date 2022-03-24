@@ -3,7 +3,7 @@
 
 CUI::CUI()
 {
-	texture = CResourceManager::getInstance()->loadTexture(L"Star", L"Mario_Item2.bmp");
+	image = CResourceManager::getInstance()->loadD2DImage(L"background.png", L"\\texture\\background.png");
 	bCameraAffected = false;
 	bMouseOn = false;
 	bLbtnDown = false;
@@ -75,7 +75,7 @@ void CUI::finalupdate()
 	finalupdate_child();
 }
 
-void CUI::render(HDC& hDC)
+void CUI::render()
 {
 	Vec2 p = getFinalPos();
 	Vec2 s = getScale();
@@ -100,7 +100,7 @@ void CUI::render(HDC& hDC)
 		);
 	}
 
-	render_child(hDC);
+	render_child();
 }
 
 void CUI::update_child()
@@ -119,11 +119,11 @@ void CUI::finalupdate_child()
 	}
 }
 
-void CUI::render_child(HDC& hDC)
+void CUI::render_child()
 {
 	for (UINT i = 0; i < vecChild.size(); i++)
 	{
-		vecChild[i]->render(hDC);
+		vecChild[i]->render();
 	}
 }
 
@@ -213,7 +213,6 @@ void CUI::setImagePos(Vec2 start, Vec2 end)
 
 void CUI::mouseOnCheck()
 {
-	//카메라 이동시 위치가 제대로 잡히지 않음.
 	Vec2 mousePos = GETMOUSEPOS();
 	Vec2 fPos = getFinalPos();
 	Vec2 s = getScale();

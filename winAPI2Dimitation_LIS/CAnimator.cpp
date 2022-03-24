@@ -27,10 +27,10 @@ void CAnimator::update()
 		curAnimation->update();
 }
 
-void CAnimator::render(HDC hDC)
+void CAnimator::render()
 {
 	if (curAnimation != nullptr)
-		curAnimation->render(hDC);
+		curAnimation->render();
 }
 
 CGameObject* CAnimator::getOwner()
@@ -46,7 +46,6 @@ void CAnimator::createAnimation(const wstring& strName, CD2DImage* tex, Vec2 lt,
 	{
 		m_mapAni.erase(m_mapAni.find(strName));
 	}
-	//assert(nullptr == pAni);
 
 	pAni = new CAnimation;
 
@@ -56,23 +55,6 @@ void CAnimator::createAnimation(const wstring& strName, CD2DImage* tex, Vec2 lt,
 
 	m_mapAni.insert(make_pair(strName, pAni));
 }
-
-/*
-void CAnimator::createAnimation(const wstring& name, CTexture* tex, Vec2 leftTop, Vec2 slice, Vec2 step, float duration, UINT frameCount)
-{
-	CAnimation* ani = findAnimation(name);
-	if (ani != nullptr)
-	{
-		return;
-	}
-	ani = new CAnimation();
-	ani->animator = this;
-	ani->name = name;
-	ani->create(tex, leftTop, slice, step, duration, frameCount);
-
-	m_mapAni.insert(make_pair(name, ani));
-}
-*/
 
 CAnimation* CAnimator::findAnimation(const wstring& name)
 {

@@ -25,7 +25,7 @@ void CTexture::load(const std::wstring& path)
 		// faile to load
 	}
 
-	hDC = CreateCompatibleDC(CCore::getInstance()->getMainDC());
+	//hDC = CreateCompatibleDC(CCore::getInstance()->getMainDC());
 	HBITMAP hOldBitmap = (HBITMAP)SelectObject(hDC, hBitmap);
 	GetObject(hBitmap, sizeof(BITMAP), &hBitmapInfo);
 }
@@ -34,7 +34,7 @@ void CTexture::create(UINT width, UINT height)
 {
 	int a = 0;
 
-	HDC mainDC = CCore::getInstance()->getMainDC();
+	HDC mainDC = nullptr;//CCore::getInstance()->getMainDC();
 	hBitmap = CreateCompatibleBitmap(mainDC, width, height);
 	hDC = CreateCompatibleDC(mainDC);
 

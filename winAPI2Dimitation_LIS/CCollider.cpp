@@ -41,26 +41,20 @@ void CCollider::finalupdate()
 	colliderPos = objPos + offSet;
 }
 
-void CCollider::render(HDC& hDC)
+void CCollider::render()
 {
 	if (g_isDeveloperMode == false)
 		return;
-	Group_Pen pType;
+	
 	COLORREF color = RGB(0, 0, 0);
 	if (collCount)
 	{
 		color = RGB(255, 0, 0);
-		pType = Group_Pen::Red;
 	}
 	else
 	{
 		color = RGB(0, 255, 0);
-		pType = Group_Pen::Green;
 	}
-		
-
-	SelectGDI brush(hDC, Group_Brush::Hollow);
-	SelectGDI pen(hDC, pType);
 
 	Vec2 camPos = CCameraManager::getInstance()->getRenderPos(colliderPos);
 

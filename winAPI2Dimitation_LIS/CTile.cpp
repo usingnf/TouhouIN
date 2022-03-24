@@ -4,7 +4,7 @@
 CTile::CTile()
 {
 	this->scale = Vec2(Tile_Size, Tile_Size);
-	texture = CResourceManager::getInstance()->loadTexture(L"Tile", L"tilemap.bmp");
+	image = CResourceManager::getInstance()->loadD2DImage(L"Tile", L"\\texture\\tilemap.bmp");
 	tileIndex = 0;
 }
 
@@ -26,32 +26,30 @@ void CTile::render(HDC& hDC)
 	Vec2 p = CCameraManager::getInstance()->getRenderPos(getPos());
 	Vec2 s = getScale();
 
-	//Rectangle(hDC, p.x, p.y, p.x + s.x, p.y + s.y);
-
-	int width = texture->getBitmapWidth();
-	int height = texture->getBitmapHeight();
+	int width = image->getWidth();
+	int height = image->getHeight();
 	int maxX = width / Tile_Size;
 	int maxY = height / Tile_Size;
 	int curX = tileIndex % maxX;
 	int curY = (tileIndex / maxX) % maxY;
 
-	TransparentBlt(hDC,
-		(int)p.x,
-		(int)p.y,
-		(int)s.x,
-		(int)s.y,
-		texture->getDC(),
+	CRenderManager::getInstance()->RenderFrame(
+		image,
+		p.x - (s.x / 2.f),
+		p.y - (s.y / 2.f),
+		p.x + (s.x / 2.f),
+		p.y + (s.y / 2.f),
 		(int)(curX * Tile_Size),
 		(int)(curY * Tile_Size),
 		Tile_Size,
 		Tile_Size,
-		RGB(255, 0, 255));
-	
+		alpha, pos, angle
+	);	
 }
 
-void CTile::setTexture(CTexture* tex)
+void CTile::setImage(CD2DImage* image)
 {
-	this->texture = tex;
+	this->image = image;
 }
 
 void CTile::setTileIndex(int index)

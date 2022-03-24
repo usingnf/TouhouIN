@@ -262,7 +262,7 @@ void CScene_Start::update()
 	}
 }
 
-void CScene_Start::render(HDC& hDC)
+void CScene_Start::render()
 {
 	for (int i = 0; i < (UINT)Group_GameObj::Size; i++)
 	{
@@ -272,7 +272,7 @@ void CScene_Start::render(HDC& hDC)
 			{
 				if ((*iter)->getIsRender() == true)
 				{
-					(*iter)->render(hDC);
+					(*iter)->render();
 				}
 				iter++;
 			}

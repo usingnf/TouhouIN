@@ -14,10 +14,8 @@ private:
 	Vec2 m_CameraMousePos;
 public:
 	void update();
-	void init();
 
 	int getButtonState(const int& key);
-
 
 	Vec2 getMousePos();
 	Vec2 getCameraMousePos();

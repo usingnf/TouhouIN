@@ -7,8 +7,6 @@ CSpell::CSpell()
 {
 	name = L"Spell";
 
-	createCollider();
-	getCollider()->setColliderScale(Vec2(30, 30));
 	CAnimation* ani;
 
 	image = CResourceManager::getInstance()->loadD2DImage(L"Enemy.png", L"\\texture\\Enemy.png");
@@ -94,8 +92,6 @@ void CSpell::update()
 		}
 	}
 
-	
-
 	if (timer >= 0.1)
 	{
 		timerCount += 1;
@@ -113,9 +109,9 @@ void CSpell::update()
 		ani->update();
 }
 
-void CSpell::render(HDC& hDC)
+void CSpell::render()
 {
-	component_render(hDC);
+	component_render();
 }
 
 void CSpell::die()

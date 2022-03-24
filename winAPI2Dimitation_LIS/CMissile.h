@@ -9,7 +9,7 @@ public:
 	virtual CMissile* clone();
 	~CMissile();
 	virtual void update();
-	virtual void render(HDC& hDC);
+	virtual void render();
 
 	void setDamage(double damage);
 

@@ -7,7 +7,7 @@ public:
 	virtual ~CSpell();
 
 	virtual void update();
-	virtual void render(HDC& hDC);
+	virtual void render();
 
 	virtual void die();
 };

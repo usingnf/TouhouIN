@@ -154,16 +154,11 @@ extern Group_CharacterMode g_mode;
 #include "CSceneManager.h"
 #include "CCameraManager.h"
 #include "CUIManager.h"
-//#include "CUI.h"
-//#include "CPanelUI.h"
-//#include "CText.h"
-
+#include "CMissile.h"
 
 class CPlayer;
-#include "CMissile.h"
 class CEnemy;
 extern CPlayer* g_player;
-
 extern CMissile* g_missile[MAX_MISSILE];
 extern int g_missileIndex;
 extern CEnemy* g_boss;
@@ -179,8 +174,6 @@ extern CEnemy* g_boss;
 
 #define PI 3.141592
 #define RADIAN (PI/180)
-
-//#define MAXSIZE_PATH 255
 
 extern HINSTANCE hInst;
 extern HWND hWnd;

@@ -59,7 +59,6 @@ void CScene_Tile::update()
 
 void buttonFunc(DWORD_PTR param1, DWORD_PTR param2)
 {
-	//CEventManager::getInstance()->changeScene(Group_Scene::Start);
 	CSoundManager::getInstance()->addSound(L"testsound", L"testsound.wav", false, false);
 	CSoundManager::getInstance()->play(L"testsound");
 }
@@ -132,7 +131,6 @@ void CScene_Tile::setTileIndex()
 
 void CScene_Tile::saveTile(const wstring& path)
 {
-	//wstring filePath = CPathManager::getInstance()->getContentPath();
 	wstring filePath = path;
 	FILE* file = nullptr;
 	
@@ -276,7 +274,6 @@ INT_PTR CALLBACK tileProc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 				UINT iCurRow = (m_iIdx / iMaxCol) % iMaxRow;
 				UINT iCurCol = (m_iIdx % iMaxCol);
 
-				
 				StretchBlt(GetDC(hDlg),
 					(int)(150),
 					(int)(200),
@@ -288,16 +285,6 @@ INT_PTR CALLBACK tileProc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 					(int)CTile::Tile_Size,
 					(int)CTile::Tile_Size,
 					SRCCOPY);
-				/*BitBlt(GetDC(hDlg),
-					(int)(150),
-					(int)(200),
-					(int)(CTile::Tile_Size),
-					(int)(CTile::Tile_Size),
-					pTex->getDC(),
-					(int)(iCurCol * CTile::Tile_Size),
-					(int)(iCurRow * CTile::Tile_Size),
-					SRCCOPY);
-					*/
 
 				tileScene->setIndex(m_iIdx);
 			}

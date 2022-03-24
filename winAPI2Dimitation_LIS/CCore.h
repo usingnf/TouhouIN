@@ -32,24 +32,10 @@ class CCore
 {
 	SINGLETON(CCore);
 private:
-	HDC m_hDC;
-	CTexture* m_MemTexture;
-
-	//HDC m_hMemDC;
-	//HBITMAP m_hBMP;
-
-	HPEN m_arrPen[(UINT)Group_Pen::Size];
-	HBRUSH m_arrBrush[(UINT)Group_Brush::Size];
+	
 public:
 	void init();
 	void update();
-	//void finalupdate();
 	void render();
-	
-	HDC getMainDC();
-
-	void createBrushPen();
-	HPEN getPen(Group_Pen pen);
-	HBRUSH getBrush(Group_Brush brush);
 };
 

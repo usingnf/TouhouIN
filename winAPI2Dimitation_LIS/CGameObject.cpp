@@ -15,7 +15,6 @@ CGameObject::CGameObject()
 	drag = 0;
 	isFixed = false;
 
-	texture = nullptr;
 	image = nullptr;
 	collider = nullptr;
 	animator = nullptr;
@@ -43,7 +42,6 @@ CGameObject::CGameObject(const CGameObject& other)
 	animator = nullptr;
 
 	image = other.image;
-	//texture = other.texture;
 
 	if (nullptr != other.collider)
 	{
@@ -61,7 +59,6 @@ CGameObject::CGameObject(const CGameObject& other)
 	speed = other.speed;
 	hp = other.hp;
 	isDelete = false;
-
 }
 
 CGameObject::~CGameObject()
@@ -103,25 +100,23 @@ void CGameObject::finalupdate()
 	}
 }
 
-void CGameObject::render(HDC& hDC)
+void CGameObject::render()
 {
 	Vec2 camPos = CCameraManager::getInstance()->getRenderPos(pos);
 
-	Rectangle(hDC,
-		camPos.x - (scale.x / 2),
-		camPos.y - (scale.y / 2),
-		camPos.x + (scale.x / 2),
-		camPos.y + (scale.y / 2));
+	CRenderManager::getInstance()->RenderFillRectangle
+		(camPos.x - (scale.x / 2), camPos.y - (scale.y / 2),
+		camPos.x + (scale.x / 2), camPos.y + (scale.y / 2));
 
-	component_render(hDC);
+	component_render();
 }
 
-void CGameObject::component_render(HDC& hDC)
+void CGameObject::component_render()
 {
 	if(collider != nullptr)
-		collider->render(hDC);
+		collider->render();
 	if (animator != nullptr)
-		animator->render(hDC);
+		animator->render();
 }
 
 void CGameObject::setName(wstring _name)
@@ -403,7 +398,6 @@ CMissile* CGameObject::createMissile(const wstring& image, Vec2 leftTop, Vec2 im
 	missile->setImage(image, leftTop, imageSize);
 	missile->setIsUse(true);
 	missile->setHp(10);
-	//CREATEOBJECT(missile, type);
 
 	g_missileIndex += 1;
 

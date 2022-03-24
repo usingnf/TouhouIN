@@ -14,36 +14,6 @@ CUIManager::~CUIManager()
 
 void CUIManager::update()
 {
-	/*
-	CScene* curScene = CSceneManager::getInstance()->getCurScene();
-	const vector<CGameObject*>& vecUI = curScene->getGroupObject(Group_GameObj::UI);
-
-	for (int i = 0; i < vecUI.size(); i++)
-	{
-		CUI* ui = (CUI*)vecUI[i];
-		ui = getTargetUI(ui);
-
-		if (ui != nullptr)
-		{
-			ui->mouseOn();
-
-			if (KEY(VK_LBUTTON) == (UINT)Key_State::Tap)
-			{
-				ui->mouseLbtnDown();
-				ui->bLbtnDown = true;
-			}
-			else if (KEY(VK_LBUTTON) == (UINT)Key_State::Off)
-			{
-				ui->mouseLbtnUp();
-				if (ui->bLbtnDown == true)
-				{
-					ui->mouseLbtnClicked();
-				}
-				ui->bLbtnDown = false;
-			}
-		}
-	}*/
-	
 	CUI* focusedUI = getFocusedUI();
 
 	if (focusedUI == nullptr)

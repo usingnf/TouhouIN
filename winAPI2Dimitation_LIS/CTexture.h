@@ -19,7 +19,5 @@ public:
 	BITMAP getBitmapInfo();
 	int getBitmapWidth();
 	int getBitmapHeight();
-
-
 };
 

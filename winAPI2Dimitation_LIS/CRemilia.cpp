@@ -30,22 +30,6 @@ CRemilia::CRemilia()
 	ani = getAnimator()->findAnimation(L"right");
 	ani->setLoop(false);
 	ani->setReverse(true);
-	
-	/*
-	image = CResourceManager::getInstance()->loadD2DImage(L"Sakuya", L"\\texture\\Sakuya.png");
-	createAnimator();
-	getAnimator()->createAnimation(L"stay", image, Vec2(0, 0), Vec2(32, 48), Vec2(32, 0), 0.08, 4);
-	getAnimator()->createAnimation(L"left", image, Vec2(0, 48), Vec2(32, 48), Vec2(32, 0), 0.08, 7);
-	getAnimator()->createAnimation(L"right", image, Vec2(0, 48), Vec2(32, 48), Vec2(32, 0), 0.08, 7);
-	getAnimator()->play(L"stay");
-
-	CAnimation* ani;
-	ani = getAnimator()->findAnimation(L"stay");
-	ani->setLoop(true);
-
-	ani = getAnimator()->findAnimation(L"right");
-	ani->setReverse(true);
-	*/
 }
 
 CRemilia* CRemilia::clone()
@@ -94,7 +78,7 @@ void CRemilia::update()
 		ani->update();
 }
 
-void CRemilia::render(HDC& hDC)
+void CRemilia::render()
 {
-	component_render(hDC);
+	component_render();
 }

@@ -19,7 +19,6 @@ private:
 
 	vector<wstring> text;
 	
-
 protected:
 	double timer = 0;
 	int timerCount = 0;
@@ -34,7 +33,6 @@ public:
 	CScene();
 	virtual ~CScene();
 
-	
 	vector<CGameObject*>* getArrObj();
 	void setName(std::wstring name);
 	wstring getName();
@@ -46,8 +44,8 @@ public:
 
 	virtual void update();
 	virtual void finalupdate();
-	virtual void render(HDC& hDC);
-	void render_tile(HDC& hDC);
+	virtual void render();
+	void render_tile();
 
 	virtual void Enter() = 0;
 	virtual void Exit() = 0;

@@ -171,8 +171,4 @@ void CCollisionManager::unCheckGroup(Group_GameObj left, Group_GameObj right)
 void CCollisionManager::reset()
 {
 	memset(m_arrCheck, 0, sizeof(UINT) * (UINT)Group_GameObj::Size);
-	/*for (int i = 0; i < (UINT)Group_GameObj::Size; i++)
-	{
-		m_arrCheck[i] = 0;
-	}*/
 }

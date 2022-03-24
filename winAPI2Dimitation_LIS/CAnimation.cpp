@@ -5,7 +5,6 @@ CAnimation::CAnimation()
 {
 	name = L"Noname";
 	animator = nullptr;
-	//texture = nullptr;
 	image = nullptr;
 	curFrame = -1;
 	accTime = 0;
@@ -57,11 +56,10 @@ void CAnimation::update()
 				curFrame--;
 			}
 		}
-		
 	}
 }
 
-void CAnimation::render(HDC& hDC)
+void CAnimation::render()
 {
 	CGameObject* obj = animator->getOwner();
 	tAniFrame frm = vecFrame[curFrame];

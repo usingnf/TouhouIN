@@ -24,7 +24,7 @@ public:
 	CCollider& operator=(CCollider& other) = delete;
 
 	void finalupdate();
-	void render(HDC& hDC);
+	void render();
 
 	Vec2 getOffSet();
 	Vec2 getColliderPos();

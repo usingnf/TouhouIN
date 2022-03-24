@@ -21,7 +21,7 @@ public:
 	CScene_Stage01();
 	~CScene_Stage01();
 	virtual void update();
-	virtual void render(HDC& hDC);
+	virtual void render();
 	virtual void Enter();
 	virtual void Exit();
 

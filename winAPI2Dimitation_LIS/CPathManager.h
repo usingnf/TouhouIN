@@ -7,8 +7,6 @@ public:
 private:
 	WCHAR szContentPath[MAXSIZE_PATH];
 public:
-	
-	void init();
 	const WCHAR* getContentPath();
 	const WCHAR* getContentRelativePath();
 };

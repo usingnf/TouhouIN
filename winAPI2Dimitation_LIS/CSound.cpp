@@ -90,7 +90,6 @@ void CSound::load(const wstring& path, bool isBGM)
 	char str[255];
 	wcstombs_s(nullptr, str, path.c_str(), 255);
 
-	
 	if (isBGM == true)
 	{
 		result = CSoundManager::getInstance()->getSystem()->createStream(str, FMOD_DEFAULT, nullptr, &m_sound);

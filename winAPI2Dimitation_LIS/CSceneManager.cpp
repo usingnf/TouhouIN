@@ -56,9 +56,9 @@ void CSceneManager::update()
 	curScene->finalupdate();
 }
 
-void CSceneManager::render(HDC& hDC)
+void CSceneManager::render()
 {
-	curScene->render(hDC);
+	curScene->render();
 }
 
 CScene* CSceneManager::getCurScene()

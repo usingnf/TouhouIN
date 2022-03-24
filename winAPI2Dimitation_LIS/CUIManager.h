@@ -12,6 +12,5 @@ public:
 private:
 	CUI* getTargetUI(CUI* parentUI);
 	CUI* getFocusedUI();
-	
 };
 

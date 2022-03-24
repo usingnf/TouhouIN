@@ -16,7 +16,6 @@ public:
 	virtual CButtonUI* Clone();
 	~CButtonUI();
 	
-
 	virtual void mouseOn();
 	virtual void mouseLbtnDown();
 	virtual void mouseLbtnUp();

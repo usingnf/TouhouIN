@@ -28,7 +28,6 @@ CResourceManager::~CResourceManager()
 		}
 	}
 	soundData.clear();
-	
 }
 
 
@@ -131,7 +130,6 @@ CSound* CResourceManager::loadSound(const wstring& name, const wstring& path)
 
 CD2DImage* CResourceManager::findD2DImage(const wstring& strKey)
 {
-	// CD2DImage 키 값을 통해 탐색
 	map<wstring, CD2DImage*>::iterator iter = m_mapD2DImg.find(strKey);
 
 	if (m_mapD2DImg.end() == iter)

@@ -5,8 +5,8 @@
 
 class CD2DImage : public CResource
 {
+protected:
 	ID2D1Bitmap* m_pBitmap;
-
 public:
 	CD2DImage();
 	~CD2DImage();

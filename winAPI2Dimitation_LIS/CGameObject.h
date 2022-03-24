@@ -1,10 +1,7 @@
 #pragma once
 #include "CAnimator.h"
 class CMissile;
-
 class CCollider;
-//class CAnimator;
-class CTexture;
 class CD2DImage;
 
 typedef void(*BTN_FUNC1)(DWORD_PTR);
@@ -27,7 +24,6 @@ protected:
 	bool isFixed;
 	bool isInvincible = false;
 
-	CTexture* texture;
 	CD2DImage* image;
 	CCollider* collider;
 	CAnimator* animator;
@@ -56,8 +52,8 @@ public:
 
 	virtual void update();
 	virtual void finalupdate(); //collider¿ë
-	virtual void render(HDC& hDC);
-	virtual void component_render(HDC& hDC);
+	virtual void render();
+	virtual void component_render();
 	
 	void setName(wstring _name);
 	wstring getName();

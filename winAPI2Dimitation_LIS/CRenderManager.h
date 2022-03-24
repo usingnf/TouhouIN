@@ -8,8 +8,6 @@
 
 using namespace D2D1;
 
-//class CD2DImage;
-
 class CRenderManager
 {
 	SINGLETON(CRenderManager);

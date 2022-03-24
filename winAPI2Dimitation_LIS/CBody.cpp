@@ -8,9 +8,6 @@ CBody::CBody()
 	scale = pScale;
 	name = L"Body";
 	
-
-	//createCollider();
-	//getCollider()->setColliderScale(Vec2(30, 30));
 	createAnimator();
 	CAnimation* ani = nullptr;
 
@@ -37,7 +34,6 @@ CBody::CBody()
 	getAnimator()->createAnimation(L"leftSakuya", image, Vec2(0, 48), Vec2(32, 48), Vec2(32, 0), 0.08, 7);
 	getAnimator()->createAnimation(L"rightSakuya", image, Vec2(0, 48), Vec2(32, 48), Vec2(32, 0), 0.08, 7);
 	getAnimator()->play(L"staySakuya");
-
 
 	ani = getAnimator()->findAnimation(L"staySakuya");
 	ani->setLoop(true);
@@ -138,7 +134,6 @@ void CBody::update()
 
 			}
 			
-
 			if (KEY('Z') == (UINT)Key_State::Hold)
 			{
 				missileTimer += DT();
@@ -158,7 +153,6 @@ void CBody::update()
 						CSoundManager::getInstance()->play(L"se_plst00.wav", 0.5f);
 						createMissile(L"RemiliaMissile.png", Vec2(14, 0), Vec2(8, 48), this->getPos(), Vec2(8, 48), Vec2(10, 30), 500, 0, 1, Group_GameObj::Missile);
 					}
-
 				}
 			}
 		}
@@ -180,20 +174,16 @@ void CBody::update()
 					getAnimator()->play(L"stayRemilia");
 			}
 		}
-
-		
 	}
-
-	
 
 	CAnimator* ani = getAnimator();
 	if (ani != nullptr)
 		ani->update();
 }
 
-void CBody::render(HDC& hDC)
+void CBody::render()
 {
-	component_render(hDC);
+	component_render();
 }
 
 CMissile* CBody::createMissile(const wstring& image, Vec2 leftTop, Vec2 imageSize, Vec2 pos, Vec2 size, Vec2 colSize, double speed, double angle, double damage, Group_GameObj type)

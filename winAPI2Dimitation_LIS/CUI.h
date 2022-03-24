@@ -16,7 +16,6 @@ private:
 	bool bMouseOn = false;
 	bool bLbtnDown = false;
 
-
 public:
 	CUI();
 	CUI(const CUI& other);
@@ -25,11 +24,11 @@ public:
 
 	virtual void update();
 	virtual void finalupdate();
-	virtual void render(HDC& hDC);
+	virtual void render();
 
 	void update_child();
 	void finalupdate_child();
-	void render_child(HDC& hDC);
+	void render_child();
 
 	virtual void mouseOn();
 	virtual void mouseLbtnDown();

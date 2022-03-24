@@ -14,7 +14,7 @@ public:
 	virtual CEnemy* clone();
 	~CEnemy();
 	virtual void update();
-	virtual void render(HDC& hDC);
+	virtual void render();
 
 	void setMaxSpeed(double speed);
 	void setDestPos(Vec2 pos);
@@ -25,7 +25,5 @@ public:
 	virtual void die();
 
 	void onCollisionEnter(CCollider* other);
-	void onCollisionStay(CCollider* other);
-	void onCollisionExit(CCollider* other);
 };
 

@@ -16,8 +16,6 @@ CKeyManager::~CKeyManager()
 
 void CKeyManager::update()
 {
-	
-
 	//창 비활성화시 키 입력 해제.
 	HWND curWnd = GetFocus();
 	if (hWnd != curWnd)
@@ -75,11 +73,6 @@ void CKeyManager::update()
 	m_curMousePos.y = p.y;
 	m_CameraMousePos.x = CCameraManager::getInstance()->getRealPos(m_curMousePos).x;
 	m_CameraMousePos.y = CCameraManager::getInstance()->getRealPos(m_curMousePos).y;
-}
-
-void CKeyManager::init()
-{
-	
 }
 
 int CKeyManager::getButtonState(const int& key)

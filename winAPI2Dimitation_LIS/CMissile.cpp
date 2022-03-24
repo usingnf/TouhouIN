@@ -60,10 +60,10 @@ void CMissile::update()
 	}
 }
 
-void CMissile::render(HDC& hDC)
+void CMissile::render()
 {
 	if(isUse)
-		component_render(hDC);
+		component_render();
 }
 
 void CMissile::setDamage(double damage)

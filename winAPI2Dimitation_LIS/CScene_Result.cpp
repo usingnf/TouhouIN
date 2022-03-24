@@ -32,7 +32,7 @@ void CScene_Result::update()
 	}
 }
 
-void CScene_Result::render(HDC& hDC)
+void CScene_Result::render()
 {
 	for (int i = 0; i < (UINT)Group_GameObj::Size; i++)
 	{
@@ -42,7 +42,7 @@ void CScene_Result::render(HDC& hDC)
 			{
 				if ((*iter)->getIsRender() == true)
 				{
-					(*iter)->render(hDC);
+					(*iter)->render();
 				}
 				iter++;
 			}
@@ -232,7 +232,6 @@ void CScene_Result::Enter()
 	omittion2->setSize(18);
 	omittion2->setColor(RGB(255, 255, 255));
 	title->AddChild(omittion2);
-
 }
 
 void CScene_Result::Exit()

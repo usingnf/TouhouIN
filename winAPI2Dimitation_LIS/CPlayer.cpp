@@ -39,7 +39,6 @@ CPlayer::~CPlayer()
 
 void CPlayer::update()
 {
-
 	if (g_gameState != Group_GameState::Play)
 	{
 		return;
@@ -108,7 +107,6 @@ void CPlayer::update()
 			if (timer2 <= 0.5)
 			{
 				this->setScale(this->getScale() + Vec2(300 * t, 300 * t));
-
 			}
 			else
 			{
@@ -151,7 +149,8 @@ void CPlayer::update()
 	}
 	else if (KEY(VK_LSHIFT) == (UINT)Key_State::Off)
 	{
-		this->setIsRender(false);
+		if(getAnimator()->getCurAnimationName() != L"die")
+			this->setIsRender(false);
 	}
 
 	if (KEY('X') == (UINT)Key_State::Tap)
@@ -160,7 +159,9 @@ void CPlayer::update()
 		{
 			getAnimator()->play(L"stay");
 			this->setScale(Vec2(64, 64));
+			this->setIsRender(false);
 			
+			timer2 = 0;
 			CPlayer::isSpell = true;
 			g_spell += -1;
 			g_bombUse += 1;
@@ -192,8 +193,6 @@ void CPlayer::update()
 				g_mode = (Group_CharacterMode)((UINT)g_mode - 1);
 			}
 		}
-
-		
 	}
 	
 
@@ -203,9 +202,9 @@ void CPlayer::update()
 		ani->update();
 }
 
-void CPlayer::render(HDC& hDC)
+void CPlayer::render()
 {
-	component_render(hDC);
+	component_render();
 }
 
 void CPlayer::die()

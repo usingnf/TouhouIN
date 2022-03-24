@@ -101,13 +101,13 @@ void CScene::finalupdate()
 	}
 }
 
-void CScene::render(HDC& hDC)
+void CScene::render()
 {
 	for (int i = 0; i < (UINT)Group_GameObj::Size; i++)
 	{
 		if (i == (UINT)Group_GameObj::Tile)
 		{
-			render_tile(hDC);
+			render_tile();
 			continue;
 		}
 
@@ -115,7 +115,7 @@ void CScene::render(HDC& hDC)
 		{
 			if ((*iter)->getIsDelete() == false)
 			{
-				(*iter)->render(hDC);
+				(*iter)->render();
 				iter++;
 			}
 			else
@@ -126,7 +126,7 @@ void CScene::render(HDC& hDC)
 	}
 }
 
-void CScene::render_tile(HDC& hDC)
+void CScene::render_tile()
 {
 	const vector<CGameObject*>& vecTile = getGroupObject(Group_GameObj::Tile);
 
@@ -136,9 +136,6 @@ void CScene::render_tile(HDC& hDC)
 	int x = (int)fptLeftTop.x / CTile::Tile_Size;
 	int y = (int)fptLeftTop.y / CTile::Tile_Size;
 	int iLTIdx = tileX * y + x;
-
-	int a = 0;
-	
 
 	int width = (int)WS_WIDTH / CTile::Tile_Size;
 	int height = (int)WS_HEIGHT / CTile::Tile_Size;
@@ -151,16 +148,8 @@ void CScene::render_tile(HDC& hDC)
 				continue;
 			}
 			int iIdx = (tileX * iCurRow) + iCurCol;
-
-			
-			a++;
-			vecTile[iIdx]->render(hDC);
-			
+			vecTile[iIdx]->render();
 		}
-	}
-	if (x > 0)
-	{
-		int b = 0;
 	}
 }
 
@@ -180,7 +169,7 @@ void CScene::createTile(UINT x, UINT y)
 		{
 			CTile* tile = new CTile();
 			tile->setPos(Vec2(j * CTile::Tile_Size, i * CTile::Tile_Size));
-			tile->setTexture(CResourceManager::getInstance()->loadTexture(L"Tile", L"tilemap.bmp"));
+			tile->setImage(CResourceManager::getInstance()->loadD2DImage(L"Tile", L"tilemap.bmp"));
 			tile->setTileIndex(3);
 			AddObject(tile, Group_GameObj::Tile);
 		}

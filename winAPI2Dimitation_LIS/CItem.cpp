@@ -106,7 +106,7 @@ void CItem::update()
 
 void CItem::render(HDC& hDC)
 {
-	component_render(hDC);
+	component_render();
 }
 
 void CItem::onCollisionEnter(CCollider* other)

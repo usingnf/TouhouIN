@@ -73,9 +73,6 @@
     <Filter Include="5. Component\2. Animator">
       <UniqueIdentifier>{b8a656c4-aefa-4ec3-9c0c-746bc290275f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="10. Util\SelectGDI">
-      <UniqueIdentifier>{867d00fb-996f-4b8c-ae7d-99a45bd06deb}</UniqueIdentifier>
-    </Filter>
     <Filter Include="1. Engine\CollisionManager">
       <UniqueIdentifier>{d9aa4e4d-6308-4beb-9bf9-ec033c800a3d}</UniqueIdentifier>
     </Filter>
@@ -173,9 +170,6 @@
     </ClInclude>
     <ClInclude Include="CCollider.h">
       <Filter>5. Component\1. Collider</Filter>
-    </ClInclude>
-    <ClInclude Include="SelectGDI.h">
-      <Filter>10. Util\SelectGDI</Filter>
     </ClInclude>
     <ClInclude Include="CCollisionManager.h">
       <Filter>1. Engine\CollisionManager</Filter>

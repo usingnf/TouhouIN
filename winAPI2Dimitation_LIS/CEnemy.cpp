@@ -136,9 +136,9 @@ void CEnemy::update()
 		ani->update();
 }
 
-void CEnemy::render(HDC& hDC)
+void CEnemy::render()
 {
-	component_render(hDC);
+	component_render();
 }
 
 void CEnemy::setMaxSpeed(double speed)
@@ -240,15 +240,5 @@ void CEnemy::onCollisionEnter(CCollider* other)
 			}
 		}
 	}
-
-}
-
-void CEnemy::onCollisionStay(CCollider* other)
-{
-	
-}
-
-void CEnemy::onCollisionExit(CCollider* other)
-{
 
 }

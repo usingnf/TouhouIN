@@ -9,7 +9,7 @@ public:
 	CScene_Result();
 	~CScene_Result();
 	virtual void update();
-	virtual void render(HDC& hDC);
+	virtual void render();
 	virtual void Enter();
 	virtual void Exit();
 	void saveHighScore();

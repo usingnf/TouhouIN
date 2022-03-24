@@ -4,7 +4,6 @@
 CSoundManager::CSoundManager()
 {
 	m_system = nullptr;
-	
 }
 
 CSoundManager::~CSoundManager()

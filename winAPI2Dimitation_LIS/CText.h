@@ -12,7 +12,7 @@ public:
 	virtual CText* clone();
 	~CText();
 	virtual void update();
-	virtual void render(HDC& hDC);
+	virtual void render();
 	void setText(const WCHAR* text);
 	void setSize(float size);
 	void setHeightAlignment(Type_TextHeightAlignment align);

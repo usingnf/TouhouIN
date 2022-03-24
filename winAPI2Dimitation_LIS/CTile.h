@@ -13,7 +13,7 @@ public:
 	virtual void update();
 	virtual void render(HDC& hDC);
 
-	void setTexture(CTexture* tex);
+	void setImage(CD2DImage* image);
 	void setTileIndex(int index);
 
 	void save(FILE* pFile);
