@@ -124,6 +124,7 @@ bool CMissile::getIsUse()
 void CMissile::recycleMissile()
 {
 	timer = 0;
+	timer2 = 0;
 	timerCount = 0;
 	m_pFunc1 = nullptr;
 	isUse = false;

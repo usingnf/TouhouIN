@@ -846,7 +846,8 @@ void WriggleAi01(DWORD_PTR self)
 		timerCount += 1;
 		CSceneManager::getInstance()->getCurScene()->startDialog();
 		g_boss->setUpdateCallBack(WriggleAi02);
-		g_boss->setHp(30);
+		g_boss->setHp(200);
+		g_boss->setMaxHp(200);
 		g_boss->setTimer(0);
 		g_boss->setTimerCount(0);
 	}
@@ -956,6 +957,8 @@ void CScene_Stage01::update()
 	}
 
 	timer += DT();
+	if (timerCount == 0)
+		timerCount = 369;
 	if (timer >= 0.1)
 	{
 		timer = 0;
@@ -985,6 +988,7 @@ void CScene_Stage01::update()
 		enemy->setHp(10);
 		enemy->setScale(Vec2(32, 32));
 		enemy->setUpdateCallBack(enemyAi02);
+		enemy->setItemDrop(Group_Item::Score, 2);
 		AddObject(enemy, Group_GameObj::Enemy);
 	}
 	//오른쪽 등장
@@ -1005,6 +1009,7 @@ void CScene_Stage01::update()
 		enemy->setHp(10);
 		enemy->setScale(Vec2(32, 32));
 		enemy->setUpdateCallBack(enemyAi03);
+		enemy->setItemDrop(Group_Item::Score, 2);
 		AddObject(enemy, Group_GameObj::Enemy);
 	}
 	//좌측 원형공격
@@ -1023,6 +1028,7 @@ void CScene_Stage01::update()
 		enemy->setHp(10);
 		enemy->setScale(Vec2(32, 32));
 		enemy->setUpdateCallBack(enemyAi04);
+		enemy->setItemDrop(Group_Item::Score, 2);
 		AddObject(enemy, Group_GameObj::Enemy);
 	}
 
@@ -1040,6 +1046,7 @@ void CScene_Stage01::update()
 		enemy->setHp(10);
 		enemy->setScale(Vec2(32, 32));
 		enemy->setUpdateCallBack(enemyAi04);
+		enemy->setItemDrop(Group_Item::Life, 1);
 		AddObject(enemy, Group_GameObj::Enemy);
 
 	}
@@ -1052,7 +1059,6 @@ void CScene_Stage01::update()
 		random3 = -getRandomInt(0, 30);
 		random4 = -getRandomInt(0, 30);
 
-
 		enemy = new CEnemy();
 		enemy->setPos(Vec2(0 + random1, -10 + random2));
 		enemy->setDestPos(Vec2(STAGE_WIDTH / 3 + random3, STAGE_HEIGHT / 3 + random4));
@@ -1061,6 +1067,7 @@ void CScene_Stage01::update()
 		enemy->setHp(10);
 		enemy->setScale(Vec2(32, 32));
 		enemy->setUpdateCallBack(enemyAi02);
+		enemy->setItemDrop(Group_Item::Score, 2);
 		AddObject(enemy, Group_GameObj::Enemy);
 	}
 	//오른쪽 등장
@@ -1072,7 +1079,6 @@ void CScene_Stage01::update()
 		random3 = -getRandomInt(0, 30);
 		random4 = -getRandomInt(0, 30);
 
-
 		enemy = new CEnemy();
 		enemy->setPos(Vec2(STAGE_WIDTH - random1, -10 + random2));
 		enemy->setDestPos(Vec2(STAGE_WIDTH / 2 + STAGE_WIDTH / 3 + random3, STAGE_HEIGHT / 3 + random4));
@@ -1081,6 +1087,7 @@ void CScene_Stage01::update()
 		enemy->setHp(10);
 		enemy->setScale(Vec2(32, 32));
 		enemy->setUpdateCallBack(enemyAi03);
+		enemy->setItemDrop(Group_Item::Score, 2);
 		AddObject(enemy, Group_GameObj::Enemy);
 	}
 	//양쪽 원형 공격
@@ -1098,6 +1105,7 @@ void CScene_Stage01::update()
 		enemy->setHp(10);
 		enemy->setScale(Vec2(32, 32));
 		enemy->setUpdateCallBack(enemyAi04);
+		enemy->setItemDrop(Group_Item::Spell, 2);
 		AddObject(enemy, Group_GameObj::Enemy);
 
 		random1 = getRandomInt(-30, 30);
@@ -1110,6 +1118,7 @@ void CScene_Stage01::update()
 		enemy->setHp(10);
 		enemy->setScale(Vec2(32, 32));
 		enemy->setUpdateCallBack(enemyAi04);
+		enemy->setItemDrop(Group_Item::Score, 2);
 		AddObject(enemy, Group_GameObj::Enemy);
 	}
 	//양쪽 원형 공격 + 유도공격
@@ -1128,6 +1137,7 @@ void CScene_Stage01::update()
 		enemy->setScale(Vec2(32, 32));
 		enemy->setUpdateCallBack(enemyAi05);
 		enemy->setFixed(true);
+		enemy->setItemDrop(Group_Item::Power, 1);
 		AddObject(enemy, Group_GameObj::Enemy);
 
 		random1 = getRandomInt(-30, 30);
@@ -1141,6 +1151,7 @@ void CScene_Stage01::update()
 		enemy->setScale(Vec2(32, 32));
 		enemy->setFixed(true);
 		enemy->setUpdateCallBack(enemyAi05);
+		enemy->setItemDrop(Group_Item::Power, 1);
 		AddObject(enemy, Group_GameObj::Enemy);
 	}
 	//좌측 등장
@@ -1152,7 +1163,6 @@ void CScene_Stage01::update()
 		random3 = -getRandomInt(0, 30);
 		random4 = -getRandomInt(0, 30);
 
-
 		enemy = new CEnemy();
 		enemy->setPos(Vec2(0 + random1, -10 + random2));
 		enemy->setDestPos(Vec2(STAGE_WIDTH / 3 + random3, STAGE_HEIGHT / 3 + random4));
@@ -1161,6 +1171,7 @@ void CScene_Stage01::update()
 		enemy->setHp(10);
 		enemy->setScale(Vec2(32, 32));
 		enemy->setUpdateCallBack(enemyAi02);
+		enemy->setItemDrop(Group_Item::Score, 2);
 		AddObject(enemy, Group_GameObj::Enemy);
 	}
 	//오른쪽 등장
@@ -1180,6 +1191,7 @@ void CScene_Stage01::update()
 		enemy->setHp(10);
 		enemy->setScale(Vec2(32, 32));
 		enemy->setUpdateCallBack(enemyAi03);
+		enemy->setItemDrop(Group_Item::Score, 2);
 		AddObject(enemy, Group_GameObj::Enemy);
 	}
 	//좌우 등장
@@ -1255,7 +1267,8 @@ void CScene_Stage01::update()
 		g_boss->setDestPos(Vec2(STAGE_WIDTH / 2, STAGE_HEIGHT / 3));
 		g_boss->setMaxSpeed(300);
 		g_boss->setSpeed(200);
-		g_boss->setHp(30);
+		g_boss->setHp(200);
+		g_boss->setMaxHp(200);
 		g_boss->setScale(Vec2(48, 64));
 		g_boss->getCollider()->setColliderScale(Vec2(48, 64));
 		g_boss->setImage(L"Boss.png");

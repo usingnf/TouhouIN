@@ -146,12 +146,14 @@ void CBody::update()
 						CSoundManager::getInstance()->play(L"se_plst00.wav", 0.5f);
 
 						createMissile(L"SakuyaMissile.png", Vec2(0, 0), Vec2(16, 32), this->getPos(), Vec2(16, 32), Vec2(10, 30), 500, 0, 1, Group_GameObj::Missile);
+						createMissile(L"SakuyaMissile.png", Vec2(0, 0), Vec2(16, 32), this->getPos(), Vec2(16, 32), Vec2(10, 30), 500, 20, 1, Group_GameObj::Missile);
+						createMissile(L"SakuyaMissile.png", Vec2(0, 0), Vec2(16, 32), this->getPos(), Vec2(16, 32), Vec2(10, 30), 500, 340, 1, Group_GameObj::Missile);
 					}
 					else if (g_mode == Group_CharacterMode::Remilia)
 					{
 						CSoundManager::getInstance()->addSound(L"se_plst00.wav", L"se_plst00.wav", false, false);
 						CSoundManager::getInstance()->play(L"se_plst00.wav", 0.5f);
-						createMissile(L"RemiliaMissile.png", Vec2(14, 0), Vec2(8, 48), this->getPos(), Vec2(8, 48), Vec2(10, 30), 500, 0, 1, Group_GameObj::Missile);
+						createMissile(L"RemiliaMissile.png", Vec2(14, 0), Vec2(8, 48), this->getPos(), Vec2(8, 48), Vec2(10, 30), 500, 0, 2, Group_GameObj::Missile);
 					}
 				}
 			}
@@ -196,7 +198,6 @@ CMissile* CBody::createMissile(const wstring& image, Vec2 leftTop, Vec2 imageSiz
 	missile->setSpeed(speed);
 	missile->setAngle(angle);
 	missile->setDamage(damage);
-	missile->setDamage(9);
 	missile->setImage(image, leftTop, imageSize);
 	missile->setIsUse(true);
 	CREATEOBJECT(missile, type);

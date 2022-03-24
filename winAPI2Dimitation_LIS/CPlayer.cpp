@@ -146,11 +146,13 @@ void CPlayer::update()
 	if (KEY(VK_LSHIFT) == (UINT)Key_State::Tap)
 	{
 		this->setIsRender(true);
+		this->speed = 100;
 	}
 	else if (KEY(VK_LSHIFT) == (UINT)Key_State::Off)
 	{
 		if(getAnimator()->getCurAnimationName() != L"die")
 			this->setIsRender(false);
+		this->speed = 300;
 	}
 
 	if (KEY('X') == (UINT)Key_State::Tap)
@@ -160,6 +162,7 @@ void CPlayer::update()
 			getAnimator()->play(L"stay");
 			this->setScale(Vec2(64, 64));
 			this->setIsRender(false);
+			isInvincible = true;
 			
 			timer2 = 0;
 			CPlayer::isSpell = true;

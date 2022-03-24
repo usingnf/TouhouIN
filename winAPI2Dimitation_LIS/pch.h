@@ -112,7 +112,7 @@ enum class Key_State
 #define STAGE_HEIGHT (WS_HEIGHT - 20)
 #define PL_STARTPOSX 200
 #define PL_STARTPOSY (WS_HEIGHT-50)
-#define MAX_MISSILE 200
+#define MAX_MISSILE 400
 
 extern Group_GameState g_gameState;
 extern float g_volume;

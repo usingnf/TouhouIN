@@ -397,6 +397,7 @@ CMissile* CGameObject::createMissile(const wstring& image, Vec2 leftTop, Vec2 im
 	missile->setDamage(damage);
 	missile->setImage(image, leftTop, imageSize);
 	missile->setIsUse(true);
+	missile->setUpdateCallBack(nullptr);
 	missile->setHp(10);
 
 	g_missileIndex += 1;

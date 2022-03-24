@@ -147,7 +147,7 @@ void CItem::onCollisionStay(CCollider* other)
 				}
 				else if (itemType == Group_Item::Score)
 				{
-					g_score += 1;
+					g_score += 100;
 				}
 				else if (itemType == Group_Item::Spell)
 				{
@@ -162,16 +162,6 @@ void CItem::onCollisionStay(CCollider* other)
 
 void CItem::onCollisionExit(CCollider* other)
 {
-	if (getIsDelete() == true)
-	{
-		int a = 0;
-	}
-	else
-	{
-		int b = 0;
-	}
-
-	int c = 0;
 	if (hp > 0)
 	{
 		if (other->getOwner()->getName() == L"Player")
