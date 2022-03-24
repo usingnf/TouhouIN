@@ -400,9 +400,7 @@ CMissile* CGameObject::createMissile(const wstring& image, Vec2 leftTop, Vec2 im
 	missile->setPos(pos);
 	missile->setScale(size);
 	if (missile->getCollider() == nullptr)
-	{
 		missile->createCollider();
-	}
 	missile->getCollider()->setColliderScale(colSize);
 	missile->setSpeed(speed);
 	missile->setAngle(angle);

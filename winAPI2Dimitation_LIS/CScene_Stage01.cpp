@@ -1602,11 +1602,11 @@ void CScene_Stage01::Enter()
 	highScoreImage->setImagePos(Vec2(300, 88), Vec2(348, 104));
 	UIBackground->AddChild(highScoreImage);
 
+	str = std::to_string(g_highScore);
+	w.assign(str.begin(), str.end());
 	CText* highScoreText = new CText();
 	highScoreText->setPos(Vec2(STAGE_WIDTH + 100, 25));
 	highScoreText->setScale(Vec2(200, 30));
-	str = std::to_string(g_highScore);
-	w.assign(str.begin(), str.end());
 	highScoreText->setText(w.c_str());
 	highScoreText->setSize(30);
 	highScoreText->setUpdateCallBack(updateHighScore);
@@ -1629,13 +1629,13 @@ void CScene_Stage01::Enter()
 	scoreText->setColor(RGB(255, 255, 255));
 	UIBackground->AddChild(scoreText);
 
-	CUI* lifeImage = new CUI();
-	lifeImage->setPos(Vec2(STAGE_WIDTH + 40, 80));
-	lifeImage->setScale(Vec2(40, 40));
-	lifeImage->setImage(L"text2.png");
-	lifeImage->setImagePos(Vec2(300, 120), Vec2(348, 136));
-	lifeImage->setUpdateCallBack(updateLife);
-	UIBackground->AddChild(lifeImage);
+	CUI* lifeImage = new CUI();									//오브젝트 생성
+	lifeImage->setPos(Vec2(STAGE_WIDTH + 40, 80));				//위치 설정
+	lifeImage->setScale(Vec2(40, 40));							//크기 설정
+	lifeImage->setImage(L"text2.png");							//이미지 설정
+	lifeImage->setImagePos(Vec2(300, 120), Vec2(348, 136));		//이미지 크기 설정
+	lifeImage->setUpdateCallBack(updateLife);					//update 내용 설정(ai, 동적연출)
+	UIBackground->AddChild(lifeImage);							
 
 	CUI* spellImage = new CUI();
 	spellImage->setPos(Vec2(STAGE_WIDTH + 40, 110));

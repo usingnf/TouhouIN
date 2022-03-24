@@ -111,6 +111,10 @@ void CPlayer::update()
 			else
 			{
 				this->timer2 = 0;
+				if ((UINT)g_mode % 2 == 1)
+					g_mode = (Group_CharacterMode)((UINT)g_mode - 1);
+				this->speed = 300;
+
 				if (g_life > 0)
 				{
 					setIsRender(false);
@@ -119,14 +123,12 @@ void CPlayer::update()
 					this->setScale(Vec2(64, 64));
 					this->hp = 1;
 					
-					if ((UINT)g_mode % 2 == 1)
-						g_mode = (Group_CharacterMode)((UINT)g_mode - 1);
+					
 					getAnimator()->play(L"stay");
 				}
 				else
 				{
 					g_player = nullptr;
-					//DELETEOBJECT(this);
 					CEventManager::getInstance()->changeScene(Group_Scene::Result);
 				}
 			}
