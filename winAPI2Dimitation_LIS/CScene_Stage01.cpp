@@ -730,6 +730,10 @@ void WriggleAi02(DWORD_PTR self)
 			missile->setAngle(255 - i * 10);
 		}
 	}
+	else if (timerCount == 37)
+	{
+		obj->setTimerCount(0);
+	}
 	if (g_boss->getHp() <= 0)
 	{
 		timerCount += 1;
@@ -833,7 +837,7 @@ void WriggleAi01(DWORD_PTR self)
 		}
 	}
 
-	if (timerCount == 100 || g_boss->getHp() <= 0)
+	if (timerCount == 85 || g_boss->getHp() <= 0)
 	{
 		timerCount += 1;
 		CSceneManager::getInstance()->getCurScene()->startDialog();

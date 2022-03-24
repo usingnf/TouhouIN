@@ -77,24 +77,33 @@ void CMissile::onCollisionEnter(CCollider* other)
 	{
 		return;
 	}
-	if (other->getOwner()->getIsInvincible() == false)
+	CGameObject* obj = other->getOwner();
+	if (obj->getIsInvincible() == false)
 	{
-		if (other->getOwner()->getHp() > 0)
+		if (obj->getHp() > 0)
 		{
-			if (other->getOwner()->getName() == L"Player")
+			if (obj->getName() == L"Player")
 			{
-				other->getOwner()->setHp(other->getOwner()->getHp() - damage);
+				obj->setHp(obj->getHp() - damage);
 			}
 			else
 			{
-				g_score += 10 * damage;
-				other->getOwner()->setHp(other->getOwner()->getHp() - damage);
+				if (obj->getHp() < 10 * damage)
+				{
+					g_score += 10 * obj->getHp();
+				}
+				else
+				{
+					g_score += 10 * damage;
+				}
+				
+				obj->setHp(obj->getHp() - damage);
 			}
 
-			if (other->getOwner()->getHp() <= 0)
+			if (obj->getHp() <= 0)
 			{
-				if(g_boss != (CEnemy*)other->getOwner())
-					other->getOwner()->die();
+				if(g_boss != (CEnemy*)obj)
+					obj->die();
 			}
 			recycleMissile();
 		}
