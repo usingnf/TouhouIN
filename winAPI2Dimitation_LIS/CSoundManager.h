@@ -15,7 +15,6 @@ private:
 	map<wstring, CSound*> mapSound;
 	System* m_system;
 	Channel* m_musicChannel;
-	
 public:
 	void init();
 	void update();
@@ -35,6 +34,5 @@ public:
 
 	Channel* getMusicChannel();
 	void setMusicChannel(Channel* channel);
-
 };
 

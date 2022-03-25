@@ -145,24 +145,25 @@ void CScene_Start::update()
 		}
 	}
 
-	if (KEY(VK_LEFT) == (UINT)Key_State::Tap)
+	if (KEY(VK_LEFT) == (UINT)Key_State::Tap) // 볼륨 감소
 	{
 		if (optionGroup->getIsRender() == true)
 		{
 			CSoundManager::getInstance()->play(L"se_ok00.wav");
-			if (menuIndex == 0)
+			if (menuIndex == 0) // 효과음
 			{
 				g_volume += -0.1;
 				if (g_volume < 0)
 					g_volume = 0;
 			}
-			else if (menuIndex == 1)
+			else if (menuIndex == 1) // 음악
 			{
 				g_musicVolume += -0.1;
 				if (g_musicVolume < 0)
 					g_musicVolume = 0;
-				
-				CSoundManager::getInstance()->getMusicChannel()->setVolume(g_musicVolume);
+				//현재 재생중인 음악 볼륨 조절
+				CSoundManager::getInstance()->
+					getMusicChannel()->setVolume(g_musicVolume);
 			}
 		}
 	}
@@ -508,23 +509,15 @@ void CScene_Start::Exit()
 int CScene_Start::loadHighScore()
 {
 	FILE* pFile = nullptr;
-
 	wstring path = CPathManager::getInstance()->getContentRelativePath();
 	path += L"\\score.dat";
-
 	_wfopen_s(&pFile, path.c_str(), L"rb");      // w : write, b : binary
 	if (pFile == nullptr)
-	{
 		return 0;
-	}
 	int score = 0;
-
 	fread(&score, sizeof(int), 1, pFile);
-
 	g_score = score;
-
 	fclose(pFile);
-
 	return score;
 }
 

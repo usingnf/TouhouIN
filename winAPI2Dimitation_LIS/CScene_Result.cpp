@@ -245,14 +245,10 @@ void CScene_Result::saveHighScore()
 	wstring filePath = CPathManager::getInstance()->getContentRelativePath();
 	filePath += L"\\score.dat";
 	FILE* file = nullptr;
-
 	_wfopen_s(&file, filePath.c_str(), L"wb");
 	if (file == nullptr)
 		return;
-
 	int score = g_highScore;
-
 	fwrite(&score, sizeof(int), 1, file);
-
 	fclose(file);
 }

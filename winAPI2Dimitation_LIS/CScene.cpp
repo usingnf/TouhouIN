@@ -280,7 +280,6 @@ void CScene::endDialog()
 {
 	g_gameState = Group_GameState::Play;
 	dialogPanel->setIsRender(false);
-	
 }
 
 void CScene::clearObject()
