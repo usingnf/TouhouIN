@@ -17,7 +17,5 @@ public:
 	virtual void render();
 
 	virtual void die();
-
-	virtual CMissile* createMissile(const wstring& image, Vec2 leftTop, Vec2 imageSize, Vec2 pos, Vec2 size, Vec2 colSize, double speed, double angle, double damage, Group_GameObj type);
 };
 

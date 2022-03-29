@@ -34,8 +34,10 @@ protected:
 	bool isDelete;
 	double timer = 0;
 	double timer2 = 0;
+	double timer3 = 0;
 	int timerCount = 0;
 	int timerCount2 = 0;
+	int timerCount3 = 0;
 
 	bool isRender;
 	void setIsDelete(bool dead);
@@ -96,13 +98,15 @@ public:
 
 	bool getIsDelete();
 
-	void createCollider();
+	void createCollider(Type_Collider type = Type_Collider::Rectangle);
 	void setColldier(CCollider* col);
 	CCollider* getCollider();
 
 	void addForce(Vec2 vec);
 
-	virtual CMissile* createMissile(const wstring& image, Vec2 leftTop, Vec2 imageSize, Vec2 pos, Vec2 size, Vec2 colSize, double speed, double angle, double damage, Group_GameObj type);
+	virtual CMissile* createMissile(const wstring& image, Vec2 leftTop, Vec2 imageSize, Vec2 pos, 
+		Vec2 size, Vec2 colSize, double speed, double angle, double damage, 
+		Group_GameObj type, Type_Collider shape = Type_Collider::Rectangle);
 
 	virtual void onCollisionEnter(CCollider* other) {};
 	virtual void onCollisionStay(CCollider* other) {};

@@ -108,11 +108,44 @@ bool CCollisionManager::isCollision(CCollider* left, CCollider* right)
 	Vec2 rightPos = right->getColliderPos();
 	Vec2 rightScale = right->getColliderScale();
 
-	if (abs(leftPos.x - rightPos.x) < (leftScale.x + rightScale.x) / 2.f
-		&& abs(leftPos.y - rightPos.y) < (leftScale.y + rightScale.y) / 2.f)
+	Type_Collider leftType = left->getType();
+	Type_Collider rightType = right->getType();
+
+	if (leftType == Type_Collider::Rectangle && rightType == Type_Collider::Rectangle)
 	{
-		return true;
+		if (abs(leftPos.x - rightPos.x) < (leftScale.x + rightScale.x) / 2.f
+			&& abs(leftPos.y - rightPos.y) < (leftScale.y + rightScale.y) / 2.f)
+		{
+			return true;
+		}
 	}
+	else if (leftType == Type_Collider::Circle && rightType == Type_Collider::Circle)
+	{
+		if (Vec2::distance(leftPos, rightPos) < ((leftScale.x+leftScale.y)/4 + (rightScale.x+rightScale.y)/4))
+		{
+			return true;
+		}
+	}
+	else if (leftType == Type_Collider::Circle && rightType == Type_Collider::Rectangle)
+	{
+		//사각충돌과 동일 처리->수정필요
+		if (abs(leftPos.x - rightPos.x) < (leftScale.x + rightScale.x) / 2.f
+			&& abs(leftPos.y - rightPos.y) < (leftScale.y + rightScale.y) / 2.f)
+		{
+			return true;
+		}
+	}
+	else if (leftType == Type_Collider::Rectangle && rightType == Type_Collider::Circle)
+	{
+		//사각충돌과 동일 처리->수정필요
+		if (abs(leftPos.x - rightPos.x) < (leftScale.x + rightScale.x) / 2.f
+			&& abs(leftPos.y - rightPos.y) < (leftScale.y + rightScale.y) / 2.f)
+		{
+			return true;
+		}
+	}
+
+	
 
 	return false;
 }

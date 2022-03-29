@@ -10,7 +10,7 @@ CCollider::CCollider()
 	colliderScale = Vec2(0, 0);
 	owner = nullptr;
 	collCount = 0;
-
+	type = Type_Collider::Rectangle;
 	ID = static_ID++;
 }
 
@@ -58,10 +58,18 @@ void CCollider::render()
 
 	Vec2 camPos = CCameraManager::getInstance()->getRenderPos(colliderPos);
 
-	CRenderManager::getInstance()->RenderRectangle(
-		camPos.x - (colliderScale.x / 2), camPos.y - (colliderScale.y / 2),
-		camPos.x + (colliderScale.x / 2), camPos.y + (colliderScale.y / 2), color);
-
+	if (type == Type_Collider::Rectangle)
+	{
+		CRenderManager::getInstance()->RenderRectangle(
+			camPos.x - (colliderScale.x / 2), camPos.y - (colliderScale.y / 2),
+			camPos.x + (colliderScale.x / 2), camPos.y + (colliderScale.y / 2), color);
+	}
+	else if (type == Type_Collider::Circle)
+	{
+		CRenderManager::getInstance()->RenderEllipse(
+			camPos.x, camPos.y,
+			colliderScale.x/2, colliderScale.y/2, color);
+	}
 }
 
 Vec2 CCollider::getOffSet()
@@ -82,6 +90,16 @@ Vec2 CCollider::getColliderScale()
 CGameObject* CCollider::getOwner()
 {
 	return owner;
+}
+
+void CCollider::setType(Type_Collider type)
+{
+	this->type = type;
+}
+
+Type_Collider CCollider::getType()
+{
+	return this->type;
 }
 
 void CCollider::setOffSet(Vec2 vec)

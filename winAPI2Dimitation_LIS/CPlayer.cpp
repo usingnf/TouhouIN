@@ -13,7 +13,7 @@ CPlayer::CPlayer()
 	name = L"Player";
 	timer = 0;
 
-	createCollider();
+	createCollider(Type_Collider::Circle);
 	getCollider()->setColliderScale(Vec2(10, 10));
 
 	image = CResourceManager::getInstance()->loadD2DImage(L"Missile.png", L"\\texture\\Missile.png");
@@ -39,6 +39,10 @@ CPlayer::~CPlayer()
 
 void CPlayer::update()
 {
+	string str = std::to_string(timer2) + "/" + std::to_string(timer3);
+	wstring w;
+	w.assign(str.begin(), str.end());
+	Logger::debug(w.c_str());
 	if (g_gameState != Group_GameState::Play)
 	{
 		return;
@@ -137,10 +141,10 @@ void CPlayer::update()
 
 	if (isInvincible == true)
 	{
-		timer2 += DT();
-		if (timer2 >= 2)
+		timer3 += DT();
+		if (timer3 >= 2)
 		{
-			timer2 = 0;
+			timer3 = 0;
 			isInvincible = false;
 		}
 	}
@@ -167,6 +171,7 @@ void CPlayer::update()
 			isInvincible = true;
 			
 			timer2 = 0;
+			timer3 = 0;
 			CPlayer::isSpell = true;
 			g_spell += -1;
 			g_bombUse += 1;
@@ -216,20 +221,4 @@ void CPlayer::die()
 	getAnimator()->play(L"die");
 	g_miss += 1;
 	this->setScale(Vec2(1,1));
-}
-
-CMissile* CPlayer::createMissile(const wstring& image, Vec2 leftTop, Vec2 imageSize, Vec2 pos, Vec2 size, Vec2 colSize, double speed, double angle, double damage, Group_GameObj type)
-{
-	CMissile* missile = new CMissile();
-	missile->setPos(pos);
-	missile->setScale(size);
-	missile->getCollider()->setColliderScale(colSize);
-	missile->setSpeed(speed);
-	missile->setAngle(angle);
-	missile->setDamage(damage);
-	missile->setImage(image, leftTop, imageSize);
-	missile->setIsUse(true);
-	CREATEOBJECT(missile, type);
-
-	return missile;
 }

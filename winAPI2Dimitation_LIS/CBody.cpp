@@ -188,13 +188,15 @@ void CBody::render()
 	component_render();
 }
 
-CMissile* CBody::createMissile(const wstring& image, Vec2 leftTop, Vec2 imageSize, Vec2 pos, Vec2 size, Vec2 colSize, double speed, double angle, double damage, Group_GameObj type)
+CMissile* CBody::createMissile(const wstring& image, Vec2 leftTop, Vec2 imageSize, Vec2 pos, Vec2 size, Vec2 colSize, double speed, double angle, double damage, Group_GameObj type, Type_Collider shape)
 {
 	CMissile* missile = new CMissile();
 	missile->setName(L"PMissile");
 	missile->setPos(pos);
 	missile->setScale(size);
+	missile->createCollider();
 	missile->getCollider()->setColliderScale(colSize);
+	missile->getCollider()->setType(shape);
 	missile->setSpeed(speed);
 	missile->setAngle(angle);
 	missile->setDamage(damage);

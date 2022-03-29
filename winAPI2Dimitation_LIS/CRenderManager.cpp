@@ -187,6 +187,8 @@ void CRenderManager::RenderEllipse(float dstX, float dstY, float dstW, float dst
 	int blue = (color >> 16) & 0xFF;
 
 	m_pBrush->SetColor(D2D1::ColorF(red / 255.f, green / 255.0f, blue / 255.0f, 1.f));
+	Matrix3x2F matrot = D2D1::Matrix3x2F::Rotation(angle, D2D1::Point2F(pos.x, pos.y));
+	m_pRenderTarget->SetTransform(matrot);
 	m_pRenderTarget->DrawEllipse(m_imgRect, m_pBrush);
 }
 

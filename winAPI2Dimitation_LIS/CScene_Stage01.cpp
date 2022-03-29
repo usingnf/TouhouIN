@@ -40,15 +40,16 @@ void enemyAi01(DWORD_PTR self)
 {
 	CGameObject* obj = (CGameObject*)self;
 	obj->setTimer(obj->getTimer() + DT());
-	if (obj->getTimer() >= 0.1)
+	if (obj->getTimer() >= 2)
 	{
 		obj->setTimer(0);
 		//action
 		CSoundManager::getInstance()->addSound(L"se_tan00.wav", L"se_tan00.wav", false, false);
 		CSoundManager::getInstance()->play(L"se_tan00.wav", 0.2f);
-		obj->createMissile(L"Missile.png", Vec2(108, 118),
+		CMissile* missile = obj->createMissile(L"Missile.png", Vec2(108, 118),
 			Vec2(28, 28), obj->getPos(),
 			Vec2(30, 30), Vec2(30, 30), 200, 180, 1, Group_GameObj::EnemyMissile);
+		missile->getCollider()->setType(Type_Collider::Circle);
 	}
 }
 
@@ -74,9 +75,10 @@ void enemyAi02(DWORD_PTR self)
 
 		double angle = getToPlayerAngle(obj);
 
-		obj->createMissile(L"Missile.png", Vec2(108, 118),
+		CMissile* missile = obj->createMissile(L"Missile.png", Vec2(108, 118),
 			Vec2(28, 28), obj->getPos(),
 			Vec2(30, 30), Vec2(30, 30), 200, angle + getRandomInt(-10, 10), 1, Group_GameObj::EnemyMissile);
+		missile->getCollider()->setType(Type_Collider::Circle);
 	}
 
 	if (obj->getTimerCount() == 8)
@@ -109,9 +111,10 @@ void enemyAi03(DWORD_PTR self)
 
 		double angle = getToPlayerAngle(obj);
 
-		obj->createMissile(L"Missile.png", Vec2(108, 118),
+		CMissile* missile = obj->createMissile(L"Missile.png", Vec2(108, 118),
 			Vec2(28, 28), obj->getPos(),
 			Vec2(30, 30), Vec2(30, 30), 200, angle + getRandomInt(-10, 10), 1, Group_GameObj::EnemyMissile);
+		missile->getCollider()->setType(Type_Collider::Circle);
 	}
 
 	if (obj->getTimerCount() == 8)
@@ -144,9 +147,10 @@ void enemyAi04(DWORD_PTR self)
 
 		for (int i = 0; i < 30; i++)
 		{
-			obj->createMissile(L"Missile.png", Vec2(108, 118),
+			CMissile* missile = obj->createMissile(L"Missile.png", Vec2(108, 118),
 				Vec2(28, 28), obj->getPos(),
 				Vec2(15, 15), Vec2(15, 15), 100, 12*i, 1, Group_GameObj::EnemyMissile);
+			missile->getCollider()->setType(Type_Collider::Circle);
 		}	
 	}
 
@@ -181,9 +185,10 @@ void enemyAi05(DWORD_PTR self)
 
 		for (int i = 0; i < 30; i++)
 		{
-			obj->createMissile(L"Missile.png", Vec2(108, 118),
+			CMissile* missile = obj->createMissile(L"Missile.png", Vec2(108, 118),
 				Vec2(28, 28), obj->getPos(),
 				Vec2(15, 15), Vec2(15, 15), 100, 12 * i, 1, Group_GameObj::EnemyMissile);
+			missile->getCollider()->setType(Type_Collider::Circle);
 		}
 	}
 	if (timerCount == 1 || timerCount == 8 || timerCount == 15)
@@ -200,9 +205,10 @@ void enemyAi05(DWORD_PTR self)
 		double ang2 = obj->getAngle();
 		for (int i = 0; i < 3; i++)
 		{
-			obj->createMissile(L"Missile.png", Vec2(108, 118),
+			CMissile* missile = obj->createMissile(L"Missile.png", Vec2(108, 118),
 				Vec2(28, 28), obj->getPos(),
 				Vec2(15, 15), Vec2(15, 15), 50, ang2 + 15 * (i - 1), 1, Group_GameObj::EnemyMissile);
+			missile->getCollider()->setType(Type_Collider::Circle);
 		}
 	}
 	
@@ -459,6 +465,7 @@ void WriggleAi02(DWORD_PTR self)
 			missile->setUpdateCallBack(WriggleMissileAi04);
 			missile->setSpeed(50);
 			missile->setAngle(285 + i * 10);
+			missile->getCollider()->setType(Type_Collider::Circle);
 		}
 		for (int i = 0; i < 4; i++)
 		{
@@ -468,6 +475,7 @@ void WriggleAi02(DWORD_PTR self)
 			missile->setUpdateCallBack(WriggleMissileAi04);
 			missile->setSpeed(50);
 			missile->setAngle(255 - i * 10);
+			missile->getCollider()->setType(Type_Collider::Circle);
 		}
 	}
 	else if (timerCount == 12)
@@ -483,6 +491,7 @@ void WriggleAi02(DWORD_PTR self)
 			missile->setUpdateCallBack(WriggleMissileAi04);
 			missile->setSpeed(100);
 			missile->setAngle(285 + i * 10);
+			missile->getCollider()->setType(Type_Collider::Circle);
 		}
 		for (int i = 0; i < 4; i++)
 		{
@@ -492,6 +501,7 @@ void WriggleAi02(DWORD_PTR self)
 			missile->setUpdateCallBack(WriggleMissileAi04);
 			missile->setSpeed(100);
 			missile->setAngle(255 - i * 10);
+			missile->getCollider()->setType(Type_Collider::Circle);
 		}
 	}
 	else if (timerCount == 14)
@@ -507,6 +517,7 @@ void WriggleAi02(DWORD_PTR self)
 			missile->setUpdateCallBack(WriggleMissileAi04);
 			missile->setSpeed(125);
 			missile->setAngle(285 + i * 10);
+			missile->getCollider()->setType(Type_Collider::Circle);
 		}
 		for (int i = 0; i < 4; i++)
 		{
@@ -516,6 +527,7 @@ void WriggleAi02(DWORD_PTR self)
 			missile->setUpdateCallBack(WriggleMissileAi04);
 			missile->setSpeed(125);
 			missile->setAngle(255 - i * 10);
+			missile->getCollider()->setType(Type_Collider::Circle);
 		}
 	}
 	else if (timerCount == 16)
@@ -531,6 +543,7 @@ void WriggleAi02(DWORD_PTR self)
 			missile->setUpdateCallBack(WriggleMissileAi04);
 			missile->setSpeed(150);
 			missile->setAngle(285 + i * 10);
+			missile->getCollider()->setType(Type_Collider::Circle);
 		}
 		for (int i = 0; i < 4; i++)
 		{
@@ -540,6 +553,7 @@ void WriggleAi02(DWORD_PTR self)
 			missile->setUpdateCallBack(WriggleMissileAi04);
 			missile->setSpeed(150);
 			missile->setAngle(255 - i * 10);
+			missile->getCollider()->setType(Type_Collider::Circle);
 		}
 	}
 	else if (timerCount == 20)
@@ -555,6 +569,7 @@ void WriggleAi02(DWORD_PTR self)
 			missile->setUpdateCallBack(WriggleMissileAi05);
 			missile->setSpeed(50);
 			missile->setAngle(105 + i * 10);
+			missile->getCollider()->setType(Type_Collider::Circle);
 		}
 		for (int i = 0; i < 4; i++)
 		{
@@ -564,6 +579,7 @@ void WriggleAi02(DWORD_PTR self)
 			missile->setUpdateCallBack(WriggleMissileAi05);
 			missile->setSpeed(50);
 			missile->setAngle(75 - i * 10);
+			missile->getCollider()->setType(Type_Collider::Circle);
 		}
 	}
 	else if (timerCount == 22)
@@ -579,6 +595,7 @@ void WriggleAi02(DWORD_PTR self)
 			missile->setUpdateCallBack(WriggleMissileAi05);
 			missile->setSpeed(100);
 			missile->setAngle(105 + i * 10);
+			missile->getCollider()->setType(Type_Collider::Circle);
 		}
 		for (int i = 0; i < 4; i++)
 		{
@@ -588,6 +605,7 @@ void WriggleAi02(DWORD_PTR self)
 			missile->setUpdateCallBack(WriggleMissileAi05);
 			missile->setSpeed(100);
 			missile->setAngle(75 - i * 10);
+			missile->getCollider()->setType(Type_Collider::Circle);
 		}
 	}
 	else if (timerCount == 24)
@@ -603,6 +621,7 @@ void WriggleAi02(DWORD_PTR self)
 			missile->setUpdateCallBack(WriggleMissileAi05);
 			missile->setSpeed(125);
 			missile->setAngle(105 + i * 10);
+			missile->getCollider()->setType(Type_Collider::Circle);
 		}
 		for (int i = 0; i < 4; i++)
 		{
@@ -612,6 +631,7 @@ void WriggleAi02(DWORD_PTR self)
 			missile->setUpdateCallBack(WriggleMissileAi05);
 			missile->setSpeed(125);
 			missile->setAngle(75 - i * 10);
+			missile->getCollider()->setType(Type_Collider::Circle);
 		}
 	}
 	else if (timerCount == 26)
@@ -627,6 +647,7 @@ void WriggleAi02(DWORD_PTR self)
 			missile->setUpdateCallBack(WriggleMissileAi05);
 			missile->setSpeed(150);
 			missile->setAngle(105 + i * 10);
+			missile->getCollider()->setType(Type_Collider::Circle);
 		}
 		for (int i = 0; i < 4; i++)
 		{
@@ -636,6 +657,7 @@ void WriggleAi02(DWORD_PTR self)
 			missile->setUpdateCallBack(WriggleMissileAi05);
 			missile->setSpeed(150);
 			missile->setAngle(75 - i * 10);
+			missile->getCollider()->setType(Type_Collider::Circle);
 		}
 	}
 	if (timerCount == 30)
@@ -651,6 +673,7 @@ void WriggleAi02(DWORD_PTR self)
 			missile->setUpdateCallBack(WriggleMissileAi04);
 			missile->setSpeed(50);
 			missile->setAngle(285 + i * 10);
+			missile->getCollider()->setType(Type_Collider::Circle);
 		}
 		for (int i = 0; i < 4; i++)
 		{
@@ -660,6 +683,7 @@ void WriggleAi02(DWORD_PTR self)
 			missile->setUpdateCallBack(WriggleMissileAi04);
 			missile->setSpeed(50);
 			missile->setAngle(255 - i * 10);
+			missile->getCollider()->setType(Type_Collider::Circle);
 		}
 	}
 	else if (timerCount == 32)
@@ -675,6 +699,7 @@ void WriggleAi02(DWORD_PTR self)
 			missile->setUpdateCallBack(WriggleMissileAi04);
 			missile->setSpeed(100);
 			missile->setAngle(285 + i * 10);
+			missile->getCollider()->setType(Type_Collider::Circle);
 		}
 		for (int i = 0; i < 4; i++)
 		{
@@ -684,6 +709,7 @@ void WriggleAi02(DWORD_PTR self)
 			missile->setUpdateCallBack(WriggleMissileAi04);
 			missile->setSpeed(100);
 			missile->setAngle(255 - i * 10);
+			missile->getCollider()->setType(Type_Collider::Circle);
 		}
 	}
 	else if (timerCount == 34)
@@ -699,6 +725,7 @@ void WriggleAi02(DWORD_PTR self)
 			missile->setUpdateCallBack(WriggleMissileAi04);
 			missile->setSpeed(125);
 			missile->setAngle(285 + i * 10);
+			missile->getCollider()->setType(Type_Collider::Circle);
 		}
 		for (int i = 0; i < 4; i++)
 		{
@@ -708,6 +735,7 @@ void WriggleAi02(DWORD_PTR self)
 			missile->setUpdateCallBack(WriggleMissileAi04);
 			missile->setSpeed(125);
 			missile->setAngle(255 - i * 10);
+			missile->getCollider()->setType(Type_Collider::Circle);
 		}
 	}
 	else if (timerCount == 36)
@@ -723,6 +751,7 @@ void WriggleAi02(DWORD_PTR self)
 			missile->setUpdateCallBack(WriggleMissileAi04);
 			missile->setSpeed(150);
 			missile->setAngle(285 + i * 10);
+			missile->getCollider()->setType(Type_Collider::Circle);
 		}
 		for (int i = 0; i < 4; i++)
 		{
@@ -732,6 +761,7 @@ void WriggleAi02(DWORD_PTR self)
 			missile->setUpdateCallBack(WriggleMissileAi04);
 			missile->setSpeed(150);
 			missile->setAngle(255 - i * 10);
+			missile->getCollider()->setType(Type_Collider::Circle);
 		}
 	}
 	else if (timerCount == 37)
@@ -782,6 +812,7 @@ void WriggleAi01(DWORD_PTR self)
 				missile->setUpdateCallBack(WriggleMissileAi01);
 				missile->setAngle(15 + j * 15);
 				missile->setSpeed(50 + i * 75);
+				missile->getCollider()->setType(Type_Collider::Circle);
 			}
 		}
 	}
@@ -801,6 +832,7 @@ void WriggleAi01(DWORD_PTR self)
 				missile->setUpdateCallBack(WriggleMissileAi02);
 				missile->setAngle(180 + j * 15);
 				missile->setSpeed(50 + i * 75);
+				missile->getCollider()->setType(Type_Collider::Circle);
 			}
 		}
 	}
@@ -830,6 +862,7 @@ void WriggleAi01(DWORD_PTR self)
 				missile->setUpdateCallBack(WriggleMissileAi03);
 				missile->setAngle(angle - 20 + j * 20);
 				missile->setSpeed(10 + i * 60);
+				missile->getCollider()->setType(Type_Collider::Circle);
 
 				CMissile* missile2 = obj->createMissile(L"Missile.png", Vec2(138, 52),
 					Vec2(16, 16), obj->getPos(),
@@ -837,6 +870,7 @@ void WriggleAi01(DWORD_PTR self)
 				missile2->setUpdateCallBack(WriggleMissileAi03);
 				missile2->setAngle(angle - 15 + j * 20);
 				missile2->setSpeed(10 + i * 60);
+				missile2->getCollider()->setType(Type_Collider::Circle);
 			}
 		}
 	}
@@ -940,8 +974,6 @@ void CScene_Stage01::update()
 			nextDialog();
 		}
 	}
-
-	
 
 	if (g_gameState != Group_GameState::Play)
 	{
@@ -1240,7 +1272,7 @@ void CScene_Stage01::update()
 
 		enemy = new CEnemy();
 		enemy->setPos(Vec2(STAGE_WIDTH + 30 - random1, 50 + random2));
-		enemy->setDestPos(Vec2(-30 + random1, 50 + random2));
+		enemy->setDestPos(Vec2(-100 + random1, 50 + random2));
 		enemy->setMaxSpeed(300);
 		enemy->setSpeed(200);
 		enemy->setHp(10);
@@ -1465,6 +1497,7 @@ void CScene_Stage01::Enter()
 	g_time = 0;
 	g_bombUse = false;
 	CPlayer::isSpell = false;
+	CResourceManager::getInstance()->loadD2DImage(L"Boss.png", L"\\texture\\Boss.png");
 	string str;
 	wstring w;
 
@@ -1549,12 +1582,12 @@ void CScene_Stage01::Enter()
 	enemy->setDestPos(Vec2(STAGE_WIDTH - 200, 200));
 	enemy->setMaxSpeed(300);
 	enemy->setSpeed(100);
-	enemy->setHp(10);
+	enemy->setHp(10000);
 	enemy->setScale(Vec2(32, 32));
 	AddObject(enemy, Group_GameObj::Enemy);
 	enemy->setUpdateCallBack(enemyAi01);
 	*/
-
+	
 	g_player = new CPlayer();
 	g_player->setPos(Vec2(PL_STARTPOSX, PL_STARTPOSY));
 	g_player->setScale(Vec2(64, 64));

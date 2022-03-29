@@ -261,11 +261,12 @@ void CGameObject::setIsDelete(bool dead)
 	this->isDelete = dead;
 }
 
-void CGameObject::createCollider()
+void CGameObject::createCollider(Type_Collider type)
 {
 	if(collider == nullptr)
 		collider = new CCollider();
 	collider->owner = this;
+	collider->setType(type);
 }
 
 void CGameObject::setColldier(CCollider* col)
@@ -379,7 +380,7 @@ void CGameObject::setAngle(Vec2 vec)
 	this->angle = Vec2::getAngle(vec);
 }
 
-CMissile* CGameObject::createMissile(const wstring& image, Vec2 leftTop, Vec2 imageSize, Vec2 pos, Vec2 size, Vec2 colSize, double speed, double angle, double damage, Group_GameObj type)
+CMissile* CGameObject::createMissile(const wstring& image, Vec2 leftTop, Vec2 imageSize, Vec2 pos, Vec2 size, Vec2 colSize, double speed, double angle, double damage, Group_GameObj type, Type_Collider shape)
 {
 	if (g_missileIndex >= MAX_MISSILE - 1)
 		g_missileIndex = 0;
@@ -400,8 +401,9 @@ CMissile* CGameObject::createMissile(const wstring& image, Vec2 leftTop, Vec2 im
 	missile->setPos(pos);
 	missile->setScale(size);
 	if (missile->getCollider() == nullptr)
-		missile->createCollider();
+		missile->createCollider(Type_Collider::Circle);
 	missile->getCollider()->setColliderScale(colSize);
+	missile->getCollider()->setType(shape);
 	missile->setSpeed(speed);
 	missile->setAngle(angle);
 	missile->setDamage(damage);
