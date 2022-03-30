@@ -20,7 +20,7 @@ enum class Group_GameState
 	Play,
 	Stop,
 	Dialog,
-
+	Movie,
 	Size,
 };
 

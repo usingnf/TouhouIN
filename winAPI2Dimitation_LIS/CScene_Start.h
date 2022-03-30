@@ -15,6 +15,7 @@ private:
 	CPanelUI* level;
 	CUI* textGroup = nullptr;
 	CUI* optionGroup = nullptr;
+	HWND video = nullptr;
 
 	double timer = 0;
 	double timerCount = 0;
@@ -31,6 +32,8 @@ public:
 	int loadHighScore();
 	float loadOption();
 	void saveOption();
+	void videoPlay(wstring& name);
+	void videoStop();
 };
 
 

@@ -15,3 +15,7 @@
 #include <tchar.h>
 #pragma comment(lib, "Msimg32.lib")
 
+#include <Vfw.h>
+//#pragma comment(lib, "vfw32.lib")
+#pragma comment(lib, "msvfw32.lib")
+

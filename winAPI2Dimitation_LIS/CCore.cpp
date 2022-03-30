@@ -60,15 +60,19 @@ void CCore::update()
 void CCore::render()
 {
 	//배경
-	CRenderManager::getInstance()->GetRenderTarget()->BeginDraw();
-	CRenderManager::getInstance()->RenderFillRectangle(-1, -1, WS_WIDTH + 1, WS_HEIGHT + 1, RGB(255, 255, 255));
-	CSceneManager::getInstance()->render();
-		
-	//frame 출력
-	WCHAR strFPS[10];
-	swprintf_s(strFPS, L"FPS:%4d", CTimeManager::getInstance()->getFPS());
-	CRenderManager::getInstance()->RenderText(strFPS, WS_WIDTH - 150, WS_HEIGHT - 30, 200, 10, 30, RGB(255, 255, 255));
-	CRenderManager::getInstance()->GetRenderTarget()->EndDraw();
+	if (g_gameState != Group_GameState::Movie)
+	{
+		CRenderManager::getInstance()->GetRenderTarget()->BeginDraw();
+		CRenderManager::getInstance()->RenderFillRectangle(-1, -1, WS_WIDTH + 1, WS_HEIGHT + 1, RGB(255, 255, 255));
+		CSceneManager::getInstance()->render();
+
+		//frame 출력
+		WCHAR strFPS[10];
+		swprintf_s(strFPS, L"FPS:%4d", CTimeManager::getInstance()->getFPS());
+		CRenderManager::getInstance()->RenderText(strFPS, WS_WIDTH - 150, WS_HEIGHT - 30, 200, 10, 30, RGB(255, 255, 255));
+		CRenderManager::getInstance()->GetRenderTarget()->EndDraw();
+	}
+	
 }
 
 void CCore::init()

@@ -23,6 +23,20 @@ void CScene_Start::update()
 			getArrObj()[i][j]->update();
 		}
 	}
+	//영상 재생 테스트
+	/*
+	if (KEY('R') == (UINT)Key_State::Tap)
+	{
+		wstring w = L"test.wmv";
+		videoPlay(w);
+	}
+
+	if (KEY('T') == (UINT)Key_State::Tap)
+	{
+		videoStop();
+	}
+	*/
+
 	timer += DT();
 	if (timerCount == 0)
 	{
@@ -564,4 +578,28 @@ void CScene_Start::saveOption()
 	fwrite(&musicVolume, sizeof(float), 1, file);
 
 	fclose(file);
+}
+
+void CScene_Start::videoPlay(wstring& name)
+{
+	CSoundManager::getInstance()->stop(L"titlebgm.wav");
+	g_gameState = Group_GameState::Movie;
+
+	wstring path = CPathManager::getInstance()->getContentRelativePath();
+	path += L"\\video\\" + name;
+	
+	MCIWndClose(video);
+	video = MCIWndCreate(hWnd, NULL, MCIWNDF_NOPLAYBAR | WS_VISIBLE | WS_CHILD, path.c_str());
+	if (video == nullptr)
+		return;
+	
+	MoveWindow(hWnd, 0, 0, WS_WIDTH, WS_HEIGHT, false);
+	MCIWndPlay(video);
+}
+
+void CScene_Start::videoStop()
+{
+	CSoundManager::getInstance()->playMusic(L"titlebgm.wav");
+	g_gameState = Group_GameState::Play;
+	MCIWndClose(video);
 }
